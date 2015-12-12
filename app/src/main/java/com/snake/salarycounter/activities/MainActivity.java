@@ -13,6 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.mikepenz.aboutlibraries.Libs;
+import com.mikepenz.aboutlibraries.LibsBuilder;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
@@ -113,8 +115,27 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
                 .addStickyDrawerItems(
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_settings).withIcon(FontAwesome.Icon.faw_cog).withIdentifier(10),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_open_source).withIcon(FontAwesome.Icon.faw_github)
+                        new SecondaryDrawerItem()
+                                .withName(R.string.drawer_item_settings)
+                                .withIcon(FontAwesome.Icon.faw_cog)
+                                .withIdentifier(10),
+                        new SecondaryDrawerItem()
+                                .withName("About")
+                                .withIcon(FontAwesome.Icon.faw_question)
+                                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                                    @Override
+                                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                                        new LibsBuilder()
+                                                //provide a style (optional) (LIGHT, DARK, LIGHT_DARK_TOOLBAR)
+                                                .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
+                                                .withAboutIconShown(true)
+                                                .withAboutVersionShown(true)
+                                                .withAboutDescription("{faw-android} This is a small sample which can be set in the about my app description file.<br /><b>You can style this with html markup :D</b>")
+                                                        //start the activity
+                                                .start(getApplicationContext());
+                                        return false;
+                                    }
+                                })
                 )
                 .withSavedInstance(savedInstanceState)
                 .build();
