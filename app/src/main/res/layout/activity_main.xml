@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context=".activities.MainActivity">
 
     <android.support.v7.widget.Toolbar
@@ -19,32 +18,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/txtLabel"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Test"
-            android:textSize="16sp" />
-
-        <TextView
-            android:text="{gmd-chart} Chart"
-            android:textColor="@android:color/black"
-            android:layout_width="wrap_content"
-            android:layout_height="56dp"
-            android:textSize="16sp"
-            android:id="@+id/textView2"
-            android:layout_gravity="center_horizontal|top" />
-
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="{gmd-chart} Chart"
+            android:text="{faw-android} Chart"
             android:id="@+id/button"
             android:nestedScrollingEnabled="true"
             android:layout_below="@+id/textView2"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal|bottom" />
+
+        <TextView
+            android:text=" {faw-android} Chart"
+            android:textColor="@android:color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:textSize="50sp"
+            android:id="@+id/textView2"
+            android:layout_gravity="center" />
 
     </FrameLayout>
 
