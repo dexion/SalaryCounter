@@ -2,10 +2,14 @@ package com.snake.salarycounter;
 
 import android.app.Application;
 
+import com.activeandroid.ActiveAndroid;
+
 public class CustomApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        ActiveAndroid.initialize(this);
 
         //only required if you add a custom or generic font on your own
         /*Iconics.init(getApplicationContext());

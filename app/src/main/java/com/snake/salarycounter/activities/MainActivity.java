@@ -78,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
         // Create the AccountHeader
         buildHeader(false, savedInstanceState);
 
+        final Context that = this;
+
         //Create the drawer
         result = new DrawerBuilder()
                 .withActivity(this)
@@ -125,14 +127,7 @@ public class MainActivity extends AppCompatActivity {
                                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                                     @Override
                                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                                        new LibsBuilder()
-                                                //provide a style (optional) (LIGHT, DARK, LIGHT_DARK_TOOLBAR)
-                                                .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
-                                                .withAboutIconShown(true)
-                                                .withAboutVersionShown(true)
-                                                .withAboutDescription("{faw-android} This is a small sample which can be set in the about my app description file.<br /><b>You can style this with html markup :D</b>")
-                                                        //start the activity
-                                                .start(getApplicationContext());
+                                        showAbout(that);
                                         return false;
                                     }
                                 })
@@ -208,11 +203,26 @@ public class MainActivity extends AppCompatActivity {
                 intent.setClass(thisContext, SettingsActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.action_about:
+                showAbout(thisContext);
+                break;
             default:
                 return false;
         }
 
         return true;
+    }
+
+    protected void showAbout(Context context)
+    {
+        new LibsBuilder()
+                //provide a style (optional) (LIGHT, DARK, LIGHT_DARK_TOOLBAR)
+                .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
+                .withAboutIconShown(true)
+                .withAboutVersionShown(true)
+                .withAboutDescription("{faw-android} This is a small sample which can be set in the about my app description file.<br /><b>You can style this with html markup :D</b>")
+                        //start the activity
+                .start(context);
     }
 
     @Override

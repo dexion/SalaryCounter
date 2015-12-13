@@ -1,8 +1,7 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="MaterialDrawerTheme.Light.TranslucentStatus">
-        <!-- Customize your theme here. -->
+    <style name="Orange" parent="MaterialDrawerTheme.Light.TranslucentStatus" >
+
     </style>
 
 </resources>
