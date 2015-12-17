@@ -2,8 +2,10 @@ package com.snake.salarycounter.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
@@ -13,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.github.orangegangsters.lollipin.lib.managers.AppLock;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
@@ -39,6 +42,8 @@ import com.snake.salarycounter.drawerItems.OverflowMenuDrawerItem;
 public class MainActivity extends AppCompatActivity {
 
     private static final int PROFILE_SETTING = 1;
+    private static final int REQUEST_CODE_ENABLE = 11;
+    private static final String PASSWORD_PREFERENCE_KEY = "PASSCODE";
 
     //save our header or result
     private AccountHeader headerResult = null;
@@ -57,6 +62,18 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (!mSharedPreferences.contains(PASSWORD_PREFERENCE_KEY)) {
+            Intent intent = new Intent(MainActivity.this, CustomPinActivity.class);
+            intent.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);
+            startActivityForResult(intent, REQUEST_CODE_ENABLE);
+        }
+        else
+        {
+            Intent intent = new Intent(MainActivity.this, CustomPinActivity.class);
+            intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
+            startActivity(intent);
+        }
 
         LayoutInflaterCompat.setFactory(getLayoutInflater(), new IconicsLayoutInflater(getDelegate()));
 
@@ -69,11 +86,28 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Setted title");
 
         // Create a few sample profile
-        profile = new ProfileDrawerItem().withName("Mike Penz").withEmail("mikepenz@gmail.com").withIcon(getResources().getDrawable(R.drawable.profile));
-        profile2 = new ProfileDrawerItem().withName("Max Muster").withEmail("max.mustermann@gmail.com").withIcon(getResources().getDrawable(R.drawable.profile2)).withIdentifier(2);
-        profile3 = new ProfileDrawerItem().withName("Felix House").withEmail("felix.house@gmail.com").withIcon(getResources().getDrawable(R.drawable.profile3));
-        profile4 = new ProfileDrawerItem().withName("Mr. X").withEmail("mister.x.super@gmail.com").withIcon(getResources().getDrawable(R.drawable.profile4)).withIdentifier(4);
-        profile5 = new ProfileDrawerItem().withName("Batman").withEmail("batman@gmail.com").withIcon(getResources().getDrawable(R.drawable.profile5));
+        profile = new ProfileDrawerItem()
+                .withName("Mike Penz")
+                .withEmail("mikepenz@gmail.com")
+                .withIcon(getResources().getDrawable(R.drawable.profile));
+        profile2 = new ProfileDrawerItem()
+                .withName("Max Muster")
+                .withEmail("max.mustermann@gmail.com")
+                .withIcon(getResources().getDrawable(R.drawable.profile2))
+                .withIdentifier(2);
+        profile3 = new ProfileDrawerItem()
+                .withName("Felix House")
+                .withEmail("felix.house@gmail.com")
+                .withIcon(getResources().getDrawable(R.drawable.profile3));
+        profile4 = new ProfileDrawerItem()
+                .withName("Mr. X")
+                .withEmail("mister.x.super@gmail.com")
+                .withIcon(getResources().getDrawable(R.drawable.profile4))
+                .withIdentifier(4);
+        profile5 = new ProfileDrawerItem()
+                .withName("Batman")
+                .withEmail("batman@gmail.com")
+                .withIcon(getResources().getDrawable(R.drawable.profile5));
 
         // Create the AccountHeader
         buildHeader(false, savedInstanceState);
@@ -86,25 +120,70 @@ public class MainActivity extends AppCompatActivity {
                 .withToolbar(toolbar)
                 .withAccountHeader(headerResult) //set the AccountHeader we created earlier for the header
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home),
+                        new PrimaryDrawerItem()
+                                .withName(R.string.drawer_item_home)
+                                .withIcon(FontAwesome.Icon.faw_home)
+                                .withIdentifier(10),
                         //here we use a customPrimaryDrawerItem we defined in our sample app
                         //this custom DrawerItem extends the PrimaryDrawerItem so it just overwrites some methods
-                        new OverflowMenuDrawerItem().withName(R.string.drawer_item_menu_drawer_item).withDescription(R.string.drawer_item_menu_drawer_item_desc).withMenu(R.menu.menu_main).withOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                            @Override
-                            public boolean onMenuItemClick(MenuItem item) {
-                                Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
-                                return false;
-                            }
-                        }).withIcon(GoogleMaterial.Icon.gmd_filter_center_focus),
-                        new CustomPrimaryDrawerItem().withBackgroundRes(R.color.accent).withName(R.string.drawer_item_free_play).withIcon(FontAwesome.Icon.faw_gamepad),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_custom).withDescription("This is a description").withIcon(FontAwesome.Icon.faw_eye),
-                        new CustomUrlPrimaryDrawerItem().withName(R.string.drawer_item_fragment_drawer).withDescription(R.string.drawer_item_fragment_drawer_desc).withIcon("https://avatars3.githubusercontent.com/u/1476232?v=3&s=460"),
-                        new SectionDrawerItem().withName(R.string.drawer_item_section_header),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_settings).withIcon(FontAwesome.Icon.faw_cart_plus),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(FontAwesome.Icon.faw_database).withEnabled(false),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_open_source).withIcon(FontAwesome.Icon.faw_github),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_contact).withSelectedIconColor(Color.RED).withIconTintingEnabled(true).withIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_plus_one).actionBar().paddingDp(5).colorRes(R.color.material_drawer_dark_primary_text)).withTag("Bullhorn"),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(FontAwesome.Icon.faw_question).withEnabled(false)
+                        new OverflowMenuDrawerItem()
+                                .withName(R.string.drawer_item_menu_drawer_item)
+                                .withDescription(R.string.drawer_item_menu_drawer_item_desc)
+                                .withMenu(R.menu.menu_main)
+                                .withOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                    @Override
+                                    public boolean onMenuItemClick(MenuItem item) {
+                                        Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
+                                        return false;
+                                    }
+                                })
+                                .withIcon(GoogleMaterial.Icon.gmd_filter_center_focus)
+                                .withIdentifier(20),
+                        new CustomPrimaryDrawerItem()
+                                .withBackgroundRes(R.color.accent)
+                                .withName(R.string.drawer_item_free_play)
+                                .withIcon(FontAwesome.Icon.faw_gamepad),
+                        new PrimaryDrawerItem()
+                                .withName(R.string.drawer_item_custom)
+                                .withDescription("This is a description")
+                                .withIcon(FontAwesome.Icon.faw_eye)
+                                .withIdentifier(30),
+                        new CustomUrlPrimaryDrawerItem()
+                                .withName(R.string.drawer_item_fragment_drawer)
+                                .withDescription(R.string.drawer_item_fragment_drawer_desc)
+                                .withIcon("https://avatars3.githubusercontent.com/u/1476232?v=3&s=460")
+                                .withIdentifier(40),
+                        new SectionDrawerItem()
+                                .withName(R.string.drawer_item_section_header),
+                        new SecondaryDrawerItem()
+                                .withName(R.string.drawer_item_settings)
+                                .withIcon(FontAwesome.Icon.faw_cart_plus)
+                                .withIdentifier(50),
+                        new SecondaryDrawerItem()
+                                .withName(R.string.drawer_item_help)
+                                .withIcon(FontAwesome.Icon.faw_database)
+                                .withEnabled(false)
+                                .withIdentifier(60),
+                        new SecondaryDrawerItem()
+                                .withName(R.string.drawer_item_open_source)
+                                .withIcon(FontAwesome.Icon.faw_github)
+                                .withIdentifier(70),
+                        new SecondaryDrawerItem()
+                                .withName(R.string.drawer_item_contact)
+                                .withSelectedIconColor(Color.RED)
+                                .withIconTintingEnabled(true)
+                                .withIcon(
+                                        new IconicsDrawable(this, GoogleMaterial.Icon.gmd_plus_one)
+                                                .actionBar()
+                                                .paddingDp(5)
+                                                .colorRes(R.color.material_drawer_dark_primary_text))
+                                .withTag("Bullhorn")
+                                .withIdentifier(80),
+                        new SecondaryDrawerItem()
+                                .withName(R.string.drawer_item_help)
+                                .withIcon(FontAwesome.Icon.faw_question)
+                                .withEnabled(false)
+                                .withIdentifier(90)
                 ) // add the items we want to use with our Drawer
                 .withOnDrawerNavigationListener(new Drawer.OnDrawerNavigationListener() {
                     @Override
@@ -120,19 +199,42 @@ public class MainActivity extends AppCompatActivity {
                         new SecondaryDrawerItem()
                                 .withName(R.string.drawer_item_settings)
                                 .withIcon(FontAwesome.Icon.faw_cog)
-                                .withIdentifier(10),
+                                .withIdentifier(1010),
                         new SecondaryDrawerItem()
                                 .withName("About")
                                 .withIcon(FontAwesome.Icon.faw_question)
-                                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                                    @Override
-                                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                                        showAbout(that);
-                                        return false;
-                                    }
-                                })
+                                .withIdentifier(1020)
                 )
                 .withSavedInstance(savedInstanceState)
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        Intent intent = new Intent();
+
+                        switch(drawerItem.getIdentifier()) {
+                            case 10:
+                                intent.setClass(that, CustomPinActivity.class);
+                                intent.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);
+                                startActivity(intent);
+                                break;
+                            case 20:
+                                intent.setClass(that, LockedScrollingActivity.class);
+                                intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
+                                startActivity(intent);
+                                break;
+                            case 1010:
+                                intent.setClass(that, SettingsActivity.class);
+                                startActivity(intent);
+                                break;
+                            case 1020:
+                                showAbout(that);
+                                break;
+                            default:
+                                return false;
+                        }
+
+                        return true;
+                    }} )
                 .build();
     }
 

@@ -3,6 +3,8 @@ package com.snake.salarycounter;
 import android.app.Application;
 
 import com.activeandroid.ActiveAndroid;
+import com.github.orangegangsters.lollipin.lib.managers.LockManager;
+import com.snake.salarycounter.activities.CustomPinActivity;
 
 public class CustomApplication extends Application {
     @Override
@@ -16,5 +18,9 @@ public class CustomApplication extends Application {
 
         //register custom fonts like this (or also provide a font definition file)
         Iconics.registerFont(new CustomFont());*/
+
+        LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
+        lockManager.enableAppLock(this, CustomPinActivity.class);
+        lockManager.getAppLock().setLogoId(R.drawable.security_lock);
     }
 }
