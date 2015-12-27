@@ -1,0 +1,109 @@
+package com.snake.vahta.counter.zooper;
+
+import android.app.Service;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.os.IBinder;
+import android.preference.PreferenceManager;
+import android.util.Log;
+
+import com.snake.vahta.counter.MyLogic;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class ZooperService extends Service {
+
+    ///
+    public static final String INTENT_ACTION = "org.zooper.zw.action.TASKERVAR";
+    public static final String BUNDLE_STRING_NAME = "org.zooper.zw.tasker.var.extra.STRING_VAR";
+    public static final String BUNDLE_STRING_VALUE = "org.zooper.zw.tasker.var.extra.STRING_TEXT";
+    public static final String BUNDLE_VERSION_CODE = "org.zooper.zw.tasker.var.extra.INT_VERSION_CODE";
+    public static final String BUNDLE_NAME = "org.zooper.zw.tasker.var.extra.BUNDLE";
+    public static final String VARIABLE_NAME = "VCC";
+    private static final String TAG = ZooperService.class.getSimpleName();
+    private MyLogic mMyLogic;
+    private Timer timer;
+    private int refresh_rate = 5;
+    ///
+
+    public ZooperService() {
+        mMyLogic = new MyLogic(false);
+    }
+
+    private void sendUpdate() {
+        Intent in = new Intent(INTENT_ACTION);
+        Bundle b = new Bundle();
+        //String value = NumberFormat.getCurrencyInstance().format(mMyLogic.getCounter());
+        String value = String.format("%1$,.2f", mMyLogic.getCounter());
+        b.putInt(BUNDLE_VERSION_CODE, 1);
+        b.putString(BUNDLE_STRING_NAME, VARIABLE_NAME);
+        b.putString(BUNDLE_STRING_VALUE, value);
+        in.putExtra(BUNDLE_NAME, b);
+        sendBroadcast(in);
+    }
+
+    private boolean ReLoadRefreshInterval() {
+        //TODO: почему-то не подгружается новое значение интервала таймера из настроек...
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        try {
+            //getApplicationContext().getSharedPreferences("widget_refresh_rate", MODE_PRIVATE);
+            int tmp = Integer.valueOf(prefs.getString("widget_refresh_rate", "6"), 10);
+            if (refresh_rate == tmp) {
+                return false;
+            } else {
+                refresh_rate = tmp;
+                return true;
+            }
+        } catch (NumberFormatException nfe) {
+            refresh_rate = 7;
+            return true;
+        }
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        // TODO Auto-generated method stub
+        getApplicationContext();
+        return null;
+    }
+
+    private TimerTask updateTask = new TimerTask() {
+        @Override
+        public void run() {
+            Log.i(TAG, "Timer send data to zooper");
+
+            if (ReLoadRefreshInterval()) {//reload refresh interval for our timer
+                timer.cancel();
+                timer.schedule(updateTask, 0, refresh_rate * 1000L);
+            }
+
+            if (mMyLogic.LoadDataFromSettings(getApplicationContext())) {
+                mMyLogic.RecalcAll();
+                sendUpdate();
+            }
+        }
+    };
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Log.i(TAG, "Service for zooper widget creating");
+
+        ReLoadRefreshInterval();
+
+        timer = new Timer("ZooperServiceTimer");
+        timer.schedule(updateTask, 0, refresh_rate * 1000L);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG, "Service for zooper widget destroying");
+
+        timer.cancel();
+        timer = null;
+    }
+}

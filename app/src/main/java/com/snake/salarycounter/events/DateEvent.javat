@@ -1,0 +1,21 @@
+package com.snake.vahta.counter.events;
+
+//When departure\arrival date changed
+public class DateEvent {
+
+    public static int ARRIVAL = 1;
+    public static int DEPARTURE = 2;
+
+    public int mType;
+    public int mDayOfMonth;
+    public int mMonth;
+    public int mYear;
+
+
+    public DateEvent(int type, int day, int month, int year) {
+        mType = type;
+        mDayOfMonth = day;
+        mMonth = month;
+        mYear = year;
+    }
+}

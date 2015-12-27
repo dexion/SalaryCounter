@@ -1,0 +1,64 @@
+package com.snake.vahta.counter.models;
+
+import android.provider.BaseColumns;
+
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
+import com.snake.vahta.counter.MyLogic;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+//@Table(name = "vahtas", id = BaseColumns._ID)
+@Table(name = "vahtas", id = BaseColumns._ID)
+public class Vahta extends Model
+{
+    @Column(name = "date_start", index = true)
+    public Date date_start;
+
+    @Column(name = "date_end")
+    public Date date_end;
+
+    @Column(name = "summary")
+    public String summary;
+
+    @Column(name = "summaries")
+    public String summaries;
+
+    @Column(name = "dates")
+    public String dates;
+
+    @Column(name = "ser")
+    public String ser;
+
+    public Vahta()
+    {
+        super();
+    }
+
+    public Vahta(MyLogic logic)
+    {
+        super();
+        /*this.date_start = new Date.(logic.arrival_date);
+        this.date_end = logic.departure_date;*/
+    }
+
+    public static ArrayList<Vahta> allVahtas()
+    {
+        List<Vahta> vahtasList = new Select().from(Vahta.class).orderBy("date_start ASC").execute();
+        return new ArrayList<Vahta>(vahtasList);
+    }
+
+    public static Vahta getByPosition(int position)
+    {
+        return new Select().from(Vahta.class).orderBy("date_start ASC").limit(1).offset(position).executeSingle();
+    }
+
+    public static Vahta getById(int _id)
+    {
+        return new Select().from(Vahta.class).where("_id = ?", _id).limit(1).executeSingle();
+    }
+}

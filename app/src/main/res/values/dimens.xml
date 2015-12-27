@@ -8,4 +8,12 @@
     <dimen name="activity_dialog_positive_button_size">6sp</dimen>
     <dimen name="activity_dialog_negative_button_size">6sp</dimen>
     <dimen name="text_margin">16dp</dimen>
+
+    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="list_item_translation_z">2dp</dimen>
+    <dimen name="list_item_height">64dp</dimen>
+    <dimen name="list_item2_height">96dp</dimen>
+    <dimen name="list_group_item_height">96dp</dimen>
+    <dimen name="list_group_item_with_add_remove_buttons_height">108dp</dimen>
 </resources>

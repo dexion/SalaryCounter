@@ -9,6 +9,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Orange">
+
         <meta-data
             android:name="AA_DB_NAME"
             android:value="salary.db" />
@@ -41,6 +42,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.snake.salarycounter.activities.MainActivity" />
         </activity>
+
         <activity
             android:name=".activities.LockedScrollingActivity"
             android:label="@string/title_activity_locked_scrolling"
@@ -50,6 +52,28 @@
                 android:value="com.snake.salarycounter.activities.MainActivity" />
         </activity>
 
+        <activity
+            android:name=".activities.CalendarActivity"
+            android:label="@string/title_activity_calendar"
+            android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.snake.salarycounter.activities.MainActivity" />
+        </activity>
+
+        <activity
+            android:name=".activities.ShiftTypeActivity"
+            android:label="@string/title_activity_shift_type"
+            android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.snake.salarycounter.activities.MainActivity" />
+        </activity>
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="22f2022038253dd2c7f492c264c6a664a72710e8" />
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

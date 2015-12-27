@@ -20,3 +20,4 @@
 -keep class **.R$* {
     <fields>;
 }
+-keep class com.wnafee.vector.** { *; }

@@ -1,0 +1,13 @@
+package com.snake.vahta.counter.events;
+
+public class SaveDBEvent {
+    public boolean mSuccess = false;
+
+    public SaveDBEvent() {
+
+    }
+
+    public SaveDBEvent(boolean success) {
+        mSuccess = success;
+    }
+}

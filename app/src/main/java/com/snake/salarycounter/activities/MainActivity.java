@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
@@ -15,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.github.orangegangsters.lollipin.lib.managers.AppLock;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
@@ -38,6 +40,7 @@ import com.snake.salarycounter.R;
 import com.snake.salarycounter.drawerItems.CustomPrimaryDrawerItem;
 import com.snake.salarycounter.drawerItems.CustomUrlPrimaryDrawerItem;
 import com.snake.salarycounter.drawerItems.OverflowMenuDrawerItem;
+import com.snake.salarycounter.models.ShiftType;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -74,6 +77,9 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
             startActivity(intent);
         }
+
+        // TODO: Move this to where you establish a user session
+        logUser();
 
         LayoutInflaterCompat.setFactory(getLayoutInflater(), new IconicsLayoutInflater(getDelegate()));
 
@@ -123,7 +129,9 @@ public class MainActivity extends AppCompatActivity {
                         new PrimaryDrawerItem()
                                 .withName(R.string.drawer_item_home)
                                 .withIcon(FontAwesome.Icon.faw_home)
-                                .withIdentifier(10),
+                                .withIdentifier(10)
+                                .withBadge("100")
+                                .withDescription("Description"),
                         //here we use a customPrimaryDrawerItem we defined in our sample app
                         //this custom DrawerItem extends the PrimaryDrawerItem so it just overwrites some methods
                         new OverflowMenuDrawerItem()
@@ -222,6 +230,19 @@ public class MainActivity extends AppCompatActivity {
                                 intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
                                 startActivity(intent);
                                 break;
+                            case 30:
+                                new ShiftType("Test", 0xffff0000).save();
+                                Snackbar.make(view, "ShiftType Added", Snackbar.LENGTH_LONG)
+                                        .setAction("Action", null).show();
+                                break;
+                            case 40:
+                                intent.setClass(that, CalendarActivity.class);
+                                startActivity(intent);
+                                break;
+                            case 50:
+                                intent.setClass(that, ShiftTypeActivity.class);
+                                startActivity(intent);
+                                break;
                             case 1010:
                                 intent.setClass(that, SettingsActivity.class);
                                 startActivity(intent);
@@ -230,12 +251,22 @@ public class MainActivity extends AppCompatActivity {
                                 showAbout(that);
                                 break;
                             default:
+                                Snackbar.make(view, "Clicked " + String.valueOf(drawerItem.getIdentifier()), Snackbar.LENGTH_LONG)
+                                        .setAction("Action", null).show();
                                 return false;
                         }
 
                         return true;
                     }} )
                 .build();
+    }
+
+    private void logUser() {
+        // TODO: Use the current user's information
+        // You can call any combination of these three methods
+        Crashlytics.setUserIdentifier("12345");
+        Crashlytics.setUserEmail("user@fabric.io");
+        Crashlytics.setUserName("Test User");
     }
 
     @Override
