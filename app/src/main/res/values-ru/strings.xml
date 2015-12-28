@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Зарплатный счётчик</string>
+    <string name="action_about">О программе</string>
+    <string name="action_settings">Настройки</string>
+    <string name="activity_dialog_accept">Ok</string>
+    <string name="activity_dialog_content">Нажмите \'Ok\' для удаления все[ данных программы, после этого Вы сможете переапустить программу и создать новый PIN-код.\n\n Если вы помните PIN-код, то нажмите \'Отмена\' для возврата к вводу пароля</string>
+    <string name="activity_dialog_decline">Отмена</string>
+    <string name="activity_dialog_title">Забыли PIN-код?</string>
+    <string name="attempts_remaining">Осталось попыток: %d</string>
+    <string name="button2_small_text">АБВГ</string>
+    <string name="button3_small_text">ДЕЁЖЗ</string>
+    <string name="button4_small_text">ИЙКЛ</string>
+    <string name="button5_small_text">МНОП</string>
+    <string name="button6_small_text">РСТУ</string>
+    <string name="button7_small_text">ФХЦЧ</string>
+    <string name="button8_small_text">ШЩЪЫ</string>
+    <string name="button9_small_text">ЬЭЮЯ</string>
+    <string name="drawer_item_settings">Настройки</string>
+    <string name="pin_code_fingerprint_not_recognized">Отпечаток пальца не распознан. Попробуйте снова</string>
+    <string name="pin_code_fingerprint_success">Отпечаток пальца распознан</string>
+    <string name="pin_code_fingerprint_text">Отпечаток пальца</string>
+    <string name="pin_code_forgot_text">Забыли?</string>
+    <string name="pin_code_step_change">Введите текущий %d-символьный PIN-код</string>
+    <string name="pin_code_step_create">Создайте %d-символьный PIN-код</string>
+    <string name="pin_code_step_disable">Отключить %d-символьный PIN-код</string>
+    <string name="pin_code_step_enable_confirm">Подтвердите %d-символьный PIN-код</string>
+    <string name="pin_code_step_unlock">Введите Ваш %d-символьный PIN-код</string>
+    <string name="restart_needed">Перезапустите приложение</string>
+    <string name="title_activity_calendar">Календарь</string>
+    <string name="title_activity_settings">Настройки</string>
+    <string name="title_activity_shift_type">Типы смен</string>
+    <string name="drawer_item_about">О программе</string>
+</resources>

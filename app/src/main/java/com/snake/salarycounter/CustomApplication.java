@@ -20,7 +20,7 @@ public class CustomApplication extends Application {
 
         JodaTimeAndroid.init(this);
         ActiveAndroid.initialize(this);
-        LeakCanary.install(this);
+        //LeakCanary.install(this);
 
 
         //only required if you add a custom or generic font on your own

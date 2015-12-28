@@ -24,7 +24,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0"
+        versionName "0.1"
     }
     buildTypes {
         release {
@@ -85,6 +85,9 @@ dependencies {
 
     compile 'com.roomorama:caldroid:2.3.1'
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
+        transitive = true;
+    }
+    compile('com.appsee:appsee-android:2.1.4@aar') {
         transitive = true;
     }
 }

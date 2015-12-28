@@ -209,10 +209,11 @@ public class MainActivity extends AppCompatActivity {
                                 .withIcon(FontAwesome.Icon.faw_cog)
                                 .withIdentifier(1010),
                         new SecondaryDrawerItem()
-                                .withName("About")
+                                .withName(R.string.drawer_item_about)
                                 .withIcon(FontAwesome.Icon.faw_question)
                                 .withIdentifier(1020)
                 )
+                .withSelectedItem(-1)
                 .withSavedInstance(savedInstanceState)
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override

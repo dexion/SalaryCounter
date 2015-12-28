@@ -1,27 +1,36 @@
 package com.snake.salarycounter.activities;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Toast;
 
 import android.support.design.widget.Snackbar;
 
+import com.activeandroid.ActiveAndroid;
+import com.activeandroid.Cache;
 import com.github.orangegangsters.lollipin.lib.managers.AppLockActivity;
 import com.snake.salarycounter.R;
+import com.snake.salarycounter.models.Category;
+import com.snake.salarycounter.models.Item;
+import com.snake.salarycounter.models.ShiftType;
 
 import uk.me.lewisdeane.ldialogs.BaseDialog;
 import uk.me.lewisdeane.ldialogs.CustomDialog;
 
 public class CustomPinActivity extends AppLockActivity {
 
+    private static final int MAX_ATTEMPTS = 3;
+
     @Override
     public void showForgotDialog() {
-        Resources res = getResources();
+        final Resources res = getResources();
         // Create the builder with required paramaters - Context, Title, Positive Text
         CustomDialog.Builder builder = new CustomDialog.Builder(this,
                 res.getString(R.string.activity_dialog_title),
@@ -52,12 +61,23 @@ public class CustomPinActivity extends AppLockActivity {
         customDialog.setClickListener(new CustomDialog.ClickListener() {
             @Override
             public void onConfirmClick() {
-                Toast.makeText(getApplicationContext(), "Yes", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.restart_needed), Toast.LENGTH_LONG).show();
+                //SharedPreferences.edit().clear().commit();
+
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(CustomPinActivity.this);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.clear();
+                editor.commit();
+
+                ActiveAndroid.execSQL("delete from "+ Cache.getTableInfo(ShiftType.class).getTableName()+";");
+                ActiveAndroid.execSQL("delete from sqlite_sequence where name='"+Cache.getTableInfo(ShiftType.class).getTableName()+"';");
+
+                CustomPinActivity.this.finishAffinity();
             }
 
             @Override
             public void onCancelClick() {
-                Toast.makeText(getApplicationContext(), "Cancel", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Cancel", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -67,8 +87,8 @@ public class CustomPinActivity extends AppLockActivity {
 
     @Override
     public void onPinFailure(int attempts) {
-        Snackbar.make(findViewById(android.R.id.content), String.valueOf(attempts), Snackbar.LENGTH_LONG)
-                .setAction("CLOSE", new View.OnClickListener() {
+        Snackbar.make(findViewById(android.R.id.content), getResources().getString(R.string.attempts_remaining, MAX_ATTEMPTS - attempts), Snackbar.LENGTH_LONG)
+                .setAction(getResources().getString(R.string.action_close), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
@@ -76,7 +96,7 @@ public class CustomPinActivity extends AppLockActivity {
                 })
                 .setActionTextColor(getResources().getColor(android.R.color.holo_red_light))
                 .show();
-        if (attempts > 3) {
+        if (attempts > MAX_ATTEMPTS - 1) {
             this.finishAffinity();
             return;
         }
