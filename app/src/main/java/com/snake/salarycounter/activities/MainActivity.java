@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.appsee.Appsee;
 import com.crashlytics.android.Crashlytics;
 import com.github.orangegangsters.lollipin.lib.managers.AppLock;
 import com.mikepenz.aboutlibraries.Libs;

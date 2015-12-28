@@ -3,11 +3,9 @@ package com.snake.salarycounter;
 import android.app.Application;
 
 import com.activeandroid.ActiveAndroid;
-import com.appsee.Appsee;
 import com.crashlytics.android.Crashlytics;
 import com.github.orangegangsters.lollipin.lib.managers.LockManager;
 import com.snake.salarycounter.activities.CustomPinActivity;
-import com.squareup.leakcanary.LeakCanary;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
