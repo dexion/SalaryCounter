@@ -64,7 +64,7 @@ dependencies {
     compile ('com.github.orangegangsters:lollipin:1.6.0@aar'){
         transitive = true
     }
-    //compile 'com.github.traex.rippleeffect:library:1.3'
+
     compile 'com.github.omadahealth.typefaceview:typefaceview:1.3.0@aar'
     compile 'uk.me.lewisdeane.ldialogs:ldialogs:1.2.0@aar'
 
@@ -72,8 +72,8 @@ dependencies {
     compile 'net.danlew:android.joda:2.9.1'
     compile 'com.google.code.gson:gson:2.5'
 
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3.1'
+    /*debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3.1'*/
 
     compile 'com.github.QuadFlask:colorpicker:0.0.9'
 
@@ -85,11 +85,7 @@ dependencies {
 
     compile 'com.roomorama:caldroid:2.3.1'
 
-
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
-        transitive = true;
-    }
-    compile('com.appsee:appsee-android:2.1.4@aar') {
         transitive = true;
     }
 }

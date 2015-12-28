@@ -66,9 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        Appsee.start(getString(R.string.com_appsee_test_apikey));
-
         SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         if (!mSharedPreferences.contains(PASSWORD_PREFERENCE_KEY)) {
             Intent intent = new Intent(MainActivity.this, CustomPinActivity.class);
