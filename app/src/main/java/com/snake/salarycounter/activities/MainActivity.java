@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.appsee.Appsee;
 import com.crashlytics.android.Crashlytics;
 import com.github.orangegangsters.lollipin.lib.managers.AppLock;
 import com.mikepenz.aboutlibraries.Libs;
@@ -65,6 +66,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Appsee.start(getString(R.string.com_appsee_test_apikey));
+
         SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         if (!mSharedPreferences.contains(PASSWORD_PREFERENCE_KEY)) {
             Intent intent = new Intent(MainActivity.this, CustomPinActivity.class);

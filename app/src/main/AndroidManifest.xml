@@ -73,7 +73,10 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="22f2022038253dd2c7f492c264c6a664a72710e8" />
+        <service android:name="com.appsee.AppseeBackgroundUploader"/>
+
     </application>
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
