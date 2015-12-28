@@ -44,15 +44,6 @@
         </activity>
 
         <activity
-            android:name=".activities.LockedScrollingActivity"
-            android:label="@string/title_activity_locked_scrolling"
-            android:parentActivityName=".activities.MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.snake.salarycounter.activities.MainActivity" />
-        </activity>
-
-        <activity
             android:name=".activities.CalendarActivity"
             android:label="@string/title_activity_calendar"
             android:parentActivityName=".activities.MainActivity">
@@ -73,10 +64,8 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="22f2022038253dd2c7f492c264c6a664a72710e8" />
-        <service android:name="com.appsee.AppseeBackgroundUploader"/>
-
     </application>
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 </manifest>

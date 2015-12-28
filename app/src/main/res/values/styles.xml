@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="Orange" parent="MaterialDrawerTheme.Light.TranslucentStatus" >
+    <style name="Orange" parent="MaterialDrawerTheme.Light.DarkToolbar.TranslucentStatus" >
 
     </style>
 

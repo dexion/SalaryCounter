@@ -20,6 +20,7 @@ import com.crashlytics.android.Crashlytics;
 import com.github.orangegangsters.lollipin.lib.managers.AppLock;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
+import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
@@ -128,13 +129,21 @@ public class MainActivity extends AppCompatActivity {
                 .addDrawerItems(
                         new PrimaryDrawerItem()
                                 .withName(R.string.drawer_item_home)
-                                .withIcon(FontAwesome.Icon.faw_home)
+                                .withIcon(CommunityMaterial.Icon.cmd_home)
                                 .withIdentifier(10)
                                 .withBadge("100")
                                 .withDescription("Description"),
+                        new PrimaryDrawerItem()
+                                .withName(R.string.drawer_item_shift_types)
+                                .withIcon(CommunityMaterial.Icon.cmd_calendar_multiple)
+                                .withIdentifier(20),
+                        new PrimaryDrawerItem()
+                                .withName(R.string.drawer_item_calendar)
+                                .withIcon(CommunityMaterial.Icon.cmd_calendar_clock)
+                                .withIdentifier(40)
                         //here we use a customPrimaryDrawerItem we defined in our sample app
                         //this custom DrawerItem extends the PrimaryDrawerItem so it just overwrites some methods
-                        new OverflowMenuDrawerItem()
+                       /* new OverflowMenuDrawerItem()
                                 .withName(R.string.drawer_item_menu_drawer_item)
                                 .withDescription(R.string.drawer_item_menu_drawer_item_desc)
                                 .withMenu(R.menu.menu_main)
@@ -191,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
                                 .withName(R.string.drawer_item_help)
                                 .withIcon(FontAwesome.Icon.faw_question)
                                 .withEnabled(false)
-                                .withIdentifier(90)
+                                .withIdentifier(90)*/
                 ) // add the items we want to use with our Drawer
                 .withOnDrawerNavigationListener(new Drawer.OnDrawerNavigationListener() {
                     @Override
@@ -206,11 +215,11 @@ public class MainActivity extends AppCompatActivity {
                 .addStickyDrawerItems(
                         new SecondaryDrawerItem()
                                 .withName(R.string.drawer_item_settings)
-                                .withIcon(FontAwesome.Icon.faw_cog)
+                                .withIcon(CommunityMaterial.Icon.cmd_settings)
                                 .withIdentifier(1010),
                         new SecondaryDrawerItem()
                                 .withName(R.string.drawer_item_about)
-                                .withIcon(FontAwesome.Icon.faw_question)
+                                .withIcon(CommunityMaterial.Icon.cmd_help)
                                 .withIdentifier(1020)
                 )
                 .withSelectedItem(-1)
@@ -227,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(intent);
                                 break;
                             case 20:
-                                intent.setClass(that, LockedScrollingActivity.class);
+                                intent.setClass(that, ShiftTypeActivity.class);
                                 intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
                                 startActivity(intent);
                                 break;
@@ -290,7 +299,7 @@ public class MainActivity extends AppCompatActivity {
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.header)
                 .withCompactStyle(compact)
-                .addProfiles(
+                /*.addProfiles(
                         profile,
                         profile2,
                         profile3,
@@ -299,7 +308,7 @@ public class MainActivity extends AppCompatActivity {
                         //don't ask but google uses 14dp for the add account icon in gmail but 20dp for the normal icons (like manage account)
                         new ProfileSettingDrawerItem().withName("Add Account").withDescription("Add new GitHub Account").withIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_plus_one).actionBar().paddingDp(5).colorRes(R.color.material_drawer_dark_primary_text)).withIdentifier(PROFILE_SETTING),
                         new ProfileSettingDrawerItem().withName("Manage Account").withIcon(GoogleMaterial.Icon.gmd_settings)
-                )
+                )*/
                 .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
                     @Override
                     public boolean onProfileChanged(View view, IProfile profile, boolean current) {

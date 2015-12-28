@@ -15,34 +15,49 @@
        limitations under the License.
 -->
 <!-- NOTE: should use FrameLayout or RelativeLayout for parent of the "@id/container" view (for Android 2.3 compatibility) -->
-<FrameLayout
-    style="@style/commonListItemStyle"
+<FrameLayout style="@style/commonListItemStyle"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/list_item_height"
-    android:background="@drawable/bg_swipe_item_neutral">
+    android:background="@drawable/bg_swipe_item_neutral"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true"
-        android:foreground="?attr/selectableItemBackground">
+        android:foreground="?attr/selectableItemBackground"
+        android:elevation="@dimen/design_fab_elevation">
 
-        <View
+        <!--<View
             android:id="@+id/drag_handle"
             android:layout_width="32dp"
             android:layout_height="fill_parent"
             android:layout_gravity="top|left"
-            android:background="@drawable/ic_reorder_grey_800_18dp" />
+            android:background="@drawable/ic_reorder_grey_800_18dp" />-->
+
+        <FrameLayout
+            android:id="@+id/drag_handle"
+            android:layout_width="64dp"
+            android:layout_height="64dp">
+
+            <com.mikepenz.iconics.view.IconicsImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                app:iiv_color="@android:color/secondary_text_light"
+                app:iiv_icon="gmd-reorder" />
+
+        </FrameLayout>
 
         <TextView
             android:id="@+id/list_item_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="top|left"
-            android:layout_marginLeft="32dp"
+            android:layout_marginLeft="64dp"
             android:layout_marginRight="64dp"
             android:gravity="center"
             tools:ignore="RtlHardcoded"/>

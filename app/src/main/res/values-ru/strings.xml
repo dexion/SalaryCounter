@@ -4,7 +4,7 @@
     <string name="action_about">О программе</string>
     <string name="action_settings">Настройки</string>
     <string name="activity_dialog_accept">Ok</string>
-    <string name="activity_dialog_content">Нажмите \'Ok\' для удаления все[ данных программы, после этого Вы сможете переапустить программу и создать новый PIN-код.\n\n Если вы помните PIN-код, то нажмите \'Отмена\' для возврата к вводу пароля</string>
+    <string name="activity_dialog_content">Нажмите \'Ok\' для удаления всех данных программы, после этого Вы сможете переапустить программу и создать новый PIN-код.\n\n Если вы помните PIN-код, то нажмите \'Отмена\' для возврата к вводу пароля</string>
     <string name="activity_dialog_decline">Отмена</string>
     <string name="activity_dialog_title">Забыли PIN-код?</string>
     <string name="attempts_remaining">Осталось попыток: %d</string>
@@ -31,4 +31,7 @@
     <string name="title_activity_settings">Настройки</string>
     <string name="title_activity_shift_type">Типы смен</string>
     <string name="drawer_item_about">О программе</string>
+    <string name="drawer_item_calendar">Календарь</string>
+    <string name="drawer_item_home">Главная</string>
+    <string name="drawer_item_shift_types">Типы смен</string>
 </resources>
