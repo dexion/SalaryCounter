@@ -8,10 +8,10 @@
     <include layout="@layout/toolbar"/>
 
     <FrameLayout
-        android:layout_below="@id/toolbar"
         android:id="@+id/frame_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingTop="?attr/actionBarSize">
 
         <Button
             android:layout_width="wrap_content"
@@ -21,13 +21,13 @@
             android:nestedScrollingEnabled="true"
             android:layout_below="@+id/textView2"
             android:layout_centerHorizontal="true"
-            android:layout_gravity="center_horizontal|bottom" />
+            android:layout_gravity="center_horizontal|top" />
 
         <TextView
             android:text=" {faw-android} Chart"
             android:textColor="@android:color/black"
             android:layout_width="wrap_content"
-            android:layout_height="56dp"
+            android:layout_height="wrap_content"
             android:textSize="50sp"
             android:id="@+id/textView2"
             android:layout_gravity="center" />

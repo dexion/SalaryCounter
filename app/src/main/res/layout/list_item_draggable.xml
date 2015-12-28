@@ -44,6 +44,7 @@
             android:layout_height="64dp">
 
             <com.mikepenz.iconics.view.IconicsImageView
+                android:id="@+id/drag_icon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center"
