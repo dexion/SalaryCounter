@@ -7,6 +7,7 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
+import com.activeandroid.util.SQLiteUtils;
 import com.snake.salarycounter.data.AbstractDataProvider;
 
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public class ShiftType extends AbstractDataProvider.Data // Data extends Model
         super();
         name = Name;
         color = Color;
-        weight = allShiftTypes().size();
+        weight = SQLiteUtils.intQuery("SELECT MAX(weight) FROM shift_types", null) + 1;
     }
 
     /*public ShiftType(long id, int viewType, String text, int swipeReaction)
@@ -112,7 +113,7 @@ public class ShiftType extends AbstractDataProvider.Data // Data extends Model
 
     public static void reorderTop(int fromPosition, int ignorePosition)
     {
-        int weight = 0;
+        int weight = 1;
         List<ShiftType> typesList = new Select()
                 .from(ShiftType.class)
                 .orderBy("weight ASC")
@@ -131,6 +132,27 @@ public class ShiftType extends AbstractDataProvider.Data // Data extends Model
         finally {
             ActiveAndroid.endTransaction();
         }
+    }
+
+    public static int reorderAfterDeletion(int position) {
+        List<ShiftType> typesList = new Select()
+                .from(ShiftType.class)
+                .orderBy("weight ASC")
+                .where("weight >= ?", position).and("weight <> ?", position)
+                .execute();
+
+        ActiveAndroid.beginTransaction();
+        try {
+            for(ShiftType i : typesList){
+                i.weight -= 1;
+                i.save();
+            }
+            ActiveAndroid.setTransactionSuccessful();
+        }
+        finally {
+            ActiveAndroid.endTransaction();
+        }
+        return typesList.size();
     }
 
     @Override

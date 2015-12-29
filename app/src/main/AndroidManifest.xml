@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.snake.salarycounter">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:name=".CustomApplication"
         android:allowBackup="true"
@@ -9,7 +12,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Orange">
-
         <meta-data
             android:name="AA_DB_NAME"
             android:value="salary.db" />
@@ -42,7 +44,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.snake.salarycounter.activities.MainActivity" />
         </activity>
-
         <activity
             android:name=".activities.CalendarActivity"
             android:label="@string/title_activity_calendar"
@@ -51,7 +52,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.snake.salarycounter.activities.MainActivity" />
         </activity>
-
         <activity
             android:name=".activities.ShiftTypeActivity"
             android:label="@string/title_activity_shift_type"
@@ -64,8 +64,15 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="22f2022038253dd2c7f492c264c6a664a72710e8" />
+
+        <activity
+            android:name=".activities.ShowShiftTypeActivity"
+            android:label="@string/title_activity_show_shift_type"
+            android:parentActivityName=".activities.ShiftTypeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.snake.salarycounter.activities.ShiftTypeActivity" />
+        </activity>
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 </manifest>

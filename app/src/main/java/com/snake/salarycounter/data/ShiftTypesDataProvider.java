@@ -46,6 +46,7 @@ public class ShiftTypesDataProvider extends AbstractDataProvider {
 
     @Override
     public int undoLastRemoval() {
+        mData = ShiftType.allShiftTypes();
         if (mLastRemovedData != null) {
             int insertedPosition;
             if (mLastRemovedPosition >= 0 && mLastRemovedPosition < mData.size()) {
@@ -96,8 +97,6 @@ public class ShiftTypesDataProvider extends AbstractDataProvider {
     public void removeItem(int position) {
         //noinspection UnnecessaryLocalVariable
         //final ConcreteData removedItem = mData.remove(position);
-
-
 
         mLastRemovedData = ShiftType.getByPosition(position); // removedItem;
         mLastRemovedData.delete();

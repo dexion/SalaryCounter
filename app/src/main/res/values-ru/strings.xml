@@ -34,4 +34,7 @@
     <string name="drawer_item_calendar">Календарь</string>
     <string name="drawer_item_home">Главная</string>
     <string name="drawer_item_shift_types">Типы смен</string>
+    <string name="action_close">Закрыть</string>
+    <string name="action_edit">Редактировать</string>
+    <string name="action_delete">Удалить</string>
 </resources>

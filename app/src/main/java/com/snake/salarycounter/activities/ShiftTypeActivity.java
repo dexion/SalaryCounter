@@ -1,21 +1,17 @@
 package com.snake.salarycounter.activities;
 
-import android.content.Context;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
-import com.flask.colorpicker.ColorPickerView;
-import com.flask.colorpicker.OnColorSelectedListener;
-import com.flask.colorpicker.builder.ColorPickerClickListener;
-import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 import com.snake.salarycounter.R;
 import com.snake.salarycounter.data.AbstractDataProvider;
 import com.snake.salarycounter.fragments.RecyclerListViewFragment;
@@ -87,6 +83,68 @@ public class ShiftTypeActivity extends AppCompatActivity {
                         .show();*/
             }
         });
+    }
+
+    /**
+     * This method will be called when a list item is removed
+     *
+     * @param position The position of the item within data set
+     */
+    public void onItemRemoved(int position) {
+
+
+        Snackbar snackbar = Snackbar.make(
+                findViewById(R.id.container),
+                R.string.snack_bar_text_item_removed,
+                Snackbar.LENGTH_LONG);
+
+        snackbar.setAction(R.string.action_close, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //onItemUndoActionClicked();
+            }
+        });
+        snackbar.setActionTextColor(ContextCompat.getColor(this, R.color.snackbar_action_color_done));
+        snackbar.show();
+    }
+
+    /**
+     * This method will be called when a list item is pinned
+     *
+     * @param position The position of the item within data set
+     */
+    public void onItemPinned(int position) {
+
+    }
+
+    /**
+     * This method will be called when a list item is clicked
+     *
+     * @param position The position of the item within data set
+     */
+    public void onItemClicked(int position) {
+        /*final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_LIST_VIEW);
+        AbstractDataProvider.Data data = getDataProvider().getItem(position);
+
+        if (data.isPinned()) {
+            // unpin if tapped the pinned item
+            data.setPinned(false);
+            ((RecyclerListViewFragment) fragment).notifyItemChanged(position);
+        }*/
+
+        Toast.makeText(this, "Clicked: " + String.valueOf(position), Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent();
+        intent.setClass(this, ShowShiftTypeActivity.class);
+        startActivity(intent);
+    }
+
+    private void onItemUndoActionClicked() {
+        int position = getDataProvider().undoLastRemoval();
+        if (position >= 0) {
+            final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_LIST_VIEW);
+            ((RecyclerListViewFragment) fragment).notifyItemInserted(position);
+        }
     }
 
     public AbstractDataProvider getDataProvider() {
