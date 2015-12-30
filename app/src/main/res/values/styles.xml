@@ -1,9 +1,5 @@
 <resources>
 
-    <style name="Orange" parent="MaterialDrawerTheme.Light.DarkToolbar.TranslucentStatus" >
-
-    </style>
-
     <style name="AppTheme"  parent="MaterialDrawerTheme.Light.DarkToolbar.TranslucentStatus">
         <!-- Customize your theme here.  -->
         <item name="colorPrimary">@color/colorPrimary</item>
