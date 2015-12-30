@@ -52,7 +52,7 @@ public class ShiftType extends AbstractDataProvider.Data // Data extends Model
         super();
         name = Name;
         color = Color;
-        weight = SQLiteUtils.intQuery("SELECT MAX(weight) FROM shift_types", null) + 1;
+        weight = ShiftType.allShiftTypes().size() == 0 ? 0 : SQLiteUtils.intQuery("SELECT MAX(weight) FROM shift_types", null) + 1;
     }
 
     /*public ShiftType(long id, int viewType, String text, int swipeReaction)
@@ -113,7 +113,7 @@ public class ShiftType extends AbstractDataProvider.Data // Data extends Model
 
     public static void reorderTop(int fromPosition, int ignorePosition)
     {
-        int weight = 1;
+        int weight = 0;
         List<ShiftType> typesList = new Select()
                 .from(ShiftType.class)
                 .orderBy("weight ASC")
