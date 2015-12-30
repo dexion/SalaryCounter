@@ -12,6 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
+import com.mikepenz.materialize.Materialize;
+import com.mikepenz.materialize.MaterializeBuilder;
 import com.snake.salarycounter.R;
 import com.snake.salarycounter.data.AbstractDataProvider;
 import com.snake.salarycounter.fragments.RecyclerListViewFragment;
@@ -44,6 +46,12 @@ public class ShiftTypeActivity extends AppCompatActivity {
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////
+
+        new MaterializeBuilder()
+                .withActivity(this)
+                .withTranslucentStatusBar(true)
+                .withTranslucentStatusBarProgrammatically(true)
+                .build();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

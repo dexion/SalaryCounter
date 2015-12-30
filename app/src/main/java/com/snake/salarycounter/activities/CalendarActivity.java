@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialize.MaterializeBuilder;
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
 import com.snake.salarycounter.R;
@@ -59,9 +60,11 @@ public class CalendarActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        /*new DrawerBuilder()
+        new MaterializeBuilder()
                 .withActivity(this)
-                .build();*/
+                .withTranslucentStatusBar(true)
+                .withTranslucentStatusBarProgrammatically(true)
+                .build();
 
         final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
 

@@ -5,6 +5,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.mikepenz.materialize.MaterializeBuilder;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.ViewPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.ViewPagerItems;
@@ -20,6 +21,12 @@ public class ShowShiftTypeActivity extends AppCompatActivity{
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        new MaterializeBuilder()
+                .withActivity(this)
+                .withTranslucentStatusBar(true)
+                .withTranslucentStatusBarProgrammatically(true)
+                .build();
 
         ViewPagerItemAdapter adapter = new ViewPagerItemAdapter(ViewPagerItems.with(this)
                 .add("Title A", R.layout.activity_locked_scrolling)
