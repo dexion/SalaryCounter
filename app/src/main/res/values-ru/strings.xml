@@ -37,4 +37,16 @@
     <string name="action_close">Закрыть</string>
     <string name="action_edit">Редактировать</string>
     <string name="action_delete">Удалить</string>
+    <string name="snack_bar_action_undo">Отменить</string>
+    <string name="snack_bar_text_item_removed">Запись удалена</string>
+    <string name="title_activity_show_shift_type">Тип смены</string>
+    <string name="action_cancel">Отмена</string>
+    <string name="action_ok"></string>
+    <string name="cannot_blank">Поле не может быть пустым</string>
+    <string name="change_shift_type_color">Изменить цвет</string>
+    <string name="choose_color">Выбрать цвет</string>
+    <string name="dialog_message_item_pinned">Элемент %d зафксирован</string>
+    <string name="incorrect_value">Некорректное значение</string>
+    <string name="shift_type_name">Название</string>
+    <string name="shift_type_name_hint">Укажите название типа смены</string>
 </resources>

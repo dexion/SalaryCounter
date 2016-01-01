@@ -172,7 +172,8 @@ public class ShiftType extends AbstractDataProvider.Data // Data extends Model
 
     @Override
     public String getText() {
-        return name + "| id: " + getId().toString() + "| weight: " + String.valueOf(weight);
+        //return name + "| id: " + getId().toString() + "| weight: " + String.valueOf(weight);
+        return name;
     }
 
     @Override

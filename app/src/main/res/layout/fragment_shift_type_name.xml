@@ -1,0 +1,33 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.ShowShiftType.ShiftTypeNameFragment">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:padding="@dimen/fab_margin">
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/shift_type_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/shift_type_name_hint"
+            app:met_floatingLabel="normal"
+            app:met_floatingLabelText="@string/shift_type_name"
+            android:singleLine="true" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/change_shift_type_color"
+            android:id="@+id/change_shift_type_color"
+            android:layout_gravity="center_horizontal|top" />
+
+    </LinearLayout>
+
+</FrameLayout>

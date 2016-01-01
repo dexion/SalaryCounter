@@ -10,9 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Toast;
 
-import com.mikepenz.materialize.Materialize;
 import com.mikepenz.materialize.MaterializeBuilder;
 import com.snake.salarycounter.R;
 import com.snake.salarycounter.data.AbstractDataProvider;
@@ -22,6 +20,7 @@ import com.snake.salarycounter.models.ShiftType;
 
 public class ShiftTypeActivity extends AppCompatActivity {
 
+    public static final int NEW_SHIFT_TYPE = -10;
     private int currentBackgroundColor = 0xffffffff;
 
     private static final String FRAGMENT_TAG_DATA_PROVIDER = "data provider";
@@ -57,40 +56,24 @@ public class ShiftTypeActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
                 new ShiftType("Test", 0xffff0000).save();
-                getDataAdapter().notifyDataSetChanged();
+                getDataAdapter().notifyDataSetChanged();*/
 
-                /*final Context context = ShiftTypeActivity.this;
-                ColorPickerDialogBuilder
-                        .with(context)
-                        .setTitle("Choose color")
-                        .initialColor(currentBackgroundColor)
-                        .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
-                        .density(12)
-                        .setOnColorSelectedListener(new OnColorSelectedListener() {
-                            @Override
-                            public void onColorSelected(int selectedColor) {
-                                Toast.makeText(context, "onColorSelected: 0x" + Integer.toHexString(selectedColor), Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        .setPositiveButton("ok", new ColorPickerClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int selectedColor, Integer[] allColors) {
-                                //changeBackgroundColor(selectedColor);
-                            }
-                        })
-                        .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        })
-                        .build()
-                        .show();*/
+                Intent intent = new Intent();
+                intent.setClass(ShiftTypeActivity.this, ShowShiftTypeActivity.class);
+                intent.putExtra("shift_type_position", NEW_SHIFT_TYPE);
+                startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getDataAdapter().notifyDataSetChanged();
     }
 
     /**
@@ -99,8 +82,6 @@ public class ShiftTypeActivity extends AppCompatActivity {
      * @param position The position of the item within data set
      */
     public void onItemRemoved(int position) {
-
-
         Snackbar snackbar = Snackbar.make(
                 findViewById(R.id.container),
                 R.string.snack_bar_text_item_removed,
@@ -140,10 +121,11 @@ public class ShiftTypeActivity extends AppCompatActivity {
             ((RecyclerListViewFragment) fragment).notifyItemChanged(position);
         }*/
 
-        Toast.makeText(this, "Clicked: " + String.valueOf(position), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Clicked: " + String.valueOf(position), Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent();
         intent.setClass(this, ShowShiftTypeActivity.class);
+        intent.putExtra("shift_type_position", position);
         startActivity(intent);
     }
 
@@ -164,5 +146,4 @@ public class ShiftTypeActivity extends AppCompatActivity {
         final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_LIST_VIEW);
         return ((RecyclerListViewFragment) fragment).getDataAdapter();
     }
-
 }
