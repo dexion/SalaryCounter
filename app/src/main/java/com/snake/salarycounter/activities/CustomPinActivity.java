@@ -15,7 +15,9 @@ import android.support.design.widget.Snackbar;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Cache;
+import com.activeandroid.util.ReflectionUtils;
 import com.github.orangegangsters.lollipin.lib.managers.AppLockActivity;
+import com.snake.salarycounter.CustomApplication;
 import com.snake.salarycounter.R;
 import com.snake.salarycounter.models.Category;
 import com.snake.salarycounter.models.Item;
@@ -69,9 +71,9 @@ public class CustomPinActivity extends AppLockActivity {
                 editor.clear();
                 editor.commit();
 
-                ActiveAndroid.execSQL("delete from "+ Cache.getTableInfo(ShiftType.class).getTableName()+";");
-                ActiveAndroid.execSQL("delete from sqlite_sequence where name='"+Cache.getTableInfo(ShiftType.class).getTableName()+"';");
-
+                //ActiveAndroid.execSQL("delete from "+ Cache.getTableInfo(ShiftType.class).getTableName()+";");
+                //ActiveAndroid.execSQL("delete from sqlite_sequence where name='"+Cache.getTableInfo(ShiftType.class).getTableName()+"';");
+                deleteDb();
                 CustomPinActivity.this.finishAffinity();
             }
 
@@ -110,5 +112,18 @@ public class CustomPinActivity extends AppLockActivity {
     @Override
     public int getPinLength() {
         return super.getPinLength();//you can override this method to change the pin length from the default 4
+    }
+
+    public void deleteDb() {
+        ActiveAndroid.dispose();
+
+        String aaName = ReflectionUtils.getMetaData(getApplicationContext(), "AA_DB_NAME");
+
+        if (aaName == null) {
+            aaName = "Application.db";
+        }
+
+        deleteDatabase(aaName);
+        //ActiveAndroid.initialize(this);
     }
 }

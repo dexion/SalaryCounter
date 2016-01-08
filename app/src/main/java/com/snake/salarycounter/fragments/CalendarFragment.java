@@ -147,7 +147,7 @@ public class CalendarFragment extends Fragment{
                 shapeDrawable.setShape(new RectShape());
                 shapeDrawable.getPaint().setColor(d.shiftType.color);
 
-                caldroidFragment.setBackgroundResourceForDate(shapeDrawable,
+                caldroidFragment.setBackgroundResourceForDate(R.color.green,
                         mDate);
                 caldroidFragment.refreshView();
             }
@@ -165,6 +165,7 @@ public class CalendarFragment extends Fragment{
                         "Long click " + formatter.format(date),
                         Toast.LENGTH_SHORT).show();
                 caldroidFragment.clearBackgroundResourceForDate(date);
+                caldroidFragment.refreshView();
             }
 
             @Override

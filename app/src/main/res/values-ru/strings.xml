@@ -49,4 +49,6 @@
     <string name="incorrect_value">Некорректное значение</string>
     <string name="shift_type_name">Название</string>
     <string name="shift_type_name_hint">Укажите название типа смены</string>
+    <string name="shift_type_main_settings">Основные свойства</string>
+    <string name="must_create_one_shift_type">Вы должны создать как минимум один тип смены</string>
 </resources>

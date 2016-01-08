@@ -3,6 +3,7 @@ package com.snake.salarycounter;
 import android.app.Application;
 
 import com.activeandroid.ActiveAndroid;
+import com.activeandroid.util.ReflectionUtils;
 import com.crashlytics.android.Crashlytics;
 import com.github.orangegangsters.lollipin.lib.managers.LockManager;
 import com.snake.salarycounter.activities.CustomPinActivity;
@@ -31,5 +32,6 @@ public class CustomApplication extends Application {
         LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
         lockManager.enableAppLock(this, CustomPinActivity.class);
         lockManager.getAppLock().setLogoId(R.drawable.security_lock);
+        lockManager.getAppLock().setTimeout(20 * 1000);
     }
 }

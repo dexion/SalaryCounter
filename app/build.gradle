@@ -49,7 +49,7 @@ dependencies {
     compile('com.mikepenz:aboutlibraries:5.3.6@aar') {
         transitive = true
     }
-    compile('com.github.orangegangsters:lollipin:1.6.0@aar') {
+    compile('com.github.dexion:lollipin:1.6.1@aar') {
         transitive = true
     }
     compile('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.8.5@aar') {
