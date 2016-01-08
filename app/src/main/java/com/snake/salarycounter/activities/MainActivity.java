@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.crashlytics.android.Crashlytics;
+import com.github.orangegangsters.lollipin.lib.PinActivity;
 import com.github.orangegangsters.lollipin.lib.managers.AppLock;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
@@ -32,7 +33,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.snake.salarycounter.R;
 import com.snake.salarycounter.models.ShiftType;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends PinActivity {
 
     private static final int PROFILE_SETTING = 1;
     private static final int REQUEST_CODE_ENABLE = 11;
@@ -61,12 +62,12 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);
             startActivityForResult(intent, REQUEST_CODE_ENABLE);
         }
-        else
+        /*else
         {
             Intent intent = new Intent(MainActivity.this, CustomPinActivity.class);
             intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
             startActivity(intent);
-        }
+        }*/
 
         // TODO: Move this to where you establish a user session
         logUser();
