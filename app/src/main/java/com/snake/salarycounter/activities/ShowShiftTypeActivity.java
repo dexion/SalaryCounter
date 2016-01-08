@@ -48,7 +48,7 @@ public class ShowShiftTypeActivity extends AppCompatActivity{
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
                 getSupportFragmentManager(), FragmentPagerItems.with(this)
                 //.add(R.string.title, PageFragment.class)
-                .add("Title", ShiftTypeNameFragment.class, new Bundler().putInt("_position", _position).get())
+                .add(R.string.shift_type_main_settings, ShiftTypeNameFragment.class, new Bundler().putInt("_position", _position).get())
                 //.add("title", PageFragment.class)
                 .create()
         );

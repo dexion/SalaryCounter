@@ -260,4 +260,6 @@
     <string name="action_ok" translatable="false">Ok</string>
     <string name="cannot_blank">Field can\'t be blank</string>
     <string name="incorrect_value">Incorrect value</string>
+    <string name="shift_type_main_settings">Main settings</string>
+    <string name="must_create_one_shift_type">You must create at least one shift type</string>
 </resources>
