@@ -262,4 +262,6 @@
     <string name="incorrect_value">Incorrect value</string>
     <string name="shift_type_main_settings">Main settings</string>
     <string name="must_create_one_shift_type">You must create at least one shift type</string>
+    <string name="dialog_delete" />
+    <string name="realy_clear">Do you realy want to clear shift type for this date?</string>
 </resources>

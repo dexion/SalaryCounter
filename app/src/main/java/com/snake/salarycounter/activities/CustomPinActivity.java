@@ -1,27 +1,19 @@
 package com.snake.salarycounter.activities;
 
-import android.app.Application;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.Toast;
 
-import android.support.design.widget.Snackbar;
-
 import com.activeandroid.ActiveAndroid;
-import com.activeandroid.Cache;
 import com.activeandroid.util.ReflectionUtils;
 import com.github.orangegangsters.lollipin.lib.managers.AppLockActivity;
-import com.snake.salarycounter.CustomApplication;
 import com.snake.salarycounter.R;
-import com.snake.salarycounter.models.Category;
-import com.snake.salarycounter.models.Item;
-import com.snake.salarycounter.models.ShiftType;
 
 import uk.me.lewisdeane.ldialogs.BaseDialog;
 import uk.me.lewisdeane.ldialogs.CustomDialog;
