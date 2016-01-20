@@ -51,4 +51,5 @@
     <string name="shift_type_name_hint">Укажите название типа смены</string>
     <string name="shift_type_main_settings">Основные свойства</string>
     <string name="must_create_one_shift_type">Вы должны создать как минимум один тип смены</string>
+    <string name="realy_clear">Вы действительно хотите очистить смену в этот день?</string>
 </resources>

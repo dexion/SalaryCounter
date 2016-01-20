@@ -44,13 +44,16 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     compile('com.mikepenz:materialdrawer:4.6.3@aar') {
-        transitive = true
+        transitive = true;
     }
     compile('com.mikepenz:aboutlibraries:5.3.6@aar') {
-        transitive = true
+        transitive = true;
     }
     compile('com.github.dexion:lollipin:1.6.1@aar') {
-        transitive = true
+        transitive = true;
+    }
+    compile('com.github.dexion:caldroid:2.3.1.1@aar') {
+        transitive = true;
     }
     compile('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.8.5@aar') {
         transitive = true
@@ -72,7 +75,6 @@ dependencies {
     compile 'net.danlew:android.joda:2.9.1'
     compile 'com.google.code.gson:gson:2.5'
     compile 'com.github.QuadFlask:colorpicker:0.0.9'
-    compile 'com.roomorama:caldroid:2.3.1'
     compile 'com.amazonaws:aws-android-sdk-cognito:2.2.6.1'
     compile 'com.ogaclejapan.smarttablayout:library:1.6.0@aar'
     compile 'com.ogaclejapan.smarttablayout:utils-v4:1.6.0@aar'
