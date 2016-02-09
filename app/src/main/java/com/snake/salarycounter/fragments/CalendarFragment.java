@@ -1,19 +1,16 @@
 package com.snake.salarycounter.fragments;
 
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
@@ -22,7 +19,6 @@ import com.snake.salarycounter.models.Day;
 import com.snake.salarycounter.models.ShiftType;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -175,12 +171,13 @@ public class CalendarFragment extends Fragment {
                     public void onConfirmClick() {
                         //Toast.makeText(getApplicationContext(), getResources().getString(R.string.restart_needed), Toast.LENGTH_LONG).show();
                         Day d = Day.getByDate(mDate);
-                        d.delete();
-
-                        caldroidFragment.setBackgroundResourceForDate(0, mDate);
-                        caldroidFragment.refreshView();
-                        caldroidFragment.clearBackgroundResourceForDate(mDate);
-                        caldroidFragment.refreshView();
+                        if(null != d) {
+                            d.delete();
+                            caldroidFragment.setBackgroundResourceForDate(0, mDate);
+                            caldroidFragment.refreshView();
+                            caldroidFragment.clearBackgroundResourceForDate(mDate);
+                            caldroidFragment.refreshView();
+                        }
                     }
 
                     @Override

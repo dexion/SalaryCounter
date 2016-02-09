@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--Даты-->
+    <PreferenceScreen
+        android:summary="@string/pref_screen_date_sum"
+        android:title="@string/pref_screen_date">
+        <com.snake.vahta.counter.preferences.DatePreference
+            android:defaultValue="01.01.2014"
+            android:dialogTitle="@string/pref_arrival_date_dialog"
+            android:key="arrival_date"
+            android:title="@string/pref_arrival_date" />
+
+        <com.snake.vahta.counter.preferences.DatePreference
+            android:defaultValue="02.02.2014"
+            android:dialogTitle="@string/pref_departure_date_dialog"
+            android:key="departure_date"
+            android:title="@string/pref_departure_date" />
+    </PreferenceScreen>
+    <!--Финансы-->
+    <PreferenceScreen android:title="@string/pref_screen_finance">
+        <EditTextPreference
+            android:defaultValue="10000"
+            android:dialogTitle="@string/pref_salary_dialog"
+            android:key="salary"
+            android:numeric="decimal"
+            android:summary="@string/pref_salary_sum"
+            android:title="@string/pref_salary" />
+        <EditTextPreference
+            android:defaultValue="50"
+            android:dialogTitle="@string/pref_north_dialog"
+            android:key="north"
+            android:numeric="integer"
+            android:summary="@string/pref_north_sum"
+            android:title="@string/pref_north" />
+        <EditTextPreference
+            android:defaultValue="70"
+            android:dialogTitle="@string/pref_district_dialog"
+            android:key="district"
+            android:numeric="integer"
+            android:summary="@string/pref_district_sum"
+            android:title="@string/pref_district" />
+        <EditTextPreference
+            android:defaultValue="25"
+            android:dialogTitle="@string/pref_bonus_dialog"
+            android:key="bonus"
+            android:numeric="integer"
+            android:summary="@string/pref_bonus_sum"
+            android:title="@string/pref_bonus" />
+        <EditTextPreference
+            android:defaultValue="0"
+            android:dialogTitle="@string/pref_alimony_dialog"
+            android:key="alimony"
+            android:numeric="integer"
+            android:summary="@string/pref_alimony_sum"
+            android:title="@string/pref_alimony" />
+        <EditTextPreference
+            android:defaultValue="0"
+            android:dialogTitle="@string/pref_residue_proc_dialog"
+            android:key="residue_proc"
+            android:numeric="integer"
+            android:summary="@string/pref_residue_proc_sum"
+            android:title="@string/pref_residue_proc" />
+        <EditTextPreference
+            android:defaultValue="0"
+            android:dialogTitle="@string/pref_residue_dialog"
+            android:key="residue"
+            android:numeric="integer"
+            android:summary="@string/pref_residue_sum"
+            android:title="@string/pref_residue" />
+
+        <EditTextPreference
+            android:defaultValue="0"
+            android:dialogTitle="@string/other_bonus_proc_dialog"
+            android:key="other_bonus_proc"
+            android:numeric="integer"
+            android:summary="@string/other_bonus_proc_sum"
+            android:title="@string/other_bonus_proc" />
+        <EditTextPreference
+            android:defaultValue="0"
+            android:dialogTitle="@string/other_bonus_dialog"
+            android:key="other_bonus"
+            android:numeric="decimal"
+            android:summary="@string/other_bonus_sum"
+            android:title="@string/other_bonus" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="enable_tax"
+            android:summary="@string/pref_enable_tax_sum"
+            android:title="@string/pref_enable_tax" />
+    </PreferenceScreen>
+    <!--Дорога-->
+    <PreferenceScreen
+        android:summary="@string/pref_screen_way_sum"
+        android:title="@string/pref_screen_way">
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="enable_way"
+            android:title="@string/pref_enable_way" />
+        <EditTextPreference
+            android:defaultValue="1"
+            android:dependency="enable_way"
+            android:dialogTitle="@string/pref_way_days_dialog"
+            android:key="way_days"
+            android:numeric="integer"
+            android:summary="@string/pref_way_days_sum"
+            android:title="@string/pref_way_days" />
+        <EditTextPreference
+            android:defaultValue="8"
+            android:dependency="enable_way"
+            android:dialogTitle="@string/pref_way_day_hours_dialog"
+            android:key="way_day_hours"
+            android:numeric="integer"
+            android:summary="@string/pref_way_day_hours_sum"
+            android:title="@string/pref_way_day_hours" />
+    </PreferenceScreen>
+    <!--Условия труда-->
+    <PreferenceScreen
+        android:summary="@string/pref_screen_working_conditions_sum"
+        android:title="@string/pref_screen_working_conditions">
+
+        <MultiSelectListPreference
+            android:defaultValue="@array/days_numbers"
+            android:dialogTitle="@string/pref_work_week"
+            android:entries="@array/days_names"
+            android:entryValues="@array/days_numbers"
+            android:key="work_week_days"
+            android:summary="@string/pref_work_week_sum"
+            android:title="@string/pref_work_week" />
+
+        <!-- 
+        <CheckBoxPreference
+                android:key="work_week"
+                android:title="@string/pref_work_week"
+                android:summary="@string/pref_work_week_sum"
+                android:defaultValue="true"/>
+                 -->
+        <!--Рабочий день-->
+        <PreferenceCategory android:title="@string/pref_cat_work_day">
+            <com.snake.vahta.counter.preferences.TimePreference
+                android:defaultValue="08:00"
+                android:dialogTitle="@string/pref_work_day_start_dialog"
+                android:key="work_day_start"
+                android:numeric="integer"
+                android:summary="@string/pref_work_day_start_sum"
+                android:title="@string/pref_work_day_start" />
+            <com.snake.vahta.counter.preferences.TimePreference
+                android:defaultValue="20:00"
+                android:dialogTitle="@string/pref_work_day_end_dialog"
+                android:key="work_day_end"
+                android:numeric="integer"
+                android:summary="@string/pref_work_day_end_sum"
+                android:title="@string/pref_work_day_end" />
+        </PreferenceCategory>
+        <!--Обед-->
+        <PreferenceCategory android:title="@string/pref_cat_dinner">
+            <com.snake.vahta.counter.preferences.TimePreference
+                android:defaultValue="13:00"
+                android:dialogTitle="@string/pref_dinner_start_dialog"
+                android:key="dinner_start"
+                android:numeric="integer"
+                android:summary="@string/pref_dinner_start_sum"
+                android:title="@string/pref_dinner_start" />
+            <com.snake.vahta.counter.preferences.TimePreference
+                android:defaultValue="14:00"
+                android:dialogTitle="@string/pref_dinner_end_dialog"
+                android:key="dinner_end"
+                android:numeric="integer"
+                android:summary="@string/pref_dinner_end_sum"
+                android:title="@string/pref_dinner_end" />
+        </PreferenceCategory>
+        <!--Праздники-->
+        <PreferenceCategory android:title="@string/pref_cat_holidays">
+            <EditTextPreference
+                android:defaultValue="2"
+                android:dialogTitle="@string/pref_hol_mult_dialog"
+                android:key="hol_mult"
+                android:summary="@string/pref_hol_mult_sum"
+                android:title="@string/pref_hol_mult" />
+            <EditTextPreference
+                android:defaultValue="0"
+                android:dialogTitle="@string/pref_hol_add_dialog"
+                android:key="hol_add"
+                android:summary="@string/pref_hol_add_sum"
+                android:title="@string/pref_hol_add" />
+        </PreferenceCategory>
+        <!--Ночные-->
+        <PreferenceCategory android:title="@string/pref_cat_nights">
+            <EditTextPreference
+                android:defaultValue="0"
+                android:key="nights_col"
+                android:title="@string/pref_nights_col" />
+            <EditTextPreference
+                android:defaultValue="40"
+                android:key="nights"
+                android:summary="@string/pref_nights_sum"
+                android:title="@string/pref_nights" />
+        </PreferenceCategory>
+        <EditTextPreference
+            android:defaultValue="100"
+            android:dialogTitle="@string/pref_everyday_pay_dialog"
+            android:key="everyday_pay"
+            android:numeric="integer"
+            android:summary="@string/pref_everyday_pay_sum"
+            android:title="@string/pref_everyday_pay" />
+    </PreferenceScreen>
+    <!--Табель-->
+    <PreferenceScreen
+        android:summary="@string/pref_screen_tabel_sum"
+        android:title="@string/pref_screen_tabel">
+        <EditTextPreference
+            android:defaultValue="136"
+            android:dialogTitle="@string/pref_jan_dialog"
+            android:key="jan"
+            android:numeric="decimal"
+            android:summary="@string/pref_jan_sum"
+            android:title="@string/pref_jan" />
+        <EditTextPreference
+            android:defaultValue="159"
+            android:dialogTitle="@string/pref_feb_dialog"
+            android:key="feb"
+            android:numeric="decimal"
+            android:summary="@string/pref_feb_sum"
+            android:title="@string/pref_feb" />
+        <EditTextPreference
+            android:defaultValue="159"
+            android:dialogTitle="@string/pref_mar_dialog"
+            android:key="mar"
+            android:numeric="decimal"
+            android:summary="@string/pref_mar_sum"
+            android:title="@string/pref_mar" />
+        <EditTextPreference
+            android:defaultValue="175"
+            android:dialogTitle="@string/pref_apr_dialog"
+            android:key="apr"
+            android:numeric="decimal"
+            android:summary="@string/pref_apr_sum"
+            android:title="@string/pref_apr" />
+        <EditTextPreference
+            android:defaultValue="143"
+            android:dialogTitle="@string/pref_may_dialog"
+            android:key="may"
+            android:numeric="decimal"
+            android:summary="@string/pref_may_sum"
+            android:title="@string/pref_may" />
+        <EditTextPreference
+            android:defaultValue="151"
+            android:dialogTitle="@string/pref_jun_dialog"
+            android:key="jun"
+            android:numeric="decimal"
+            android:summary="@string/pref_jun_sum"
+            android:title="@string/pref_jun" />
+        <EditTextPreference
+            android:defaultValue="184"
+            android:dialogTitle="@string/pref_jul_dialog"
+            android:key="jul"
+            android:numeric="decimal"
+            android:summary="@string/pref_jul_sum"
+            android:title="@string/pref_jul" />
+        <EditTextPreference
+            android:defaultValue="176"
+            android:dialogTitle="@string/pref_aug_dialog"
+            android:key="aug"
+            android:numeric="decimal"
+            android:summary="@string/pref_aug_sum"
+            android:title="@string/pref_aug" />
+        <EditTextPreference
+            android:defaultValue="168"
+            android:dialogTitle="@string/pref_sep_dialog"
+            android:key="sep"
+            android:numeric="decimal"
+            android:summary="@string/pref_sep_sum"
+            android:title="@string/pref_sep" />
+        <EditTextPreference
+            android:defaultValue="184"
+            android:dialogTitle="@string/pref_oct_dialog"
+            android:key="oct"
+            android:numeric="decimal"
+            android:summary="@string/pref_oct_sum"
+            android:title="@string/pref_oct" />
+        <EditTextPreference
+            android:defaultValue="160"
+            android:dialogTitle="@string/pref_nov_dialog"
+            android:key="nov"
+            android:numeric="decimal"
+            android:summary="@string/pref_nov_sum"
+            android:title="@string/pref_nov" />
+        <EditTextPreference
+            android:defaultValue="167"
+            android:dialogTitle="@string/pref_dec_dialog"
+            android:key="dec"
+            android:numeric="decimal"
+            android:summary="@string/pref_dec_sum"
+            android:title="@string/pref_dec" />
+    </PreferenceScreen>
+    <!-- Виджет -->
+    <PreferenceScreen android:title="@string/pref_screen_widget">
+
+        <EditTextPreference
+            android:defaultValue="5"
+            android:dialogTitle="@string/pref_widget_refresh_rate_dialog"
+            android:key="widget_refresh_rate"
+            android:numeric="integer"
+            android:summary="@string/pref_widget_refresh_rate_sum"
+            android:title="@string/pref_widget_refresh_rate" />
+    </PreferenceScreen>
+</PreferenceScreen>

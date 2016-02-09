@@ -55,6 +55,8 @@ public class MainActivity extends PinActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
+
         SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         if (!mSharedPreferences.contains(PASSWORD_PREFERENCE_KEY)) {
             Intent intent = new Intent(MainActivity.this, CustomPinActivity.class);
@@ -69,7 +71,7 @@ public class MainActivity extends PinActivity {
         }*/
 
         // TODO: Move this to where you establish a user session
-        logUser();
+        //logUser();
 
         LayoutInflaterCompat.setFactory(getLayoutInflater(), new IconicsLayoutInflater(getDelegate()));
 

@@ -26,8 +26,6 @@ import java.util.Date;
 
 public class CalendarActivity extends AppCompatActivity {
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
