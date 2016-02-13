@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -117,5 +118,17 @@ public class CustomPinActivity extends AppLockActivity {
 
         deleteDatabase(aaName);
         //ActiveAndroid.initialize(this);
+    }
+
+    @Override
+    public void onStop() {
+        Log.d(TAG, "onStop " + "CustomPinActivity");
+
+        SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplication());
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putLong("LAST_ACTIVE_MILLIS", 0);
+        editor.apply();
+
+        super.onStop();
     }
 }
