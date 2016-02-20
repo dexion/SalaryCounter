@@ -220,7 +220,7 @@ public class MainActivity extends PinActivity {
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         Intent intent = new Intent();
 
-                        switch(drawerItem.getIdentifier()) {
+                        switch((int)drawerItem.getIdentifier()) {
                             case 10:
                                 intent.setClass(that, CustomPinActivity.class);
                                 intent.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);

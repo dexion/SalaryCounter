@@ -29,7 +29,6 @@ public class ShowShiftTypeActivity extends AppCompatActivity{
 
         new MaterializeBuilder()
                 .withActivity(this)
-                .withTranslucentStatusBar(true)
                 .withTranslucentStatusBarProgrammatically(true)
                 .build();
 

@@ -37,7 +37,7 @@ public class CalendarFragment extends Fragment {
 
     private void setCustomResourceForDates() {
         for(Day d : Day.allDays()){
-            caldroidFragment.setBackgroundResourceForDate(d.shiftType.color, d.date.toDate());
+            caldroidFragment.setBackgroundDrawableForDate(new ColorDrawable(d.shiftType.color), d.date.toDate());
         }
     }
 
@@ -122,7 +122,7 @@ public class CalendarFragment extends Fragment {
                     d.save();
                 }
 
-                caldroidFragment.setBackgroundResourceForDate(d.shiftType.color, mDate);
+                caldroidFragment.setBackgroundDrawableForDate(new ColorDrawable(d.shiftType.color), mDate);
                 caldroidFragment.refreshView();
             }
 
@@ -173,9 +173,7 @@ public class CalendarFragment extends Fragment {
                         Day d = Day.getByDate(mDate);
                         if(null != d) {
                             d.delete();
-                            caldroidFragment.setBackgroundResourceForDate(0, mDate);
-                            caldroidFragment.refreshView();
-                            caldroidFragment.clearBackgroundResourceForDate(mDate);
+                            caldroidFragment.clearBackgroundDrawableForDate(mDate);
                             caldroidFragment.refreshView();
                         }
                     }

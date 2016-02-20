@@ -37,7 +37,6 @@ public class CalendarActivity extends AppCompatActivity {
 
         new MaterializeBuilder()
                 .withActivity(this)
-                .withTranslucentStatusBar(true)
                 .withTranslucentStatusBarProgrammatically(true)
                 .build();
 
