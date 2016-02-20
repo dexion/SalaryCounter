@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:summary="@string/pref_screen_tabel_sum"
+    android:title="@string/pref_screen_tabel">
+    <EditTextPreference
+        android:defaultValue="136"
+        android:dialogTitle="@string/pref_jan_dialog"
+        android:key="jan"
+        android:numeric="decimal"
+        android:summary="@string/pref_jan_sum"
+        android:title="@string/pref_jan" />
+    <EditTextPreference
+        android:defaultValue="159"
+        android:dialogTitle="@string/pref_feb_dialog"
+        android:key="feb"
+        android:numeric="decimal"
+        android:summary="@string/pref_feb_sum"
+        android:title="@string/pref_feb" />
+    <EditTextPreference
+        android:defaultValue="159"
+        android:dialogTitle="@string/pref_mar_dialog"
+        android:key="mar"
+        android:numeric="decimal"
+        android:summary="@string/pref_mar_sum"
+        android:title="@string/pref_mar" />
+    <EditTextPreference
+        android:defaultValue="175"
+        android:dialogTitle="@string/pref_apr_dialog"
+        android:key="apr"
+        android:numeric="decimal"
+        android:summary="@string/pref_apr_sum"
+        android:title="@string/pref_apr" />
+    <EditTextPreference
+        android:defaultValue="143"
+        android:dialogTitle="@string/pref_may_dialog"
+        android:key="may"
+        android:numeric="decimal"
+        android:summary="@string/pref_may_sum"
+        android:title="@string/pref_may" />
+    <EditTextPreference
+        android:defaultValue="151"
+        android:dialogTitle="@string/pref_jun_dialog"
+        android:key="jun"
+        android:numeric="decimal"
+        android:summary="@string/pref_jun_sum"
+        android:title="@string/pref_jun" />
+    <EditTextPreference
+        android:defaultValue="184"
+        android:dialogTitle="@string/pref_jul_dialog"
+        android:key="jul"
+        android:numeric="decimal"
+        android:summary="@string/pref_jul_sum"
+        android:title="@string/pref_jul" />
+    <EditTextPreference
+        android:defaultValue="176"
+        android:dialogTitle="@string/pref_aug_dialog"
+        android:key="aug"
+        android:numeric="decimal"
+        android:summary="@string/pref_aug_sum"
+        android:title="@string/pref_aug" />
+    <EditTextPreference
+        android:defaultValue="168"
+        android:dialogTitle="@string/pref_sep_dialog"
+        android:key="sep"
+        android:numeric="decimal"
+        android:summary="@string/pref_sep_sum"
+        android:title="@string/pref_sep" />
+    <EditTextPreference
+        android:defaultValue="184"
+        android:dialogTitle="@string/pref_oct_dialog"
+        android:key="oct"
+        android:numeric="decimal"
+        android:summary="@string/pref_oct_sum"
+        android:title="@string/pref_oct" />
+    <EditTextPreference
+        android:defaultValue="160"
+        android:dialogTitle="@string/pref_nov_dialog"
+        android:key="nov"
+        android:numeric="decimal"
+        android:summary="@string/pref_nov_sum"
+        android:title="@string/pref_nov" />
+    <EditTextPreference
+        android:defaultValue="167"
+        android:dialogTitle="@string/pref_dec_dialog"
+        android:key="dec"
+        android:numeric="decimal"
+        android:summary="@string/pref_dec_sum"
+        android:title="@string/pref_dec" />
+</PreferenceScreen>

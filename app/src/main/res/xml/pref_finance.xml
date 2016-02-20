@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:defaultValue="10000"
+        android:dialogTitle="@string/pref_salary_dialog"
+        android:key="salary"
+        android:numeric="integer"
+        android:summary="@string/pref_salary_sum"
+        android:title="@string/pref_salary" />
+    <EditTextPreference
+        android:defaultValue="50"
+        android:dialogTitle="@string/pref_north_dialog"
+        android:key="north"
+        android:numeric="integer"
+        android:summary="@string/pref_north_sum"
+        android:title="@string/pref_north" />
+    <EditTextPreference
+        android:defaultValue="70"
+        android:dialogTitle="@string/pref_district_dialog"
+        android:key="district"
+        android:numeric="integer"
+        android:summary="@string/pref_district_sum"
+        android:title="@string/pref_district" />
+    <EditTextPreference
+        android:defaultValue="25"
+        android:dialogTitle="@string/pref_bonus_dialog"
+        android:key="bonus"
+        android:numeric="integer"
+        android:summary="@string/pref_bonus_sum"
+        android:title="@string/pref_bonus" />
+    <EditTextPreference
+        android:defaultValue="0"
+        android:dialogTitle="@string/pref_alimony_dialog"
+        android:key="alimony"
+        android:numeric="integer"
+        android:summary="@string/pref_alimony_sum"
+        android:title="@string/pref_alimony" />
+    <EditTextPreference
+        android:defaultValue="0"
+        android:dialogTitle="@string/pref_residue_proc_dialog"
+        android:key="residue_proc"
+        android:numeric="integer"
+        android:summary="@string/pref_residue_proc_sum"
+        android:title="@string/pref_residue_proc" />
+    <EditTextPreference
+        android:defaultValue="0"
+        android:dialogTitle="@string/pref_residue_dialog"
+        android:key="residue"
+        android:numeric="integer"
+        android:summary="@string/pref_residue_sum"
+        android:title="@string/pref_residue" />
+
+    <EditTextPreference
+        android:defaultValue="0"
+        android:dialogTitle="@string/other_bonus_proc_dialog"
+        android:key="other_bonus_proc"
+        android:numeric="integer"
+        android:summary="@string/other_bonus_proc_sum"
+        android:title="@string/other_bonus_proc" />
+    <EditTextPreference
+        android:defaultValue="0"
+        android:dialogTitle="@string/other_bonus_dialog"
+        android:key="other_bonus"
+        android:numeric="integer"
+        android:summary="@string/other_bonus_sum"
+        android:title="@string/other_bonus" />
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="enable_tax"
+        android:summary="@string/pref_enable_tax_sum"
+        android:title="@string/pref_enable_tax" />
+
+</PreferenceScreen>
