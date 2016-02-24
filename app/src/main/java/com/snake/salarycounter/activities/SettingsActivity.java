@@ -54,6 +54,7 @@ public class SettingsActivity extends PreferenceActivity {
 
             new MaterializeBuilder()
                     .withActivity(this)
+                    .withTranslucentStatusBar(true)
                     .withTranslucentStatusBarProgrammatically(true)
                     .build();
         } else {
