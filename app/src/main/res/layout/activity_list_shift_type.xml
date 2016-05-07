@@ -2,17 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
-    android:fitsSystemWindows="true">
+    xmlns:fab="http://schemas.android.com/apk/res-auto">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_height="wrap_content"
+    <include layout="@layout/toolbar"/>
+
+    <FrameLayout
+        android:id="@+id/frame_container"
         android:layout_width="match_parent"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <include layout="@layout/toolbar"/>
-
-    </android.support.design.widget.AppBarLayout>
+        android:layout_height="match_parent"
+        android:paddingTop="?attr/actionBarSize">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     <com.melnykov.fab.FloatingActionButton
         android:id="@+id/fab"
@@ -25,10 +27,6 @@
         fab:fab_colorPressed="@color/primary_dark"
         fab:fab_colorRipple="@color/primary_light" />
 
-    <FrameLayout
-        android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="?attr/actionBarSize"/>
+    </FrameLayout>
 
 </RelativeLayout>

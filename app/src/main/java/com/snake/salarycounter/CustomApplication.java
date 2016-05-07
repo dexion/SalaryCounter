@@ -24,18 +24,10 @@ public class CustomApplication extends Application {
 
         JodaTimeAndroid.init(this);
         ActiveAndroid.initialize(this);
-        //LeakCanary.install(this);
-
-
-        //only required if you add a custom or generic font on your own
-        /*Iconics.init(getApplicationContext());
-
-        //register custom fonts like this (or also provide a font definition file)
-        Iconics.registerFont(new CustomFont());*/
 
         LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
-        lockManager.enableAppLock(this, CustomPinActivity.class);
-        lockManager.getAppLock().setLogoId(R.drawable.security_lock);
+        //lockManager.enableAppLock(this, CustomPinActivity.class);
+        //lockManager.getAppLock().setLogoId(R.drawable.security_lock);
         //lockManager.getAppLock().setTimeout(20 * 1000);
 
         Parse.enableLocalDatastore(getApplicationContext());

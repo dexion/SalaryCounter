@@ -18,7 +18,7 @@
             android:value="salary.db" />
         <meta-data
             android:name="AA_DB_VERSION"
-            android:value="2" />
+            android:value="1" />
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="22f2022038253dd2c7f492c264c6a664a72710e8" />

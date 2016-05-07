@@ -8,14 +8,11 @@ import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
 import com.activeandroid.util.SQLiteUtils;
-import com.snake.salarycounter.data.AbstractDataProvider;
-
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Table(name = "shift_types", id = BaseColumns._ID)
-public class ShiftType extends AbstractDataProvider.Data // Data extends Model
+public class ShiftType extends Model // Data extends Model
 {
     @Column(name = "name", index = true)
     public String name;
@@ -28,11 +25,6 @@ public class ShiftType extends AbstractDataProvider.Data // Data extends Model
 
     @Column(name = "ser")
     public String ser;
-
-    private long mId;
-    private String mText;
-    private int mViewType;
-    private boolean mPinned;
 
     public ShiftType()
     {
@@ -156,39 +148,17 @@ public class ShiftType extends AbstractDataProvider.Data // Data extends Model
     }
 
     @Override
-    public boolean isSectionHeader() {
-        return false;
-    }
-
-    @Override
-    public int getViewType() {
-        return mViewType;
-    }
-
-    @Override
     public String toString() {
         return name;
     }
 
-    @Override
     public String getText() {
         //return name + "| id: " + getId().toString() + "| weight: " + String.valueOf(weight);
         return name;
     }
 
-    @Override
     public int getColor() {
         return color;
-    }
-
-    @Override
-    public boolean isPinned() {
-        return mPinned;
-    }
-
-    @Override
-    public void setPinned(boolean pinned) {
-        mPinned = pinned;
     }
 }
 

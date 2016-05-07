@@ -63,6 +63,13 @@ dependencies {
     compile('com.mikepenz:aboutlibraries:5.6.5@aar') {
         transitive = true;
     }
+    compile('com.mikepenz:fastadapter:1.4.5@aar') {
+        transitive = true
+    }
+    compile 'com.mikepenz:fastadapter-extensions:1.4.5@aar'
+    compile('com.mikepenz:itemanimators:0.2.4@aar') {
+        transitive = true
+    }
     compile('com.github.dexion:lollipin:1.6.1@aar') {
         transitive = true;
     }
@@ -102,4 +109,7 @@ dependencies {
     compile 'com.github.johnpersano:supertoasts:1.3.4@aar'
 
     compile 'com.melnykov:floatingactionbutton:1.3.0'
+
+    //https://github.com/JakeWharton/butterknife
+    compile 'com.jakewharton:butterknife:7.0.1'
 }
