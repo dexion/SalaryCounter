@@ -1,8 +1,7 @@
-package com.snake.salarycounter.activities;
+package com.snake.salarycounter.activities.ShiftType;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -10,15 +9,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ListView;
 
+import com.melnykov.fab.FloatingActionButton;
 import com.mikepenz.materialize.MaterializeBuilder;
 import com.snake.salarycounter.R;
 import com.snake.salarycounter.data.AbstractDataProvider;
 import com.snake.salarycounter.fragments.RecyclerListViewFragment;
 import com.snake.salarycounter.fragments.ShiftTypesDataProviderFragment;
-import com.snake.salarycounter.models.ShiftType;
 
-public class ShiftTypeActivity extends AppCompatActivity {
+public class ListShiftTypeActivity extends AppCompatActivity {
 
     public static final int NEW_SHIFT_TYPE = -10;
     private int currentBackgroundColor = 0xffffffff;
@@ -29,7 +29,7 @@ public class ShiftTypeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shift_type);
+        setContentView(R.layout.activity_list_shift_type);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -48,11 +48,13 @@ public class ShiftTypeActivity extends AppCompatActivity {
 
         new MaterializeBuilder()
                 .withActivity(this)
-                .withTranslucentStatusBar(true)
                 .withTranslucentStatusBarProgrammatically(true)
                 .build();
 
+        ListView listView = (ListView) findViewById(R.id.recycler_view);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.attachToListView(listView);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,7 +65,7 @@ public class ShiftTypeActivity extends AppCompatActivity {
                 getDataAdapter().notifyDataSetChanged();*/
 
                 Intent intent = new Intent();
-                intent.setClass(ShiftTypeActivity.this, ShowShiftTypeActivity.class);
+                intent.setClass(ListShiftTypeActivity.this, ShowShiftTypeActivity.class);
                 intent.putExtra("shift_type_position", NEW_SHIFT_TYPE);
                 startActivity(intent);
             }

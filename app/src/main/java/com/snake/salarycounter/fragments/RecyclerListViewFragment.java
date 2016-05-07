@@ -1,9 +1,5 @@
 package com.snake.salarycounter.fragments;
 
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.NinePatchDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,14 +9,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextMenu;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.animator.RefactoredDefaultItemAnimator;
@@ -31,11 +22,9 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeMana
 import com.h6ah4i.android.widget.advrecyclerview.touchguard.RecyclerViewTouchActionGuardManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 import com.snake.salarycounter.R;
-import com.snake.salarycounter.activities.ShiftTypeActivity;
-import com.snake.salarycounter.activities.ShowShiftTypeActivity;
+import com.snake.salarycounter.activities.ShiftType.ListShiftTypeActivity;
 import com.snake.salarycounter.adapters.ShiftTypeAdapter;
 import com.snake.salarycounter.data.AbstractDataProvider;
-import com.snake.salarycounter.utils.RecyclerItemClickListener;
 
 
 /**
@@ -87,12 +76,12 @@ public class RecyclerListViewFragment extends Fragment {
         myItemAdapter.setEventListener(new ShiftTypeAdapter.EventListener() {
             @Override
             public void onItemRemoved(int position) {
-                ((ShiftTypeActivity) getActivity()).onItemRemoved(position);
+                ((ListShiftTypeActivity) getActivity()).onItemRemoved(position);
             }
 
             @Override
             public void onItemPinned(int position) {
-                ((ShiftTypeActivity) getActivity()).onItemPinned(position);
+                ((ListShiftTypeActivity) getActivity()).onItemPinned(position);
             }
 
             @Override
@@ -214,7 +203,7 @@ public class RecyclerListViewFragment extends Fragment {
     private void onItemViewClick(View v, boolean pinned) {
         int position = mRecyclerView.getChildAdapterPosition(v);
         if (position != RecyclerView.NO_POSITION) {
-            ((ShiftTypeActivity) getActivity()).onItemClicked(position);
+            ((ListShiftTypeActivity) getActivity()).onItemClicked(position);
         }
     }
 
@@ -223,7 +212,7 @@ public class RecyclerListViewFragment extends Fragment {
     }
 
     public AbstractDataProvider getDataProvider() {
-        return ((ShiftTypeActivity) getActivity()).getDataProvider();
+        return ((ListShiftTypeActivity) getActivity()).getDataProvider();
     }
 
     public RecyclerView.Adapter getDataAdapter() {

@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
     <application
         android:name=".CustomApplication"
@@ -17,7 +18,10 @@
             android:value="salary.db" />
         <meta-data
             android:name="AA_DB_VERSION"
-            android:value="1" />
+            android:value="2" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="22f2022038253dd2c7f492c264c6a664a72710e8" />
 
         <activity
             android:name=".activities.MainActivity"
@@ -54,25 +58,20 @@
                 android:value="com.snake.salarycounter.activities.MainActivity" />
         </activity>
         <activity
-            android:name=".activities.ShiftTypeActivity"
+            android:name=".activities.ShiftType.ListShiftTypeActivity"
             android:label="@string/title_activity_shift_type"
             android:parentActivityName=".activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.snake.salarycounter.activities.MainActivity" />
         </activity>
-
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="22f2022038253dd2c7f492c264c6a664a72710e8" />
-
         <activity
-            android:name=".activities.ShowShiftTypeActivity"
+            android:name=".activities.ShiftType.ShowShiftTypeActivity"
             android:label="@string/title_activity_show_shift_type"
-            android:parentActivityName=".activities.ShiftTypeActivity">
+            android:parentActivityName=".activities.ShiftType.ListShiftTypeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.snake.salarycounter.activities.ShiftTypeActivity" />
+                android:value=".activities.ShiftType.ListShiftTypeActivity" />
         </activity>
     </application>
 

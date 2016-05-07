@@ -1,4 +1,4 @@
-package com.snake.salarycounter.activities;
+package com.snake.salarycounter.activities.ShiftType;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -29,12 +29,11 @@ public class ShowShiftTypeActivity extends AppCompatActivity{
 
         new MaterializeBuilder()
                 .withActivity(this)
-                .withTranslucentStatusBar(true)
                 .withTranslucentStatusBarProgrammatically(true)
                 .build();
 
         _position = getIntent().getIntExtra("shift_type_position", -1);
-        if(_position == ShiftTypeActivity.NEW_SHIFT_TYPE){
+        if(_position == ListShiftTypeActivity.NEW_SHIFT_TYPE){
             _position = ShiftType.allShiftTypes().size() ;
             new ShiftType("", 0xffff0000, _position).save();
         }

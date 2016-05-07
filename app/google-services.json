@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "291188666729",
+    "project_id": "salarycounter"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:291188666729:android:b4c7189f31927a58",
+        "android_client_info": {
+          "package_name": "com.snake.salarycounter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "291188666729-637kdsisoqqv6h46icf5mfbnf5nu4kre.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.snake.salarycounter",
+            "certificate_hash": "80EBFF4ED1996E57617B012A1979845392F04534"
+          }
+        },
+        {
+          "client_id": "291188666729-5e0grol5i1ddpm06oj3guor9o06etoqj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfhIu0HXYcjSEZxd5TDK4osmsBcL_eQTs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-77335036-1"
+          }
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "291188666729-5e0grol5i1ddpm06oj3guor9o06etoqj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

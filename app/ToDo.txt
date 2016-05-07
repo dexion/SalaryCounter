@@ -1,0 +1,4 @@
+parse-dashboard --appId UiMwAE3tZuBd68FGbNGVX3FrJonMR8l1RB10pP1G --masterKey rZA2kI0nA8IXuFSztdqsH2AEQdUQRrNCWpOStFPC --serverURL "http://salarycounter.herokuapp.com/parse/" --appName SalaryCounter
+
+291188666729-7etfgsm7f9hu7rb8sqbjtffbq99p7u32.apps.googleusercontent.com
+bdmRMdkoYtgHUXM-0mchV0Sv

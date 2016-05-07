@@ -9,6 +9,7 @@ buildscript {
 }
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+apply plugin: 'com.google.gms.google-services'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
@@ -17,7 +18,7 @@ repositories {
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion "${rootProject.ext.buildToolsVersion}"
 
     defaultConfig {
         applicationId "com.snake.salarycounter"
@@ -25,6 +26,14 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "0.1"
+
+        applicationVariants.all { variant ->
+            variant.outputs.each { output ->
+                def file = output.outputFile
+                def fileName = file.name.replace(".apk", "-v" + versionName + "-c" + versionCode + ".apk")
+                output.outputFile = new File(file.parentFile, fileName)
+            }
+        }
     }
     buildTypes {
         release {
@@ -43,38 +52,54 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
 
-    compile('com.mikepenz:materialdrawer:4.6.4@aar') {
+    compile "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
+    compile "com.android.support:recyclerview-v7:${rootProject.ext.supportLibVersion}"
+    compile "com.android.support:support-annotations:${rootProject.ext.supportLibVersion}"
+    compile "com.android.support:design:${rootProject.ext.supportLibVersion}"
+
+    compile('com.mikepenz:materialdrawer:5.2.2@aar') {
         transitive = true;
     }
-    compile('com.mikepenz:aboutlibraries:5.5.2@aar') {
+    compile('com.mikepenz:aboutlibraries:5.6.5@aar') {
         transitive = true;
     }
     compile('com.github.dexion:lollipin:1.6.1@aar') {
         transitive = true;
     }
-    //compile('com.github.dexion:caldroid:2.3.1.1@aar') {
     compile('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.8.6@aar') {
         transitive = true
     }
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true;
     }
-    compile 'com.roomorama:caldroid:3.0.0'
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:support-v4:23.1.1'
-    compile 'com.android.support:design:23.1.1'
-    compile 'com.mikepenz:iconics-core:2.5.5@aar'
-    compile 'com.mikepenz:google-material-typeface:2.1.0.1.original@aar'
-    compile 'com.mikepenz:fontawesome-typeface:4.5.0.1@aar'
-    compile 'com.mikepenz:community-material-typeface:1.3.41.1@aar'
+    compile 'com.roomorama:caldroid:3.0.1'
+
+    compile 'com.mikepenz:iconics-core:2.5.11@aar'
+    compile 'com.mikepenz:google-material-typeface:2.2.0.1.original@aar'
+    compile 'com.mikepenz:fontawesome-typeface:4.6.0.1@aar'
+    compile 'com.mikepenz:community-material-typeface:1.5.54.1@aar'
+
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
+
     compile 'com.github.omadahealth.typefaceview:typefaceview:1.3.0@aar'
     compile 'uk.me.lewisdeane.ldialogs:ldialogs:1.2.0@aar'
+
     compile 'de.greenrobot:eventbus:2.4.0'
     compile 'net.danlew:android.joda:2.9.1'
     compile 'com.google.code.gson:gson:2.5'
     compile 'com.github.QuadFlask:colorpicker:0.0.9'
-    compile 'com.amazonaws:aws-android-sdk-cognito:2.2.6.1'
+
     compile 'com.ogaclejapan.smarttablayout:library:1.6.0@aar'
     compile 'com.ogaclejapan.smarttablayout:utils-v4:1.6.0@aar'
+
+    compile 'pub.devrel:easypermissions:0.1.5'
+    compile 'com.google.android.gms:play-services-auth:8.3.0'
+    compile 'pub.devrel:easygoogle:0.2.4+'
+
+    compile 'com.parse:parse-android:1.13.0'
+    compile 'com.parse:parseui-widget-android:0.0.1'
+
+    compile 'com.github.johnpersano:supertoasts:1.3.4@aar'
+
+    compile 'com.melnykov:floatingactionbutton:1.3.0'
 }
