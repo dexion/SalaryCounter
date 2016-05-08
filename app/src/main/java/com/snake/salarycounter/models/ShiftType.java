@@ -147,6 +147,9 @@ public class ShiftType extends Model // Data extends Model
         return typesList.size();
     }
 
+    public boolean canDelete(int position){
+        return !(Day.getByShiftType(ShiftType.getByPosition(position)).size() > 0);
+    }
     @Override
     public String toString() {
         return name;

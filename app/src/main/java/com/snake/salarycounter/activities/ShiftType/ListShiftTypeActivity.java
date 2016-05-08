@@ -1,6 +1,7 @@
 package com.snake.salarycounter.activities.ShiftType;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteConstraintException;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -19,6 +20,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.github.johnpersano.supertoasts.SuperCardToast;
+import com.github.johnpersano.supertoasts.SuperToast;
+import com.github.johnpersano.supertoasts.util.Style;
 import com.melnykov.fab.FloatingActionButton;
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.fastadapter.FastAdapter;
@@ -243,6 +247,8 @@ public class ListShiftTypeActivity extends AppCompatActivity
         final GenericShiftTypeItem item = fastAdapter.getItem(position);
         item.setSwipedDirection(direction);
 
+        final View rv = findViewById(R.id.rv);
+
         // This can vary depending on direction but remove & archive simulated here both results in
         // removal from list
         final Runnable removeRunnable = new Runnable() {
@@ -251,13 +257,26 @@ public class ListShiftTypeActivity extends AppCompatActivity
                 item.setSwipedAction(null);
                 int position = itemAdapter.getAdapterPosition(item);
                 if (position != RecyclerView.NO_POSITION) {
-                    ShiftType.getByPosition(position).delete();
-                    ShiftType.reorderAfterDeletion(position);
-                    itemAdapter.remove(position);
+                    try {
+                        if (ShiftType.getByPosition(position).canDelete(position)) {
+                            ShiftType.getByPosition(position).delete();
+                            ShiftType.reorderAfterDeletion(position);
+                            itemAdapter.remove(position);
+                        }
+                        else
+                        {
+                            item.setSwipedDirection(0);
+                            SuperToast.create(ListShiftTypeActivity.this, getString(R.string.cannot_delete), SuperToast.Duration.MEDIUM, Style.getStyle(SuperToast.Background.ORANGE)).show();
+                            rv.removeCallbacks(this);
+                        }
+                    }
+                    catch(SQLiteConstraintException sqlExc){
+                        SuperToast.create(ListShiftTypeActivity.this, getString(R.string.error_deleting), SuperToast.Duration.MEDIUM, Style.getStyle(SuperToast.Background.RED)).show();
+                    }
                 }
             }
         };
-        final View rv = findViewById(R.id.rv);
+
         rv.postDelayed(removeRunnable, 1500);
 
         item.setSwipedAction(new Runnable() {

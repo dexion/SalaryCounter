@@ -347,4 +347,6 @@
     <string name="search_title">Поиск</string>
     <string name="action_undo">Отменить</string>
     <string name="removed">Удалено</string>
+    <string name="error_deleting">Не все записи получилось удалить</string>
+    <string name="cannot_delete">Удаление невозможно, т.к. существуют связанные записи</string>
 </resources>

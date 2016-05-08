@@ -34,7 +34,7 @@ public class Day extends Model {
 
     public static ArrayList<Day> allDays() {
         List<Day> typesList = new Select().from(Day.class).orderBy("date ASC").execute();
-        return new ArrayList<Day>(typesList);
+        return new ArrayList<>(typesList);
     }
 
     public static Day getByPosition(int position) {
@@ -51,6 +51,11 @@ public class Day extends Model {
 
     public static Day getById(int _id) {
         return new Select().from(Day.class).where("_id = ?", _id).limit(1).executeSingle();
+    }
+
+    public static ArrayList<Day> getByShiftType(ShiftType shiftType) {
+        List<Day> days = new Select().from(Day.class).where("shift_type = ?", shiftType.getId()).execute();
+        return new ArrayList<>(days);
     }
 
     public String getText() {
