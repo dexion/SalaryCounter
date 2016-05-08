@@ -33,18 +33,14 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
-import com.parse.ParseObject;
-import com.parse.ParseQueryAdapter;
 import com.snake.salarycounter.R;
 import com.snake.salarycounter.activities.ShiftType.ListShiftTypeActivity;
 import com.snake.salarycounter.models.ShiftType;
 
 import io.fabric.sdk.android.Fabric;
-import pub.devrel.easygoogle.Google;
-import pub.devrel.easygoogle.gac.SignIn;
 
-public class MainActivity extends PinActivity implements
-        SignIn.SignInListener {
+
+public class MainActivity extends PinActivity {
 
     private static final int PROFILE_SETTING = 1;
     private static final int REQUEST_CODE_ENABLE = 11;
@@ -55,48 +51,9 @@ public class MainActivity extends PinActivity implements
     private Drawer result = null;
     private PrimaryDrawerItem authDrawerItem = null;
 
-    private Google mGoogle;
-
     final static int II_SETTINGS = 101;
     final static int II_ABOUT = 102;
     final static int II_ACCOUNT = 103;
-
-    @Override
-    public void onSignedIn(GoogleSignInAccount account) {
-        // Sign in was successful.
-
-        /*if (Plus.PeopleApi.getCurrentPerson(mGoogle.getGoogleApiClient()) != null) {
-            Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
-            String personName = currentPerson.getDisplayName();
-            String personPhoto = currentPerson.getImage();
-            String personGooglePlusProfile = currentPerson.getUrl();
-        }*/
-        headerResult.clear();
-        headerResult.addProfile(
-                new ProfileDrawerItem()
-                        .withName(account.getDisplayName())
-                        .withEmail(account.getEmail())
-                        .withIcon(account.getPhotoUrl())
-                , 0);
-        authDrawerItem.withName(getString(R.string.account_signout));
-        SuperToast.create(MainActivity.this, account.getDisplayName(), SuperToast.Duration.MEDIUM).show();
-    }
-
-    @Override
-    public void onSignedOut() {
-        // Sign out was successful.
-        headerResult.clear();
-        authDrawerItem.withName("Авторизация");
-        //((SecondaryDrawerItem)mainDrawer.getDrawerItem(II_SYNC)).withName(getString(R.string.account_title));
-        SuperToast.create(MainActivity.this, getString(R.string.signed_out), SuperToast.Duration.MEDIUM).show();
-    }
-
-    @Override
-    public void onSignInFailed() {
-        // Sign in failed for some reason and should not be attempted again
-        // unless the user requests it.
-        SuperToast.create(MainActivity.this, getString(R.string.error_signing_in), SuperToast.Duration.MEDIUM).show();
-    }
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -129,11 +86,6 @@ public class MainActivity extends PinActivity implements
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        mGoogle = new Google.Builder(this)
-                .enableSignIn(this)
-                .build();
-        final SignIn GSI = mGoogle.getSignIn();
 
         // Handle Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -291,17 +243,10 @@ public class MainActivity extends PinActivity implements
                                 startActivity(intent);
                                 break;
                             case II_ABOUT:
-                                //showAbout(that);
-                                GSI.signOut();
+                                showAbout(that);
                                 break;
                             case II_ACCOUNT:
-                                if(GSI.isSignedIn()){
-                                    GSI.signOut();
-                                }
-                                else{
-                                    GSI.signIn();
-                                    //SuperToast.create(MainActivity.this, GSI.getCurrentUser().getDisplayName(), SuperToast.Duration.MEDIUM);
-                                }
+
                                 break;
                             default:
                                 Snackbar.make(view, "Clicked " + String.valueOf(drawerItem.getIdentifier()), Snackbar.LENGTH_LONG)

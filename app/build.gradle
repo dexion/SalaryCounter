@@ -66,7 +66,6 @@ dependencies {
     compile('com.mikepenz:fastadapter:1.4.5@aar') {
         transitive = true
     }
-    compile 'com.mikepenz:fastadapter-extensions:1.4.5@aar'
     compile('com.mikepenz:itemanimators:0.2.4@aar') {
         transitive = true
     }
@@ -79,37 +78,29 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true;
     }
-    compile 'com.roomorama:caldroid:3.0.1'
 
+    //https://github.com/JakeWharton/butterknife
+    compile 'com.mikepenz:fastadapter-extensions:1.4.5@aar'
+    compile 'com.roomorama:caldroid:3.0.1'
     compile 'com.mikepenz:iconics-core:2.5.11@aar'
     compile 'com.mikepenz:google-material-typeface:2.2.0.1.original@aar'
     compile 'com.mikepenz:fontawesome-typeface:4.6.0.1@aar'
     compile 'com.mikepenz:community-material-typeface:1.5.54.1@aar'
-
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
-
     compile 'com.github.omadahealth.typefaceview:typefaceview:1.3.0@aar'
     compile 'uk.me.lewisdeane.ldialogs:ldialogs:1.2.0@aar'
-
     compile 'de.greenrobot:eventbus:2.4.0'
     compile 'net.danlew:android.joda:2.9.1'
     compile 'com.google.code.gson:gson:2.5'
     compile 'com.github.QuadFlask:colorpicker:0.0.9'
-
     compile 'com.ogaclejapan.smarttablayout:library:1.6.0@aar'
     compile 'com.ogaclejapan.smarttablayout:utils-v4:1.6.0@aar'
-
     compile 'pub.devrel:easypermissions:0.1.5'
-    compile 'com.google.android.gms:play-services-auth:8.3.0'
-    compile 'pub.devrel:easygoogle:0.2.4+'
-
     compile 'com.parse:parse-android:1.13.0'
     compile 'com.parse:parseui-widget-android:0.0.1'
-
     compile 'com.github.johnpersano:supertoasts:1.3.4@aar'
-
     compile 'com.melnykov:floatingactionbutton:1.3.0'
-
-    //https://github.com/JakeWharton/butterknife
     compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.android.support:support-v4:23.3.0'
+    compile 'com.borax12.materialdaterangepicker:library:1.7'
 }
