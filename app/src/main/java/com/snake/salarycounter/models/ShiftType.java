@@ -11,7 +11,10 @@ import com.activeandroid.util.SQLiteUtils;
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,12 +48,52 @@ public class ShiftType extends Model
     @Column (name = "day_duration")
     public Duration dayDuration;
 
+    @Column (name = "is_fixed_price")
+    public boolean isFixedPrice;
+
+    @Column (name = "fixed_price")
+    public BigDecimal fixedPrice;
+
+    @Column (name = "additional_price")
+    public BigDecimal additionalPrice;
+
+    @Column (name = "multiplier")
+    public BigDecimal multiplier;
+
+    @Column (name = "is_count_hours")
+    public boolean isCountHours;
+
+    @Column (name = "is_average_price")
+    public boolean isAveragePrice;
+
     public ShiftType()
     {
         super();
     }
 
-    public ShiftType(String Name, int Color, int Weight)
+    public ShiftType(String sName)
+    {
+        super();
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("HH:mm:ss");
+
+        name = sName;
+        color = 0xffff0000;
+        weight = ShiftType.allShiftTypes().size();
+        dayStart =    formatter.parseDateTime("08:00:00");
+        dayEnd =      formatter.parseDateTime("20:00:00");
+        dinnerStart = formatter.parseDateTime("13:00:00");
+        dinnerEnd =   formatter.parseDateTime("14:00:00");
+        dayDuration = (new Duration(dayStart, dayEnd)).minus(new Duration(dinnerStart, dinnerEnd));
+
+        isFixedPrice = false;
+        fixedPrice = new BigDecimal(0.0);
+        additionalPrice = new BigDecimal(0.0);
+        multiplier = new BigDecimal(1.0);
+        isCountHours = true;
+        isAveragePrice = false;
+    }
+
+    /*public ShiftType(String Name, int Color, int Weight)
     {
         super();
         name = Name;
@@ -64,15 +107,7 @@ public class ShiftType extends Model
         name = Name;
         color = Color;
         weight = ShiftType.allShiftTypes().size() == 0 ? 0 : SQLiteUtils.intQuery("SELECT MAX(weight) FROM shift_types", null) + 1;
-    }
-
-    public ShiftType(int position, ShiftType st)
-    {
-        super();
-        name = st.name;
-        color = st.color;
-        weight = position;
-    }
+    }*/
 
     public static ArrayList<ShiftType> allShiftTypes()
     {
@@ -85,7 +120,7 @@ public class ShiftType extends Model
         return new Select().from(ShiftType.class).orderBy("weight ASC").limit(1).offset(position).executeSingle();
     }
 
-    public static ShiftType getById(int _id)
+    public static ShiftType getById(long _id)
     {
         return new Select().from(ShiftType.class).where("_id = ?", _id).limit(1).executeSingle();
     }
@@ -169,7 +204,6 @@ public class ShiftType extends Model
     }
 
     public String getText() {
-        //return name + "| id: " + getId().toString() + "| weight: " + String.valueOf(weight);
         return name;
     }
 
@@ -177,4 +211,3 @@ public class ShiftType extends Model
         return color;
     }
 }
-

@@ -29,9 +29,9 @@ import de.greenrobot.event.EventBus;
 
 public class ShiftTypeTimeFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "_position";
+    private static final String ARG_PARAM1 = "_id";
 
-    private int mPosition;
+    private long mId;
 
     private ShiftType st;
     private DateTime currentDayStart;
@@ -119,8 +119,8 @@ public class ShiftTypeTimeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mPosition = getArguments().getInt(ARG_PARAM1);
-            st = ShiftType.getByPosition(mPosition);
+            mId = getArguments().getLong(ARG_PARAM1);
+            st = ShiftType.getById(mId);
 
             currentDayStart = st.dayStart;
             currentDayEnd = st.dayEnd;

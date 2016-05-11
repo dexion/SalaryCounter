@@ -22,12 +22,12 @@ import de.greenrobot.event.EventBus;
 
 public class ShiftTypeNameFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "_position";
+    private static final String ARG_PARAM1 = "_id";
 
     private Button btn_change_color;
     private int currentBackgroundColor = 0xffff0000;
 
-    private int mPosition;
+    private long mId;
 
     private ShiftType st;
 
@@ -39,8 +39,8 @@ public class ShiftTypeNameFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mPosition = getArguments().getInt(ARG_PARAM1);
-            st = ShiftType.getByPosition(mPosition);
+            mId = getArguments().getLong(ARG_PARAM1);
+            st = ShiftType.getById(mId);
             currentBackgroundColor = st.color;
         }
         EventBus.getDefault().register(this);
