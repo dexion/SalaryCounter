@@ -266,12 +266,13 @@ public class ListShiftTypeActivity extends AppCompatActivity
                         else
                         {
                             item.setSwipedDirection(0);
-                            SuperToast.create(ListShiftTypeActivity.this, getString(R.string.cannot_delete), SuperToast.Duration.MEDIUM, Style.getStyle(SuperToast.Background.ORANGE)).show();
+
+                            SuperToast.create(ListShiftTypeActivity.this, getString(R.string.cannot_delete), SuperToast.Duration.MEDIUM, Style.getStyle(Style.ORANGE)).show();
                             rv.removeCallbacks(this);
                         }
                     }
                     catch(SQLiteConstraintException sqlExc){
-                        SuperToast.create(ListShiftTypeActivity.this, getString(R.string.error_deleting), SuperToast.Duration.MEDIUM, Style.getStyle(SuperToast.Background.RED)).show();
+                        SuperToast.create(ListShiftTypeActivity.this, getString(R.string.error_deleting), SuperToast.Duration.MEDIUM, Style.getStyle(Style.RED)).show();
                     }
                 }
             }

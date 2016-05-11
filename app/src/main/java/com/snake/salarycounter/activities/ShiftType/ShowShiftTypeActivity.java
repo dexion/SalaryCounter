@@ -12,7 +12,12 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 import com.snake.salarycounter.R;
 import com.snake.salarycounter.fragments.ShowShiftType.ShiftTypeNameFragment;
+import com.snake.salarycounter.fragments.ShowShiftType.ShiftTypeTimeFragment;
 import com.snake.salarycounter.models.ShiftType;
+
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 public class ShowShiftTypeActivity extends AppCompatActivity{
 
@@ -35,7 +40,13 @@ public class ShowShiftTypeActivity extends AppCompatActivity{
         _position = getIntent().getIntExtra("shift_type_position", -1);
         if(_position == ListShiftTypeActivity.NEW_SHIFT_TYPE){
             _position = ShiftType.allShiftTypes().size() ;
-            new ShiftType("", 0xffff0000, _position).save();
+            DateTimeFormatter formatter = DateTimeFormat.forPattern("HH:mm:ss");
+            ShiftType st = new ShiftType("", 0xffff0000, _position);
+            st.dayStart =    formatter.parseDateTime("08:00:00");
+            st.dayEnd =      formatter.parseDateTime("20:00:00");
+            st.dinnerStart = formatter.parseDateTime("13:00:00");
+            st.dinnerEnd =   formatter.parseDateTime("14:00:00");
+            st.save();
         }
 
         /*ViewPagerItemAdapter adapter = new ViewPagerItemAdapter(ViewPagerItems.with(this)
@@ -48,6 +59,7 @@ public class ShowShiftTypeActivity extends AppCompatActivity{
                 getSupportFragmentManager(), FragmentPagerItems.with(this)
                 //.add(R.string.title, PageFragment.class)
                 .add(R.string.shift_type_main_settings, ShiftTypeNameFragment.class, new Bundler().putInt("_position", _position).get())
+                .add(R.string.shift_type_time_settings, ShiftTypeTimeFragment.class, new Bundler().putInt("_position", _position).get())
                 //.add("title", PageFragment.class)
                 .create()
         );

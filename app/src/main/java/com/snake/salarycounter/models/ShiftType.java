@@ -8,11 +8,15 @@ import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
 import com.activeandroid.util.SQLiteUtils;
+
+import org.joda.time.DateTime;
+import org.joda.time.Duration;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @Table(name = "shift_types", id = BaseColumns._ID)
-public class ShiftType extends Model // Data extends Model
+public class ShiftType extends Model
 {
     @Column(name = "name", index = true)
     public String name;
@@ -25,6 +29,21 @@ public class ShiftType extends Model // Data extends Model
 
     @Column(name = "ser")
     public String ser;
+
+    @Column (name = "day_start")
+    public DateTime dayStart;
+
+    @Column (name = "day_end")
+    public DateTime dayEnd;
+
+    @Column (name = "dinner_start")
+    public DateTime dinnerStart;
+
+    @Column (name = "dinner_end")
+    public DateTime dinnerEnd;
+
+    @Column (name = "day_duration")
+    public Duration dayDuration;
 
     public ShiftType()
     {
@@ -46,13 +65,6 @@ public class ShiftType extends Model // Data extends Model
         color = Color;
         weight = ShiftType.allShiftTypes().size() == 0 ? 0 : SQLiteUtils.intQuery("SELECT MAX(weight) FROM shift_types", null) + 1;
     }
-
-    /*public ShiftType(long id, int viewType, String text, int swipeReaction)
-    {
-        super();
-        mId = id;
-        mViewType = viewType;
-    }*/
 
     public ShiftType(int position, ShiftType st)
     {
@@ -150,6 +162,7 @@ public class ShiftType extends Model // Data extends Model
     public boolean canDelete(int position){
         return !(Day.getByShiftType(ShiftType.getByPosition(position)).size() > 0);
     }
+
     @Override
     public String toString() {
         return name;
