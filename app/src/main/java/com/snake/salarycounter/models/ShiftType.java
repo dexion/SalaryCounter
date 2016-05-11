@@ -87,7 +87,7 @@ public class ShiftType extends Model
 
         isFixedPrice = false;
         fixedPrice = new BigDecimal(0.0);
-        additionalPrice = new BigDecimal(0.0);
+        additionalPrice = new BigDecimal(250.0); // компенсация вахтового метода
         multiplier = new BigDecimal(1.0);
         isCountHours = true;
         isAveragePrice = false;
@@ -112,7 +112,7 @@ public class ShiftType extends Model
     public static ArrayList<ShiftType> allShiftTypes()
     {
         List<ShiftType> typesList = new Select().from(ShiftType.class).orderBy("weight ASC").execute();
-        return new ArrayList<ShiftType>(typesList);
+        return new ArrayList<>(typesList);
     }
 
     public static ShiftType getByPosition(int position)

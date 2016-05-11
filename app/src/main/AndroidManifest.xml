@@ -19,7 +19,8 @@
         <meta-data
             android:name="AA_DB_VERSION"
             android:value="1" />
-        <meta-data android:name="AA_SERIALIZERS"
+        <meta-data
+            android:name="AA_SERIALIZERS"
             android:value="com.snake.salarycounter.utils.JodaDateTimeSerializer, com.snake.salarycounter.utils.JodaDurationSerializer" />
         <meta-data
             android:name="io.fabric.ApiKey"
@@ -74,6 +75,11 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.ShiftType.ListShiftTypeActivity" />
+        </activity>
+        <activity android:name=".activities.FinanceCondition.ListFinanceConditionActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.snake.salarycounter.activities.MainActivity" />
         </activity>
     </application>
 

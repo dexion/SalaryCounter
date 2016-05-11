@@ -34,6 +34,7 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.snake.salarycounter.R;
+import com.snake.salarycounter.activities.FinanceCondition.ListFinanceConditionActivity;
 import com.snake.salarycounter.activities.ShiftType.ListShiftTypeActivity;
 import com.snake.salarycounter.models.ShiftType;
 
@@ -120,6 +121,11 @@ public class MainActivity extends PinActivity {
                                 .withSelectable(false)
                                 .withIcon(CommunityMaterial.Icon.cmd_calendar_multiple)
                                 .withIdentifier(20),
+                        new PrimaryDrawerItem()
+                                .withName(R.string.drawer_item_finance_conditions)
+                                .withSelectable(false)
+                                .withIcon(CommunityMaterial.Icon.cmd_diamond)
+                                .withIdentifier(30),
                         new PrimaryDrawerItem()
                                 .withName(R.string.drawer_item_calendar)
                                 .withSelectable(false)
@@ -225,6 +231,10 @@ public class MainActivity extends PinActivity {
                             case 20:
                                 intent.setClass(that, ListShiftTypeActivity.class);
                                 intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
+                                startActivity(intent);
+                                break;
+                            case 30:
+                                intent.setClass(that, ListFinanceConditionActivity.class);
                                 startActivity(intent);
                                 break;
                             case 40:
