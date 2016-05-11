@@ -127,7 +127,6 @@ public class ShiftTypeTimeFragment extends Fragment {
             currentDinnerStart = st.dinnerStart;
             currentDinnerEnd = st.dinnerEnd;
         }
-        EventBus.getDefault().register(this);
     }
 
     @Override
