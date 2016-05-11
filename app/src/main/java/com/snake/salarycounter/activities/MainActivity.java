@@ -117,10 +117,12 @@ public class MainActivity extends PinActivity {
                                 .withDescription("Description"),
                         new PrimaryDrawerItem()
                                 .withName(R.string.drawer_item_shift_types)
+                                .withSelectable(false)
                                 .withIcon(CommunityMaterial.Icon.cmd_calendar_multiple)
                                 .withIdentifier(20),
                         new PrimaryDrawerItem()
                                 .withName(R.string.drawer_item_calendar)
+                                .withSelectable(false)
                                 .withIcon(CommunityMaterial.Icon.cmd_calendar_clock)
                                 .withIdentifier(40)
                         //here we use a customPrimaryDrawerItem we defined in our sample app
@@ -195,7 +197,7 @@ public class MainActivity extends PinActivity {
                     }
                 })
                 .addStickyDrawerItems(
-                        authDrawerItem,
+                        //authDrawerItem,
                         new SecondaryDrawerItem()
                                 .withSelectable(false)
                                 .withName(R.string.drawer_item_settings)
@@ -224,11 +226,6 @@ public class MainActivity extends PinActivity {
                                 intent.setClass(that, ListShiftTypeActivity.class);
                                 intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
                                 startActivity(intent);
-                                break;
-                            case 30:
-                                new ShiftType("Test", 0xffff0000).save();
-                                Snackbar.make(view, "ShiftType Added", Snackbar.LENGTH_LONG)
-                                        .setAction("Action", null).show();
                                 break;
                             case 40:
                                 intent.setClass(that, CalendarActivity.class);
