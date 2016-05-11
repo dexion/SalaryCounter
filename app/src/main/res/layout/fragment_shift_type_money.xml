@@ -1,0 +1,61 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.snake.salarycounter.fragments.ShowShiftType.ShiftTypeMoneyFragment"
+    android:orientation="vertical"
+    android:padding="@dimen/fab_margin">
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/shift_type_money_is_count_hours"
+        android:id="@+id/shift_type_money_is_count_hours" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/shift_type_money_is_average_price"
+        android:id="@+id/shift_type_money_is_average_price" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/shift_type_money_is_fixed_price"
+        android:id="@+id/shift_type_money_is_fixed_price" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/shift_type_money_fixed_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/shift_type_money_fixed_price"
+        app:met_floatingLabel="normal"
+        app:met_floatingLabelText="@string/shift_type_money_fixed_price"
+        android:singleLine="true"
+        android:inputType="numberDecimal"
+        android:ems="10" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/shift_type_money_additional_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/shift_type_money_additional_price"
+        app:met_floatingLabel="normal"
+        app:met_floatingLabelText="@string/shift_type_money_additional_price"
+        android:singleLine="true"
+        android:inputType="numberDecimal"
+        android:ems="10" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/shift_type_money_multiplier"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/shift_type_money_multiplier"
+        app:met_floatingLabel="normal"
+        app:met_floatingLabelText="@string/shift_type_money_multiplier"
+        android:singleLine="true"
+        android:inputType="numberDecimal"
+        android:ems="10" />
+
+</LinearLayout>
