@@ -17,13 +17,13 @@ repositories {
 
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion Integer.parseInt("${rootProject.ext.compileSdkVersion}")
     buildToolsVersion "${rootProject.ext.buildToolsVersion}"
 
     defaultConfig {
         applicationId "com.snake.salarycounter"
-        minSdkVersion 16
-        targetSdkVersion 23
+        minSdkVersion Integer.parseInt("${rootProject.ext.minSdkVersion}")
+        targetSdkVersion Integer.parseInt("${rootProject.ext.compileSdkVersion}")
         versionCode 1
         versionName "0.1"
 
@@ -56,6 +56,7 @@ dependencies {
     compile "com.android.support:recyclerview-v7:${rootProject.ext.supportLibVersion}"
     compile "com.android.support:support-annotations:${rootProject.ext.supportLibVersion}"
     compile "com.android.support:design:${rootProject.ext.supportLibVersion}"
+    compile "com.android.support:support-v4:${rootProject.ext.supportLibV4Version}"
 
     compile('com.mikepenz:materialdrawer:5.2.2@aar') {
         transitive = true;
@@ -101,6 +102,5 @@ dependencies {
     compile 'com.github.johnpersano:supertoasts:1.3.4@aar'
     compile 'com.melnykov:floatingactionbutton:1.3.0'
     compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.android.support:support-v4:23.3.0'
-    compile 'com.borax12.materialdaterangepicker:library:1.7'
+    compile project(path: ':libs:DateRangePicker')
 }

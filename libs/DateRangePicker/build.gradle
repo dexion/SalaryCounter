@@ -1,0 +1,25 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion Integer.parseInt("${rootProject.ext.compileSdkVersion}")
+    buildToolsVersion "${rootProject.ext.buildToolsVersion}"
+
+    defaultConfig {
+        minSdkVersion Integer.parseInt("${rootProject.ext.minSdkVersion}")
+        targetSdkVersion Integer.parseInt("${rootProject.ext.compileSdkVersion}")
+        versionName "1"
+        versionCode 1
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile "com.android.support:support-v4:${rootProject.ext.supportLibV4Version}"
+}
+
