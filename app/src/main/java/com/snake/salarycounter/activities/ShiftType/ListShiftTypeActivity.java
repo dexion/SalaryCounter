@@ -48,7 +48,6 @@ public class ListShiftTypeActivity extends AppCompatActivity
             FastAdapter.OnClickListener<GenericShiftTypeItem> {
 
     public static final int NEW_SHIFT_TYPE = -10;
-    private int currentBackgroundColor = 0xffffffff;
 
     //save our FastAdapter
     private FastAdapter<GenericShiftTypeItem> fastAdapter;
@@ -127,23 +126,12 @@ public class ListShiftTypeActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
-                new ShiftType("Test", 0xffff0000).save();
-                getDataAdapter().notifyDataSetChanged();*/
-
                 Intent intent = new Intent();
                 intent.setClass(ListShiftTypeActivity.this, ShowShiftTypeActivity.class);
                 intent.putExtra("shift_type_position", NEW_SHIFT_TYPE);
                 startActivity(intent);
             }
         });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     @Override
@@ -160,7 +148,6 @@ public class ListShiftTypeActivity extends AppCompatActivity
             case android.R.id.home:
                 onBackPressed();
                 return true;
-
             default:
                 return super.onOptionsItemSelected(item);
         }
