@@ -276,4 +276,7 @@
     <string name="shift_type_money_is_count_hours">Учитывать часы при табелировании</string>
     <string name="shift_type_money_is_average_price">Оплачивается по среднему заработку</string>
     <string name="drawer_item_finance_conditions">Finance conditions</string>
+    <string name="drawer_item_tabel">Табель</string>
+    <string name="title_activity_list_finance_condition">Условия труда</string>
+    <string name="title_activity_list_tabel">Табель</string>
 </resources>

@@ -26,7 +26,7 @@ public class FinanceCondition extends Model{
     public BigDecimal addition; // ЕДВ
 
     @Column(name = "addition_proc")
-    public double addition_proc; // доплаты в %, например, за совмещение
+    public double addition_proc; // доплаты в % к окладу, например, за совмещение
 
     @Column(name = "north")
     public double north; // северный
@@ -91,6 +91,6 @@ public class FinanceCondition extends Model{
     }
 
     public String getText() {
-        return startDate.toString("MMMM yyyy");
+        return startDate.toString("dd MMMM yyyy");
     }
 }

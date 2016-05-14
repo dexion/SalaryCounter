@@ -36,6 +36,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.snake.salarycounter.R;
 import com.snake.salarycounter.activities.FinanceCondition.ListFinanceConditionActivity;
 import com.snake.salarycounter.activities.ShiftType.ListShiftTypeActivity;
+import com.snake.salarycounter.activities.Tabel.ListTabelActivity;
 import com.snake.salarycounter.models.ShiftType;
 
 import io.fabric.sdk.android.Fabric;
@@ -51,6 +52,11 @@ public class MainActivity extends PinActivity {
     private AccountHeader headerResult = null;
     private Drawer result = null;
     private PrimaryDrawerItem authDrawerItem = null;
+
+    final static int II_SHIFT_TYPES = 10;
+    final static int II_FINANCE_CONDITIONS = 20;
+    final static int II_TABLE = 30;
+    final static int II_CALENDAR = 40;
 
     final static int II_SETTINGS = 101;
     final static int II_ABOUT = 102;
@@ -120,17 +126,22 @@ public class MainActivity extends PinActivity {
                                 .withName(R.string.drawer_item_shift_types)
                                 .withSelectable(false)
                                 .withIcon(CommunityMaterial.Icon.cmd_calendar_multiple)
-                                .withIdentifier(20),
+                                .withIdentifier(II_SHIFT_TYPES),
+                        new PrimaryDrawerItem()
+                                .withName(R.string.drawer_item_tabel)
+                                .withSelectable(false)
+                                .withIcon(CommunityMaterial.Icon.cmd_calendar_multiple)
+                                .withIdentifier(II_TABLE),
                         new PrimaryDrawerItem()
                                 .withName(R.string.drawer_item_finance_conditions)
                                 .withSelectable(false)
                                 .withIcon(CommunityMaterial.Icon.cmd_diamond)
-                                .withIdentifier(30),
+                                .withIdentifier(II_FINANCE_CONDITIONS),
                         new PrimaryDrawerItem()
                                 .withName(R.string.drawer_item_calendar)
                                 .withSelectable(false)
                                 .withIcon(CommunityMaterial.Icon.cmd_calendar_clock)
-                                .withIdentifier(40)
+                                .withIdentifier(II_CALENDAR)
                         //here we use a customPrimaryDrawerItem we defined in our sample app
                         //this custom DrawerItem extends the PrimaryDrawerItem so it just overwrites some methods
                        /* new OverflowMenuDrawerItem()
@@ -223,26 +234,30 @@ public class MainActivity extends PinActivity {
                         Intent intent = new Intent();
 
                         switch((int)drawerItem.getIdentifier()) {
-                            case 10:
+                            case 1000:
                                 intent.setClass(that, CustomPinActivity.class);
                                 intent.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);
                                 startActivity(intent);
                                 break;
-                            case 20:
+                            case 2000:
                                 intent.setClass(that, ListShiftTypeActivity.class);
                                 intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
                                 startActivity(intent);
                                 break;
-                            case 30:
+                            case II_SHIFT_TYPES:
+                                intent.setClass(that, ListShiftTypeActivity.class);
+                                startActivity(intent);
+                                break;
+                            case II_FINANCE_CONDITIONS:
                                 intent.setClass(that, ListFinanceConditionActivity.class);
                                 startActivity(intent);
                                 break;
-                            case 40:
-                                intent.setClass(that, CalendarActivity.class);
+                            case II_TABLE:
+                                intent.setClass(that, ListTabelActivity.class);
                                 startActivity(intent);
                                 break;
-                            case 50:
-                                intent.setClass(that, ListShiftTypeActivity.class);
+                            case II_CALENDAR:
+                                intent.setClass(that, CalendarActivity.class);
                                 startActivity(intent);
                                 break;
                             case II_SETTINGS:
