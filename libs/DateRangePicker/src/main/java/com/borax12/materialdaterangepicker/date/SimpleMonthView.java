@@ -23,7 +23,7 @@ import android.util.AttributeSet;
 
 public class SimpleMonthView extends com.borax12.materialdaterangepicker.date.MonthView {
 
-    public SimpleMonthView(Context context, AttributeSet attr, DatePickerController controller) {
+    public SimpleMonthView(Context context, AttributeSet attr, DateRangePickerController controller) {
         super(context, attr, controller);
     }
 

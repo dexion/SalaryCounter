@@ -54,8 +54,8 @@ public class AmPmCirclesView extends View {
     private String mPmText;
     private boolean mIsInitialized;
 
-    private static final int AM = TimePickerDialog.AM;
-    private static final int PM = TimePickerDialog.PM;
+    private static final int AM = TimeRangePickerDialog.AM;
+    private static final int PM = TimeRangePickerDialog.PM;
 
     private boolean mDrawValuesReady;
     private int mAmPmCircleRadius;

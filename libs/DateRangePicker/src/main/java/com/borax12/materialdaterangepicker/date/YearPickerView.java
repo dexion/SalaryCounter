@@ -29,7 +29,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.borax12.materialdaterangepicker.R;
-import com.borax12.materialdaterangepicker.date.DatePickerDialog.OnDateChangedListener;
+import com.borax12.materialdaterangepicker.date.DateRangePickerDialog.OnDateChangedListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,7 @@ import java.util.List;
 public class YearPickerView extends ListView implements OnItemClickListener, OnDateChangedListener {
     private static final String TAG = "YearPickerView";
 
-    private final DatePickerController mController;
+    private final DateRangePickerController mController;
     private YearAdapter mAdapter;
     private int mViewSize;
     private int mChildSize;
@@ -51,7 +51,7 @@ public class YearPickerView extends ListView implements OnItemClickListener, OnD
     /**
      * @param context
      */
-    public YearPickerView(Context context, DatePickerController controller) {
+    public YearPickerView(Context context, DateRangePickerController controller) {
         super(context);
         mController = controller;
         mController.registerOnDateChangedListener(this);

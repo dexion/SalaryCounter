@@ -54,10 +54,10 @@ import java.util.Locale;
 /**
  * Dialog allowing users to select a date.
  */
-public class DatePickerDialog extends DialogFragment implements
-        OnClickListener, com.borax12.materialdaterangepicker.date.DatePickerController {
+public class DateRangePickerDialog extends DialogFragment implements
+        OnClickListener, DateRangePickerController {
 
-    private static final String TAG = "DatePickerDialog";
+    private static final String TAG = "DateRangePickerDialog";
 
     private static final int UNINITIALIZED = -1;
     private static final int MONTH_AND_DAY_VIEW = 0;
@@ -175,7 +175,7 @@ public class DatePickerDialog extends DialogFragment implements
          *            with {@link java.util.Calendar}.
          * @param dayOfMonth The day of the month that was set.
          */
-        void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth,int yearEnd, int monthOfYearEnd, int dayOfMonthEnd);
+        void onDateSet(DateRangePickerDialog view, int year, int monthOfYear, int dayOfMonth, int yearEnd, int monthOfYearEnd, int dayOfMonthEnd);
     }
 
     /**
@@ -187,7 +187,7 @@ public class DatePickerDialog extends DialogFragment implements
     }
 
 
-    public DatePickerDialog() {
+    public DateRangePickerDialog() {
         // Empty constructor required for dialog fragment.
     }
 
@@ -197,10 +197,10 @@ public class DatePickerDialog extends DialogFragment implements
      * @param monthOfYear The initial month of the dialog.
      * @param dayOfMonth The initial day of the dialog.
      */
-    public static DatePickerDialog newInstance(OnDateSetListener callBack, int year,
-            int monthOfYear, 
-            int dayOfMonth) {
-        DatePickerDialog ret = new DatePickerDialog();
+    public static DateRangePickerDialog newInstance(OnDateSetListener callBack, int year,
+                                                    int monthOfYear,
+                                                    int dayOfMonth) {
+        DateRangePickerDialog ret = new DateRangePickerDialog();
         ret.initialize(callBack, year, monthOfYear, dayOfMonth);
         return ret;
     }
@@ -215,13 +215,13 @@ public class DatePickerDialog extends DialogFragment implements
      * @param montOfYearEnd The end month of the dialog.
      * @param dayOfMonthEnd  The end day of the dialog.
      */
-    public static DatePickerDialog newInstance(OnDateSetListener callBack, int year,
-                                               int monthOfYear,
-                                               int dayOfMonth,
-                                               int yearEnd,
-                                               int montOfYearEnd,
-                                               int dayOfMonthEnd) {
-        DatePickerDialog ret = new DatePickerDialog();
+    public static DateRangePickerDialog newInstance(OnDateSetListener callBack, int year,
+                                                    int monthOfYear,
+                                                    int dayOfMonth,
+                                                    int yearEnd,
+                                                    int montOfYearEnd,
+                                                    int dayOfMonthEnd) {
+        DateRangePickerDialog ret = new DateRangePickerDialog();
         ret.initialize(callBack, year, monthOfYear, dayOfMonth, yearEnd, montOfYearEnd, dayOfMonthEnd);
         return ret;
     }
@@ -429,7 +429,7 @@ public class DatePickerDialog extends DialogFragment implements
             public void onClick(View v) {
                 tryVibrate();
                 if (mCallBack != null) {
-                    mCallBack.onDateSet(DatePickerDialog.this, mCalendar.get(Calendar.YEAR),
+                    mCallBack.onDateSet(DateRangePickerDialog.this, mCalendar.get(Calendar.YEAR),
                             mCalendar.get(Calendar.MONTH), mCalendar.get(Calendar.DAY_OF_MONTH),mCalendarEnd.get(Calendar.YEAR),
                             mCalendarEnd.get(Calendar.MONTH), mCalendarEnd.get(Calendar.DAY_OF_MONTH));
                 }

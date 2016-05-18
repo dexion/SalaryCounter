@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.borax12.materialdaterangepicker.time.RadialPickerLayout;
-import com.borax12.materialdaterangepicker.time.TimePickerDialog;
+import com.borax12.materialdaterangepicker.time.TimeRangePickerDialog;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.github.johnpersano.supertoasts.util.Style;
 import com.snake.salarycounter.R;
@@ -25,7 +25,6 @@ import org.joda.time.format.DateTimeFormatter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.greenrobot.event.EventBus;
 
 public class ShiftTypeTimeFragment extends Fragment {
 
@@ -43,8 +42,8 @@ public class ShiftTypeTimeFragment extends Fragment {
 
     @Bind(R.id.shift_type_time_day) Button day;
     @OnClick(R.id.shift_type_time_day) void setDayStartEnd() {
-        TimePickerDialog tpd = TimePickerDialog.newInstance(
-                new TimePickerDialog.OnTimeSetListener() {
+        TimeRangePickerDialog tpd = TimeRangePickerDialog.newInstance(
+                new TimeRangePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int hourOfDayEnd, int minuteEnd) {
                         currentDayStart = formatter.parseDateTime((hourOfDay < 10 ? "0" + hourOfDay : "" + hourOfDay) + ":" + (minute < 10 ? "0" + minute : "" + minute));
@@ -77,8 +76,8 @@ public class ShiftTypeTimeFragment extends Fragment {
 
     @Bind(R.id.shift_type_time_dinner) Button dinner;
     @OnClick(R.id.shift_type_time_dinner) void setDinnerStartEnd() {
-        TimePickerDialog tpd = TimePickerDialog.newInstance(
-                new TimePickerDialog.OnTimeSetListener() {
+        TimeRangePickerDialog tpd = TimeRangePickerDialog.newInstance(
+                new TimeRangePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int hourOfDayEnd, int minuteEnd) {
                         currentDinnerStart = formatter.parseDateTime((hourOfDay < 10 ? "0" + hourOfDay : "" + hourOfDay) + ":" + (minute < 10 ? "0" + minute : "" + minute));

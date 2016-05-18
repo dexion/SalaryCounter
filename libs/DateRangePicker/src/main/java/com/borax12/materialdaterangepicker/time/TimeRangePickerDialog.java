@@ -50,8 +50,8 @@ import java.util.Locale;
 /**
  * Dialog to set a time.
  */
-public class TimePickerDialog extends DialogFragment implements OnValueSelectedListener{
-    private static final String TAG = "TimePickerDialog";
+public class TimeRangePickerDialog extends DialogFragment implements OnValueSelectedListener{
+    private static final String TAG = "TimeRangePickerDialog";
 
     private static final String KEY_HOUR_OF_DAY = "hour_of_day";
     private static final String KEY_MINUTE = "minute";
@@ -152,20 +152,20 @@ public class TimePickerDialog extends DialogFragment implements OnValueSelectedL
         void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int hourOfDayEnd, int minuteEnd);
     }
 
-    public TimePickerDialog() {
+    public TimeRangePickerDialog() {
         // Empty constructor required for dialog fragment.
     }
 
     /**
-    public TimePickerDialog(Context context, int theme, OnTimeSetListener callback,
+    public TimeRangePickerDialog(Context context, int theme, OnTimeSetListener callback,
             int hourOfDay, int minute, boolean is24HourMode) {
         // Empty constructor required for dialog fragment.
     }
      **/
 
-    public static TimePickerDialog newInstance(OnTimeSetListener callback,
-            int hourOfDay, int minuteOfHour, int hourOfDayEnd, int minuteOfHourEnd, boolean is24HourMode) {
-        TimePickerDialog ret = new TimePickerDialog();
+    public static TimeRangePickerDialog newInstance(OnTimeSetListener callback,
+                                                    int hourOfDay, int minuteOfHour, int hourOfDayEnd, int minuteOfHourEnd, boolean is24HourMode) {
+        TimeRangePickerDialog ret = new TimeRangePickerDialog();
         ret.initialize(callback, hourOfDay, minuteOfHour, hourOfDayEnd, minuteOfHourEnd, is24HourMode);
         return ret;
     }
@@ -1065,7 +1065,7 @@ public class TimePickerDialog extends DialogFragment implements OnValueSelectedL
      * may then be used for the caller to know whether zeros had been explicitly entered as either
      * hours of minutes. This is helpful for deciding whether to show the dashes, or actual 0's.
      * @return A size-3 int array. The first value will be the hours, the second value will be the
-     * minutes, and the third will be either TimePickerDialog.AM or TimePickerDialog.PM.
+     * minutes, and the third will be either TimeRangePickerDialog.AM or TimeRangePickerDialog.PM.
      */
     private int[] getEnteredTime(Boolean[] enteredZeros) {
         int amOrPm = -1;
