@@ -1,5 +1,6 @@
 package com.snake.salarycounter.activities.Tabel;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -38,11 +39,13 @@ public class ListTabelActivity extends AppCompatActivity
         SimpleSwipeCallback.ItemSwipeCallback,
         FastAdapter.OnClickListener<GenericTabelItem>  {
 
+    public static final long NEW_TABEL = -10;
+
     //save our FastAdapter
     private FastAdapter<GenericTabelItem> fastAdapter;
     GenericItemAdapter<Tabel, GenericTabelItem> itemAdapter;
 
-    //drag & drop
+    //swipe
     private SimpleSwipeCallback touchCallback;
     private ItemTouchHelper touchHelper;
 
@@ -114,14 +117,14 @@ public class ListTabelActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Intent intent = new Intent();
+                Intent intent = new Intent();
                 intent.setClass(ListTabelActivity.this, ShowTabelActivity.class);
-                intent.putExtra("shift_type_position", NEW_TABEL);
-                startActivity(intent);*/
-                for(int i = 2012; i < 2016; i++)
+                intent.putExtra("tabel_id", NEW_TABEL);
+                startActivity(intent);
+                /*for(int i = 2012; i < 2016; i++)
                     for(int ii = 1; ii < 13; ii++)
-                        new Tabel(DateTime.now().withYear(i).withMonthOfYear(ii), 164.25).save();
-                SuperToast.create(ListTabelActivity.this, "Ok", SuperToast.Duration.MEDIUM, Style.getStyle(Style.BLUE)).show();
+                        new Tabel(DateTime.now().withYear(i).withMonthOfYear(ii).withDayOfMonth(1), 164.25).save();
+                SuperToast.create(ListTabelActivity.this, "Ok", SuperToast.Duration.MEDIUM, Style.getStyle(Style.BLUE)).show();*/
             }
         });
     }
@@ -202,6 +205,10 @@ public class ListTabelActivity extends AppCompatActivity
 
     @Override
     public boolean onClick(View v, IAdapter<GenericTabelItem> adapter, GenericTabelItem item, int position) {
+        Intent intent = new Intent();
+        intent.setClass(this, ShowTabelActivity.class);
+        intent.putExtra("tabel_id", Tabel.getByPosition(position).getId());
+        startActivity(intent);
         return false;
     }
 }

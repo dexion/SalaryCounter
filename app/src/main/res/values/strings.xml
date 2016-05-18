@@ -279,4 +279,10 @@
     <string name="drawer_item_tabel">Табель</string>
     <string name="title_activity_list_finance_condition">Условия труда</string>
     <string name="title_activity_list_tabel">Табель</string>
+    <string name="title_activity_show_tabel">Табель</string>
+    <string name="tabel_start_date_hint">Начало действия</string>
+    <string name="tabel_start_date">Начало действия</string>
+    <string name="tabel_hours_hint">Количество часов</string>
+    <string name="tabel_hours">Количество часов</string>
+    <string name="tabel_main_settings">Основные настройки</string>
 </resources>

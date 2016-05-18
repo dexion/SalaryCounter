@@ -39,17 +39,7 @@ public class ShowShiftTypeActivity extends AppCompatActivity{
         _position = getIntent().getIntExtra("shift_type_position", -1);
         if(_position == ListShiftTypeActivity.NEW_SHIFT_TYPE){
             //_position = ShiftType.allShiftTypes().size() ;
-
-            ActiveAndroid.beginTransaction();
-            try {
-                ShiftType st = new ShiftType("");
-                st.save();
-                _id = st.getId();
-                ActiveAndroid.setTransactionSuccessful();
-            }
-            finally {
-                ActiveAndroid.endTransaction();
-            }
+            _id = new ShiftType("").save();
         }
         else{
             _id = ShiftType.getByPosition(_position).getId();

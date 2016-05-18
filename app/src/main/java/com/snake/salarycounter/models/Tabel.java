@@ -37,13 +37,13 @@ public class Tabel extends Model {
 
     public static ArrayList<Tabel> allTabel()
     {
-        List<Tabel> typesList = new Select().from(Tabel.class).orderBy("start_date ASC").execute();
+        List<Tabel> typesList = new Select().from(Tabel.class).orderBy("start_date DESC").execute();
         return new ArrayList<>(typesList);
     }
 
     public static Tabel getByPosition(int position)
     {
-        return new Select().from(Tabel.class).orderBy("start_date ASC").limit(1).offset(position).executeSingle();
+        return new Select().from(Tabel.class).orderBy("start_date DESC").limit(1).offset(position).executeSingle();
     }
 
     public static Tabel getById(long _id)
