@@ -178,8 +178,11 @@ public class ShiftType extends Model
         return typesList.size();
     }
 
-    public boolean canDelete(int position){
+    public static boolean canDelete(int position){
         return !(Day.getByShiftType(ShiftType.getByPosition(position)).size() > 0);
+    }
+    public boolean canDelete(){
+        return !(Day.getByShiftType(this).size() > 0);
     }
 
     @Override

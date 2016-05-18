@@ -147,7 +147,7 @@ public class MainActivity extends PinActivity {
                         new PrimaryDrawerItem()
                                 .withName(R.string.drawer_item_tabel)
                                 .withSelectable(false)
-                                .withIcon(CommunityMaterial.Icon.cmd_calendar_multiple)
+                                .withIcon(CommunityMaterial.Icon.cmd_calendar_clock)
                                 .withIdentifier(II_TABLE),
                         new PrimaryDrawerItem()
                                 .withName(R.string.drawer_item_finance_conditions)
@@ -157,7 +157,7 @@ public class MainActivity extends PinActivity {
                         new PrimaryDrawerItem()
                                 .withName(R.string.drawer_item_calendar)
                                 .withSelectable(false)
-                                .withIcon(CommunityMaterial.Icon.cmd_calendar_clock)
+                                .withIcon(CommunityMaterial.Icon.cmd_calendar_text)
                                 .withIdentifier(II_CALENDAR)
                         //here we use a customPrimaryDrawerItem we defined in our sample app
                         //this custom DrawerItem extends the PrimaryDrawerItem so it just overwrites some methods

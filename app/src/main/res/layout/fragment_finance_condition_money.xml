@@ -1,0 +1,128 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.snake.salarycounter.fragments.ShowFinanceCondition.FinanceConditionMoneyFragment">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView" >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/fab_margin">
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/finance_condition_salary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/finance_condition_salary_hint"
+                app:met_floatingLabel="normal"
+                app:met_floatingLabelText="@string/finance_condition_salary"
+                android:singleLine="true"
+                android:inputType="numberDecimal" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/finance_condition_addition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/finance_condition_addition_hint"
+                app:met_floatingLabel="normal"
+                app:met_floatingLabelText="@string/finance_condition_addition"
+                android:singleLine="true"
+                android:inputType="numberDecimal" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/finance_condition_addition_proc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/finance_condition_addition_proc_hint"
+                app:met_floatingLabel="normal"
+                app:met_floatingLabelText="@string/finance_condition_addition_proc"
+                android:singleLine="true"
+                android:inputType="numberDecimal" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/finance_condition_north"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/finance_condition_north_hint"
+                app:met_floatingLabel="normal"
+                app:met_floatingLabelText="@string/finance_condition_north"
+                android:singleLine="true"
+                android:inputType="number" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/finance_condition_district"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/finance_condition_district_hint"
+                app:met_floatingLabel="normal"
+                app:met_floatingLabelText="@string/finance_condition_district"
+                android:singleLine="true"
+                android:inputType="number" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/finance_condition_bonus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/finance_condition_bonus_hint"
+                app:met_floatingLabel="normal"
+                app:met_floatingLabelText="@string/finance_condition_bonus"
+                android:singleLine="true"
+                android:inputType="numberDecimal" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/finance_condition_alimony"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/finance_condition_alimony_hint"
+                app:met_floatingLabel="normal"
+                app:met_floatingLabelText="@string/finance_condition_alimony"
+                android:singleLine="true"
+                android:inputType="numberDecimal" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/finance_condition_alimony_proc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/finance_condition_alimony_proc_hint"
+                app:met_floatingLabel="normal"
+                app:met_floatingLabelText="@string/finance_condition_alimony_proc"
+                android:singleLine="true"
+                android:inputType="numberDecimal" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/finance_condition_residue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/finance_condition_residue_hint"
+                app:met_floatingLabel="normal"
+                app:met_floatingLabelText="@string/finance_condition_residue"
+                android:singleLine="true"
+                android:inputType="numberDecimal" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/finance_condition_residue_proc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/finance_condition_residue_proc_hint"
+                app:met_floatingLabel="normal"
+                app:met_floatingLabelText="@string/finance_condition_residue_proc"
+                android:singleLine="true"
+                android:inputType="numberDecimal" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/finance_condition_enable_tax"
+                android:id="@+id/finance_condition_enable_tax" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

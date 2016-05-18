@@ -1,5 +1,6 @@
 package com.snake.salarycounter.activities.FinanceCondition;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -29,14 +30,14 @@ import com.snake.salarycounter.R;
 import com.snake.salarycounter.generic.GenericFinanceConditionItem;
 import com.snake.salarycounter.models.FinanceCondition;
 
-import org.joda.time.DateTime;
-
 
 public class ListFinanceConditionActivity extends AppCompatActivity
         implements
         ItemAdapter.ItemFilterListener,
         SimpleSwipeCallback.ItemSwipeCallback,
         FastAdapter.OnClickListener<GenericFinanceConditionItem>  {
+
+    public static final long NEW_FINANCE_CONDITION = -10;
 
     //save our FastAdapter
     private FastAdapter<GenericFinanceConditionItem> fastAdapter;
@@ -114,14 +115,14 @@ public class ListFinanceConditionActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Intent intent = new Intent();
+                Intent intent = new Intent();
                 intent.setClass(ListFinanceConditionActivity.this, ShowFinanceConditionActivity.class);
-                intent.putExtra("shift_type_position", NEW_FINANCE_CONDITION);
-                startActivity(intent);*/
-                for(int i = 2012; i < 2016; i++)
+                intent.putExtra("finance_condition_id", NEW_FINANCE_CONDITION);
+                startActivity(intent);
+                /*for(int i = 2012; i < 2016; i++)
                     for(int ii = 1; ii < 13; ii++)
                         new FinanceCondition(DateTime.now().withYear(i).withMonthOfYear(ii)).save();
-                SuperToast.create(ListFinanceConditionActivity.this, "Ok", SuperToast.Duration.MEDIUM, Style.getStyle(Style.BLUE)).show();
+                SuperToast.create(ListFinanceConditionActivity.this, "Ok", SuperToast.Duration.MEDIUM, Style.getStyle(Style.BLUE)).show();*/
             }
         });
     }
@@ -202,6 +203,10 @@ public class ListFinanceConditionActivity extends AppCompatActivity
 
     @Override
     public boolean onClick(View v, IAdapter<GenericFinanceConditionItem> adapter, GenericFinanceConditionItem item, int position) {
+        Intent intent = new Intent();
+        intent.setClass(this, ShowFinanceConditionActivity.class);
+        intent.putExtra("finance_condition_id", item.getModel().getId());
+        startActivity(intent);
         return false;
     }
 }

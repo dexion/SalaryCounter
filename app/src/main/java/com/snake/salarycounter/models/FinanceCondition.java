@@ -67,17 +67,28 @@ public class FinanceCondition extends Model{
     {
         super();
         startDate = date;
+        salary = new BigDecimal(0.0);
+        addition = new BigDecimal(0.0);
+        alimony = new BigDecimal(0.0);
+        residue = new BigDecimal(0.0);
+        other_bonus = new BigDecimal(0.0);
+        enable_tax = true;
     }
 
     public static ArrayList<FinanceCondition> allFinanceConditions()
     {
-        List<FinanceCondition> typesList = new Select().from(FinanceCondition.class).orderBy("start_date ASC").execute();
+        List<FinanceCondition> typesList = new Select().from(FinanceCondition.class).orderBy("start_date DESC").execute();
         return new ArrayList<>(typesList);
     }
 
     public static FinanceCondition getByPosition(int position)
     {
-        return new Select().from(FinanceCondition.class).orderBy("start_date ASC").limit(1).offset(position).executeSingle();
+        return new Select().from(FinanceCondition.class).orderBy("start_date DESC").limit(1).offset(position).executeSingle();
+    }
+
+    public static FinanceCondition getLast()
+    {
+        return new Select().from(FinanceCondition.class).orderBy("start_date DESC").limit(1).executeSingle();
     }
 
     public static FinanceCondition getById(long _id)
@@ -85,7 +96,7 @@ public class FinanceCondition extends Model{
         return new Select().from(FinanceCondition.class).where("_id = ?", _id).limit(1).executeSingle();
     }
 
-    public boolean canDelete(int position)
+    public static boolean canDelete(int position)
     {
         return true;
     }
@@ -96,5 +107,25 @@ public class FinanceCondition extends Model{
 
     public static FinanceCondition getByDate(DateTime date){
         return new Select().from(FinanceCondition.class).orderBy("start_date DESC").limit(1).where("start_date <= ?", date.getMillis()).executeSingle();
+    }
+
+    public long copy(){
+        FinanceCondition fc = new FinanceCondition(this.startDate);
+        fc.startDate = this.startDate;
+        fc.salary = this.salary;
+        fc.addition = this.addition;
+        fc.addition_proc = this.addition_proc;
+        fc.north = this.north;
+        fc.district = this.district;
+        fc.bonus = this.bonus;
+        fc.alimony = this.alimony;
+        fc.alimony_proc = this.alimony_proc;
+        fc.residue = this.residue;
+        fc.residue_proc = this.residue_proc;
+        fc.other_bonus = this.other_bonus;
+        fc.other_bonus_proc = this.other_bonus_proc;
+        fc.enable_tax = this.enable_tax;
+
+        return fc.save();
     }
 }

@@ -98,6 +98,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.Tabel.ListTabelActivity" />
         </activity>
+        <activity
+            android:name=".activities.FinanceCondition.ShowFinanceConditionActivity"
+            android:label="@string/title_activity_show_finance_condition"
+            android:parentActivityName=".activities.FinanceCondition.ListFinanceConditionActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.FinanceCondition.ListFinanceConditionActivity" />
+        </activity>
     </application>
 
 </manifest>
