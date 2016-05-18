@@ -118,7 +118,9 @@ public class ListFinanceConditionActivity extends AppCompatActivity
                 intent.setClass(ListFinanceConditionActivity.this, ShowFinanceConditionActivity.class);
                 intent.putExtra("shift_type_position", NEW_FINANCE_CONDITION);
                 startActivity(intent);*/
-                new FinanceCondition(DateTime.now()).save();
+                for(int i = 2012; i < 2016; i++)
+                    for(int ii = 1; ii < 13; ii++)
+                        new FinanceCondition(DateTime.now().withYear(i).withMonthOfYear(ii)).save();
                 SuperToast.create(ListFinanceConditionActivity.this, "Ok", SuperToast.Duration.MEDIUM, Style.getStyle(Style.BLUE)).show();
             }
         });

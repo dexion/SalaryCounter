@@ -59,4 +59,8 @@ public class Tabel extends Model {
     public String getText() {
         return new SimpleDateFormat("LLLL yyyy", Locale.getDefault()).format(startDate.getMillis());
     }
+
+    public static Tabel getByDate(DateTime date){
+        return new Select().from(Tabel.class).orderBy("start_date DESC").limit(1).where("start_date <= ?", date.getMillis()).executeSingle();
+    }
 }

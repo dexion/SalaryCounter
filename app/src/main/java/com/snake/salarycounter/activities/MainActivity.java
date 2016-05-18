@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import com.crashlytics.android.Crashlytics;
 import com.github.johnpersano.supertoasts.SuperToast;
@@ -33,12 +34,20 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.snake.salarycounter.MyLogic;
 import com.snake.salarycounter.R;
 import com.snake.salarycounter.activities.FinanceCondition.ListFinanceConditionActivity;
 import com.snake.salarycounter.activities.ShiftType.ListShiftTypeActivity;
 import com.snake.salarycounter.activities.Tabel.ListTabelActivity;
 import com.snake.salarycounter.models.ShiftType;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.fabric.sdk.android.Fabric;
 
 
@@ -61,6 +70,12 @@ public class MainActivity extends PinActivity {
     final static int II_SETTINGS = 101;
     final static int II_ABOUT = 102;
     final static int II_ACCOUNT = 103;
+
+    @Bind(R.id.button) Button btn;
+    @OnClick(R.id.button) void onButtonClicked(){
+        MyLogic lgc = new MyLogic(DateTime.now(), DateTime.now());
+        lgc.RecalcDay(DateTime.parse("16.05.2016", DateTimeFormat.forPattern("dd.mm.yyyy")));
+    }
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -93,6 +108,8 @@ public class MainActivity extends PinActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ButterKnife.bind(this);
 
         // Handle Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

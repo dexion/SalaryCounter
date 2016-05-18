@@ -118,7 +118,9 @@ public class ListTabelActivity extends AppCompatActivity
                 intent.setClass(ListTabelActivity.this, ShowTabelActivity.class);
                 intent.putExtra("shift_type_position", NEW_TABEL);
                 startActivity(intent);*/
-                new Tabel(DateTime.now(), 164.25).save();
+                for(int i = 2012; i < 2016; i++)
+                    for(int ii = 1; ii < 13; ii++)
+                        new Tabel(DateTime.now().withYear(i).withMonthOfYear(ii), 164.25).save();
                 SuperToast.create(ListTabelActivity.this, "Ok", SuperToast.Duration.MEDIUM, Style.getStyle(Style.BLUE)).show();
             }
         });

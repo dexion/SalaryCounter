@@ -93,22 +93,6 @@ public class ShiftType extends Model
         isAveragePrice = false;
     }
 
-    /*public ShiftType(String Name, int Color, int Weight)
-    {
-        super();
-        name = Name;
-        color = Color;
-        weight = Weight;
-    }
-
-    public ShiftType(String Name, int Color)
-    {
-        super();
-        name = Name;
-        color = Color;
-        weight = ShiftType.allShiftTypes().size() == 0 ? 0 : SQLiteUtils.intQuery("SELECT MAX(weight) FROM shift_types", null) + 1;
-    }*/
-
     public static ArrayList<ShiftType> allShiftTypes()
     {
         List<ShiftType> typesList = new Select().from(ShiftType.class).orderBy("weight ASC").execute();

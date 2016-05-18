@@ -61,4 +61,8 @@ public class Day extends Model {
     public String getText() {
         return null;
     }
+
+    public ShiftType getShiftType(){
+        return shiftType;
+    }
 }

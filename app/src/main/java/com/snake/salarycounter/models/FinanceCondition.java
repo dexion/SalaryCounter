@@ -93,4 +93,8 @@ public class FinanceCondition extends Model{
     public String getText() {
         return startDate.toString("dd MMMM yyyy");
     }
+
+    public static FinanceCondition getByDate(DateTime date){
+        return new Select().from(FinanceCondition.class).orderBy("start_date DESC").limit(1).where("start_date <= ?", date.getMillis()).executeSingle();
+    }
 }
