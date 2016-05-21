@@ -133,12 +133,12 @@ public class MainActivity extends PinActivity {
                 .withToolbar(toolbar)
                 .withAccountHeader(headerResult) //set the AccountHeader we created earlier for the header
                 .addDrawerItems(
-                        new PrimaryDrawerItem()
+                        /*new PrimaryDrawerItem()
                                 .withName(R.string.drawer_item_home)
                                 .withIcon(CommunityMaterial.Icon.cmd_home)
                                 .withIdentifier(10)
                                 .withBadge("100")
-                                .withDescription("Description"),
+                                .withDescription("Description"),*/
                         new PrimaryDrawerItem()
                                 .withName(R.string.drawer_item_shift_types)
                                 .withSelectable(false)
