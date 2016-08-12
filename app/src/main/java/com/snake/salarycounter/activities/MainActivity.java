@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +20,15 @@ import com.crashlytics.android.Crashlytics;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.github.orangegangsters.lollipin.lib.PinActivity;
 import com.github.orangegangsters.lollipin.lib.managers.AppLock;
+
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 import com.mikepenz.aboutlibraries.LibsConfiguration;
@@ -39,28 +50,38 @@ import com.snake.salarycounter.R;
 import com.snake.salarycounter.activities.FinanceCondition.ListFinanceConditionActivity;
 import com.snake.salarycounter.activities.ShiftType.ListShiftTypeActivity;
 import com.snake.salarycounter.activities.Tabel.ListTabelActivity;
-import com.snake.salarycounter.models.ShiftType;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.fabric.sdk.android.Fabric;
+import pub.devrel.easygoogle.Google;
+import pub.devrel.easygoogle.gac.SignIn;
 
 
-public class MainActivity extends PinActivity {
+public class MainActivity extends PinActivity implements
+        SignIn.SignInListener {
 
     private static final int PROFILE_SETTING = 1;
     private static final int REQUEST_CODE_ENABLE = 11;
     private static final String PASSWORD_PREFERENCE_KEY = "PASSCODE";
 
-    //save our header or result
+    public static final String ANONYMOUS = "anonymous";
+
+    private static final String TAG = "SignInActivity";
+
+    //save our header or drawerResult
     private AccountHeader headerResult = null;
-    private Drawer result = null;
+    private Drawer drawerResult = null;
     private PrimaryDrawerItem authDrawerItem = null;
+
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseUser mFirebaseUser;
+    private String mUsername;
+    private Google mGoogle;
 
     final static int II_SHIFT_TYPES = 10;
     final static int II_FINANCE_CONDITIONS = 20;
@@ -117,18 +138,24 @@ public class MainActivity extends PinActivity {
         //getSupportActionBar().setTitle("Setted title");
 
         // Create the AccountHeader
-        buildHeader(false, savedInstanceState);
+        buildHeader(true, savedInstanceState);
 
         final Context that = this;
 
-        authDrawerItem = new PrimaryDrawerItem()
+        String serverClientId = getString(R.string.default_web_client_id);
+
+        mGoogle = new Google.Builder(this)
+                .enableSignIn(this, serverClientId)
+                .build();
+
+        authDrawerItem = new SecondaryDrawerItem()
                 .withSelectable(false)
                 .withName(R.string.account_title)
-                .withIcon(CommunityMaterial.Icon.cmd_plus)
+                .withIcon(CommunityMaterial.Icon.cmd_account)
                 .withIdentifier(II_ACCOUNT);
 
         //Create the drawer
-        result = new DrawerBuilder()
+        drawerResult = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
                 .withAccountHeader(headerResult) //set the AccountHeader we created earlier for the header
@@ -231,7 +258,7 @@ public class MainActivity extends PinActivity {
                     }
                 })
                 .addStickyDrawerItems(
-                        //authDrawerItem,
+                        authDrawerItem,
                         new SecondaryDrawerItem()
                                 .withSelectable(false)
                                 .withName(R.string.drawer_item_settings)
@@ -285,7 +312,16 @@ public class MainActivity extends PinActivity {
                                 showAbout(that);
                                 break;
                             case II_ACCOUNT:
-
+                                if(mGoogle.getSignIn().isSignedIn()) {
+                                    mFirebaseAuth.signOut();
+                                    mGoogle.getSignIn().signOut();
+                                    mFirebaseUser = null;
+                                    mUsername = ANONYMOUS;
+                                    //mPhotoUrl = null;
+                                }
+                                else {
+                                    mGoogle.getSignIn().signIn();
+                                }
                                 break;
                             default:
                                 Snackbar.make(view, "Clicked " + String.valueOf(drawerItem.getIdentifier()), Snackbar.LENGTH_LONG)
@@ -296,6 +332,26 @@ public class MainActivity extends PinActivity {
                         return true;
                     }} )
                 .build();
+
+
+        mUsername = ANONYMOUS;
+
+        // Initialize Firebase Auth
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+
+        if (mFirebaseUser == null) {
+            // Not signed in, launch the Sign In activity
+            mGoogle.getSignIn().signIn();
+        } else {
+            mUsername = mFirebaseUser.getDisplayName();
+            //mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
+        }
     }
 
     private void logUser() {
@@ -325,6 +381,7 @@ public class MainActivity extends PinActivity {
         headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.header)
+                .withSelectionListEnabledForSingleProfile(false)
                 .withCompactStyle(compact)
                 /*.addProfiles(
                         profile,
@@ -458,7 +515,7 @@ public class MainActivity extends PinActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         //add the values which need to be saved from the drawer to the bundle
-        outState = result.saveInstanceState(outState);
+        outState = drawerResult.saveInstanceState(outState);
         //add the values which need to be saved from the accountHeader to the bundle
         outState = headerResult.saveInstanceState(outState);
         super.onSaveInstanceState(outState);
@@ -467,10 +524,68 @@ public class MainActivity extends PinActivity {
     @Override
     public void onBackPressed() {
         //handle the back press :D close the drawer first and if the drawer is closed close the activity
-        if (result != null && result.isDrawerOpen()) {
-            result.closeDrawer();
+        if (drawerResult != null && drawerResult.isDrawerOpen()) {
+            drawerResult.closeDrawer();
         } else {
             super.onBackPressed();
         }
+    }
+
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        Log.d(TAG, "firebaseAuthWithGooogle:" + acct.getId());
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        mFirebaseAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
+
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "signInWithCredential", task.getException());
+                            SuperToast.create(MainActivity.this, getString(R.string.error_signing_in), SuperToast.Duration.MEDIUM).show();
+                        } else {
+                            //SuperToast.create(MainActivity.this, mFirebaseUser.getDisplayName(), SuperToast.Duration.MEDIUM).show();
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void onSignedIn(GoogleSignInAccount googleSignInAccount) {
+        firebaseAuthWithGoogle(googleSignInAccount);
+        authDrawerItem
+                .withName(R.string.account_signout)
+                .withIcon(CommunityMaterial.Icon.cmd_account_off);
+        drawerResult.updateStickyFooterItem(authDrawerItem);
+
+        headerResult.clear();
+        headerResult.addProfile(
+                new ProfileDrawerItem()
+                        .withName(googleSignInAccount.getDisplayName())
+                        .withEmail(googleSignInAccount.getEmail())
+                        .withIcon(googleSignInAccount.getPhotoUrl())
+                , 0);
+
+    }
+
+    @Override
+    public void onSignInFailed() {
+        SuperToast.create(MainActivity.this, getString(R.string.error_signing_in), SuperToast.Duration.MEDIUM).show();
+    }
+
+    @Override
+    public void onSignedOut() {
+        headerResult.clear();
+
+        authDrawerItem
+                .withName(R.string.account_title)
+                .withIcon(CommunityMaterial.Icon.cmd_account);
+
+        drawerResult.updateStickyFooterItem(authDrawerItem);
+
+        SuperToast.create(MainActivity.this, getString(R.string.signed_out), SuperToast.Duration.MEDIUM).show();
     }
 }
