@@ -183,7 +183,8 @@
     <string name="gcm_permission" translatable="false">com.snake.salarycounter.permission.test</string>
     <string name="account_title">Авторизация</string>
     <string name="account_signout">Выйти</string>
-    <string name="server_client_id">291188666729-7etfgsm7f9hu7rb8sqbjtffbq99p7u32.apps.googleusercontent.com</string>
+    <!--<string name="server_client_id">291188666729-7etfgsm7f9hu7rb8sqbjtffbq99p7u32.apps.googleusercontent.com</string>-->
+    <string name="server_client_id">291188666729-ll8538jvqi7q39ea9gtvo122j80b5nul.apps.googleusercontent.com</string>
     <string name="error_signing_in">Ошибка при авторизации</string>
     <string name="signed_out">Успешный выход из аккаунта</string>
     <string name="about">О программе</string>

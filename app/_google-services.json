@@ -1,9 +1,7 @@
 {
   "project_info": {
     "project_number": "291188666729",
-    "firebase_url": "https://salarycounter.firebaseio.com",
-    "project_id": "salarycounter",
-    "storage_bucket": "salarycounter.appspot.com"
+    "project_id": "salarycounter"
   },
   "client": [
     {
@@ -15,28 +13,12 @@
       },
       "oauth_client": [
         {
-          "client_id": "291188666729-7tfgm22tnn99ite20jngp3eqmrij75ii.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.snake.salarycounter",
-            "certificate_hash": "1FDF2DC47582CA34CC8E3C9609BE79FD47AB11E2"
-          }
-        },
-        {
           "client_id": "291188666729-637kdsisoqqv6h46icf5mfbnf5nu4kre.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.snake.salarycounter",
             "certificate_hash": "80EBFF4ED1996E57617B012A1979845392F04534"
           }
-        },
-        {
-          "client_id": "291188666729-ll8538jvqi7q39ea9gtvo122j80b5nul.apps.googleusercontent.com",
-          "client_type": 3
-        },
-        {
-          "client_id": "291188666729-7etfgsm7f9hu7rb8sqbjtffbq99p7u32.apps.googleusercontent.com",
-          "client_type": 3
         },
         {
           "client_id": "291188666729-5e0grol5i1ddpm06oj3guor9o06etoqj.apps.googleusercontent.com",
@@ -59,13 +41,13 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "291188666729-ll8538jvqi7q39ea9gtvo122j80b5nul.apps.googleusercontent.com",
+              "client_id": "291188666729-5e0grol5i1ddpm06oj3guor9o06etoqj.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
         },
         "ads_service": {
-          "status": 2
+          "status": 1
         }
       }
     }

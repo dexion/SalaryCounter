@@ -9,7 +9,6 @@ buildscript {
 }
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
-apply plugin: 'com.google.gms.google-services'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
@@ -58,13 +57,13 @@ dependencies {
     compile "com.android.support:design:${rootProject.ext.supportLibVersion}"
     compile "com.android.support:support-v4:${rootProject.ext.supportLibV4Version}"
 
-    compile('com.mikepenz:materialdrawer:5.2.2@aar') {
+    compile('com.mikepenz:materialdrawer:5.4.0@aar') {
         transitive = true;
     }
-    compile('com.mikepenz:aboutlibraries:5.6.5@aar') {
+    compile('com.mikepenz:aboutlibraries:5.7.1@aar') {
         transitive = true;
     }
-    compile('com.mikepenz:fastadapter:1.4.5@aar') {
+    compile('com.mikepenz:fastadapter:1.6.1@aar') {
         transitive = true
     }
     compile('com.mikepenz:itemanimators:0.2.4@aar') {
@@ -80,12 +79,13 @@ dependencies {
         transitive = true;
     }
     compile project(path: ':libs:DateRangePicker')
-    compile 'com.mikepenz:fastadapter-extensions:1.4.5@aar'
+    compile 'com.mikepenz:fastadapter-extensions:1.6.1@aar'
+    compile 'com.mikepenz:materialize:0.9.0@aar'
     compile 'com.roomorama:caldroid:3.0.1'
-    compile 'com.mikepenz:iconics-core:2.5.11@aar'
-    compile 'com.mikepenz:google-material-typeface:2.2.0.1.original@aar'
-    compile 'com.mikepenz:fontawesome-typeface:4.6.0.1@aar'
-    compile 'com.mikepenz:community-material-typeface:1.5.54.1@aar'
+    compile 'com.mikepenz:iconics-core:2.7.2@aar'
+    compile 'com.mikepenz:google-material-typeface:2.2.0.3.original@aar'
+    compile 'com.mikepenz:fontawesome-typeface:4.6.0.3@aar'
+    compile 'com.mikepenz:community-material-typeface:1.5.54.2@aar'
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
     compile 'com.github.omadahealth.typefaceview:typefaceview:1.3.0@aar'
     compile 'uk.me.lewisdeane.ldialogs:ldialogs:1.2.0@aar'
@@ -95,11 +95,17 @@ dependencies {
     compile 'com.github.QuadFlask:colorpicker:0.0.9'
     compile 'com.ogaclejapan.smarttablayout:library:1.6.0@aar'
     compile 'com.ogaclejapan.smarttablayout:utils-v4:1.6.0@aar'
+    compile 'com.google.firebase:firebase-auth:9.4.0'
+    compile 'com.google.android.gms:play-services-auth:9.4.0'
+    compile 'com.google.android.gms:play-services-appinvite:9.4.0'
+    compile 'com.google.android.gms:play-services-gcm:9.4.0'
+    compile 'pub.devrel:easygoogle:0.2.5'
     compile 'pub.devrel:easypermissions:0.1.5'
-    compile 'com.parse:parse-android:1.13.0'
-    compile 'com.parse:parseui-widget-android:0.0.1'
     compile 'com.github.johnpersano:supertoasts:1.3.4@aar'
     compile 'com.melnykov:floatingactionbutton:1.3.0'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.wdullaer:materialdatetimepicker:2.3.0'
+
 }
+
+apply plugin: 'com.google.gms.google-services'
