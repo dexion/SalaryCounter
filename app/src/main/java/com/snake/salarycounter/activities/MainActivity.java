@@ -29,6 +29,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 import com.mikepenz.aboutlibraries.LibsConfiguration;
@@ -50,11 +52,12 @@ import com.snake.salarycounter.R;
 import com.snake.salarycounter.activities.FinanceCondition.ListFinanceConditionActivity;
 import com.snake.salarycounter.activities.ShiftType.ListShiftTypeActivity;
 import com.snake.salarycounter.activities.Tabel.ListTabelActivity;
+import com.snake.salarycounter.models.Tabel;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.fabric.sdk.android.Fabric;
@@ -92,7 +95,7 @@ public class MainActivity extends PinActivity implements
     final static int II_ABOUT = 102;
     final static int II_ACCOUNT = 103;
 
-    @Bind(R.id.button) Button btn;
+    @BindView(R.id.button) Button btn;
     @OnClick(R.id.button) void onButtonClicked(){
         MyLogic lgc = new MyLogic(DateTime.now(), DateTime.now());
         lgc.RecalcDay(DateTime.parse("16.05.2016", DateTimeFormat.forPattern("dd.mm.yyyy")));
@@ -432,6 +435,15 @@ public class MainActivity extends PinActivity implements
                 break;
             case R.id.action_about:
                 showAbout(thisContext);
+                break;
+            case R.id.action_firebase_test:
+                DatabaseReference ref = FirebaseDatabase
+                        .getInstance()
+                        .getReference("/users/" + mFirebaseUser.getUid());
+
+                Tabel tbl = new Tabel(DateTime.now(), 164.5);
+                //ref.push().child("users").child(mFirebaseUser.getUid()).setValue(tbl);
+                ref.push().setValue(tbl);
                 break;
             default:
                 return false;
