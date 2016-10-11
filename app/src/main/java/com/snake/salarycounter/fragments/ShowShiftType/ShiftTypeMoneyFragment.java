@@ -16,7 +16,7 @@ import com.snake.salarycounter.watchers.TextValidator;
 
 import java.math.BigDecimal;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import de.greenrobot.event.EventBus;
@@ -29,28 +29,28 @@ public class ShiftTypeMoneyFragment extends Fragment {
 
     private ShiftType st;
 
-    @Bind(R.id.shift_type_money_is_count_hours) CheckBox isCountHours;
+    @BindView(R.id.shift_type_money_is_count_hours) CheckBox isCountHours;
     @OnCheckedChanged(R.id.shift_type_money_is_fixed_price) void onIsCountHoursChecked(boolean checked) {
         st.isCountHours = checked;
         st.save();
     }
 
-    @Bind(R.id.shift_type_money_is_average_price) CheckBox isAveragePrice;
+    @BindView(R.id.shift_type_money_is_average_price) CheckBox isAveragePrice;
     @OnCheckedChanged(R.id.shift_type_money_is_fixed_price) void onIsAverageChecked(boolean checked) {
         st.isAveragePrice = checked;
         st.save();
     }
 
-    @Bind(R.id.shift_type_money_is_fixed_price) CheckBox isFixedPrice;
+    @BindView(R.id.shift_type_money_is_fixed_price) CheckBox isFixedPrice;
     @OnCheckedChanged(R.id.shift_type_money_is_fixed_price) void onIsFixedPriceChecked(boolean checked) {
         fixedPrice.setEnabled(checked);
         st.isFixedPrice = checked;
         st.save();
     }
 
-    @Bind(R.id.shift_type_money_fixed_price) EditText fixedPrice;
-    @Bind(R.id.shift_type_money_additional_price) EditText additionalPrice;
-    @Bind(R.id.shift_type_money_multiplier) EditText multiplier;
+    @BindView(R.id.shift_type_money_fixed_price) EditText fixedPrice;
+    @BindView(R.id.shift_type_money_additional_price) EditText additionalPrice;
+    @BindView(R.id.shift_type_money_multiplier) EditText multiplier;
 
     public ShiftTypeMoneyFragment() {
         // Required empty public constructor

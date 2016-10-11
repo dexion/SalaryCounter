@@ -22,7 +22,7 @@ import org.joda.time.Period;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -40,7 +40,7 @@ public class ShiftTypeTimeFragment extends Fragment {
 
     DateTimeFormatter formatter = DateTimeFormat.forPattern("HH:mm");
 
-    @Bind(R.id.shift_type_time_day) Button day;
+    @BindView(R.id.shift_type_time_day) Button day;
     @OnClick(R.id.shift_type_time_day) void setDayStartEnd() {
         TimeRangePickerDialog tpd = TimeRangePickerDialog.newInstance(
                 new TimeRangePickerDialog.OnTimeSetListener() {
@@ -74,7 +74,7 @@ public class ShiftTypeTimeFragment extends Fragment {
         tpd.show(getActivity().getFragmentManager(), "DayStartEnd");
     }
 
-    @Bind(R.id.shift_type_time_dinner) Button dinner;
+    @BindView(R.id.shift_type_time_dinner) Button dinner;
     @OnClick(R.id.shift_type_time_dinner) void setDinnerStartEnd() {
         TimeRangePickerDialog tpd = TimeRangePickerDialog.newInstance(
                 new TimeRangePickerDialog.OnTimeSetListener() {
@@ -108,7 +108,7 @@ public class ShiftTypeTimeFragment extends Fragment {
         tpd.show(getActivity().getFragmentManager(), "DinnerStartEnd");
     }
 
-    @Bind(R.id.shift_type_time_duration) TextView duration;
+    @BindView(R.id.shift_type_time_duration) TextView duration;
 
     public ShiftTypeTimeFragment() {
         // Required empty public constructor

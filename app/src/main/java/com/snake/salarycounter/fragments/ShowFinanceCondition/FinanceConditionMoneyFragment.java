@@ -15,7 +15,7 @@ import com.snake.salarycounter.watchers.TextValidator;
 
 import java.math.BigDecimal;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import de.greenrobot.event.EventBus;
@@ -28,18 +28,18 @@ public class FinanceConditionMoneyFragment extends Fragment {
 
     private FinanceCondition fc;
 
-    @Bind(R.id.finance_condition_salary) EditText financeConditionSalary;
-    @Bind(R.id.finance_condition_addition) EditText financeConditionAddition;
-    @Bind(R.id.finance_condition_addition_proc) EditText financeConditionAdditionProc;
-    @Bind(R.id.finance_condition_north) EditText financeConditionNorth;
-    @Bind(R.id.finance_condition_district) EditText financeConditionDistrict;
-    @Bind(R.id.finance_condition_bonus) EditText financeConditionBonus;
-    @Bind(R.id.finance_condition_alimony) EditText financeConditionAlimony;
-    @Bind(R.id.finance_condition_alimony_proc) EditText financeConditionAlimonyProc;
-    @Bind(R.id.finance_condition_residue) EditText financeConditionResidue;
-    @Bind(R.id.finance_condition_residue_proc) EditText financeConditionResidueProc;
+    @BindView(R.id.finance_condition_salary) EditText financeConditionSalary;
+    @BindView(R.id.finance_condition_addition) EditText financeConditionAddition;
+    @BindView(R.id.finance_condition_addition_proc) EditText financeConditionAdditionProc;
+    @BindView(R.id.finance_condition_north) EditText financeConditionNorth;
+    @BindView(R.id.finance_condition_district) EditText financeConditionDistrict;
+    @BindView(R.id.finance_condition_bonus) EditText financeConditionBonus;
+    @BindView(R.id.finance_condition_alimony) EditText financeConditionAlimony;
+    @BindView(R.id.finance_condition_alimony_proc) EditText financeConditionAlimonyProc;
+    @BindView(R.id.finance_condition_residue) EditText financeConditionResidue;
+    @BindView(R.id.finance_condition_residue_proc) EditText financeConditionResidueProc;
 
-    @Bind(R.id.finance_condition_enable_tax) CheckBox enableTax;
+    @BindView(R.id.finance_condition_enable_tax) CheckBox enableTax;
     @OnCheckedChanged(R.id.finance_condition_enable_tax) void onEnableTaxChecked(boolean checked) {
         fc.enable_tax = checked;
         fc.save();

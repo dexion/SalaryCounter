@@ -15,7 +15,7 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.joda.time.DateTime;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
@@ -32,7 +32,7 @@ public class FinanceConditionNameFragment extends Fragment {
 
     private FinanceCondition fc;
 
-    @Bind(R.id.finance_condition_start_date) EditText financeConditionStartDate;
+    @BindView(R.id.finance_condition_start_date) EditText financeConditionStartDate;
     @OnClick(R.id.finance_condition_start_date) void onTabelStartDateClick(){
         DatePickerDialog  tpd = DatePickerDialog.newInstance(
                 new DatePickerDialog.OnDateSetListener(){

@@ -15,7 +15,7 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.joda.time.DateTime;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
@@ -32,8 +32,8 @@ public class TabelNameFragment extends Fragment {
 
     private Tabel t;
 
-    @Bind(R.id.tabel_start_date) EditText tabelStartDate;
-    @Bind(R.id.tabel_hours) EditText tabelHours;
+    @BindView(R.id.tabel_start_date) EditText tabelStartDate;
+    @BindView(R.id.tabel_hours) EditText tabelHours;
     @OnClick(R.id.tabel_start_date) void onTabelStartDateClick(){
         DatePickerDialog  tpd = DatePickerDialog.newInstance(
                 new DatePickerDialog.OnDateSetListener(){

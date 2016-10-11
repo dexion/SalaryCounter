@@ -12,7 +12,9 @@ import com.mikepenz.materialdrawer.holder.StringHolder;
 import com.snake.salarycounter.R;
 import com.snake.salarycounter.models.FinanceCondition;
 
-import butterknife.Bind;
+import java.util.List;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
@@ -50,8 +52,8 @@ public class GenericFinanceConditionItem  extends GenericAbstractItem<FinanceCon
      * @param viewHolder the viewHolder of this item
      */
     @Override
-    public void bindView(ViewHolder viewHolder){
-            super.bindView(viewHolder);
+    public void bindView(ViewHolder viewHolder, List payloads){
+            super.bindView(viewHolder, payloads);
 
             //define our data for the view
             viewHolder.name.setText(getModel().getText());
@@ -97,16 +99,16 @@ public class GenericFinanceConditionItem  extends GenericAbstractItem<FinanceCon
      */
     protected static class ViewHolder extends RecyclerView.ViewHolder {
         protected View view;
-        @Bind(R.id.name)
+        @BindView(R.id.name)
         public TextView name;
 
-        @Bind(R.id.swipe_result_content)
+        @BindView(R.id.swipe_result_content)
         View swipeResultContent;
-        @Bind(R.id.item_content)
+        @BindView(R.id.item_content)
         View itemContent;
-        @Bind(R.id.swiped_text)
+        @BindView(R.id.swiped_text)
         TextView swipedText;
-        @Bind(R.id.swiped_action)
+        @BindView(R.id.swiped_action)
         TextView swipedAction;
 
         public Runnable swipedActionRunnable;

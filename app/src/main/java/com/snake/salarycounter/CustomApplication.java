@@ -10,7 +10,6 @@ import com.activeandroid.ActiveAndroid;
 import com.bumptech.glide.Glide;
 import com.crashlytics.android.Crashlytics;
 import com.github.orangegangsters.lollipin.lib.managers.LockManager;
-import com.google.firebase.database.FirebaseDatabase;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
@@ -34,13 +33,6 @@ public class CustomApplication extends Application {
         //lockManager.enableAppLock(this, CustomPinActivity.class);
         //lockManager.getAppLock().setLogoId(R.drawable.security_lock);
         //lockManager.getAppLock().setTimeout(20 * 1000);
-
-        /*Parse.enableLocalDatastore(getApplicationContext());
-        Parse.initialize(new Parse.Configuration.Builder(getApplicationContext())
-                .applicationId("UiMwAE3tZuBd68FGbNGVX3FrJonMR8l1RB10pP1G")
-                .server("http://salarycounter.herokuapp.com/parse/")
-                .build()
-        );*/
 
         //initialize and create the image loader logic
         DrawerImageLoader.init(new AbstractDrawerImageLoader() {

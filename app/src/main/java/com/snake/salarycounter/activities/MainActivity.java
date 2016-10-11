@@ -22,15 +22,6 @@ import com.github.orangegangsters.lollipin.lib.PinActivity;
 import com.github.orangegangsters.lollipin.lib.managers.AppLock;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 import com.mikepenz.aboutlibraries.LibsConfiguration;
@@ -81,9 +72,6 @@ public class MainActivity extends PinActivity implements
     private Drawer drawerResult = null;
     private PrimaryDrawerItem authDrawerItem = null;
 
-    private FirebaseAuth mFirebaseAuth;
-    private FirebaseUser mFirebaseUser;
-    private String mUsername;
     private Google mGoogle;
 
     final static int II_SHIFT_TYPES = 10;
@@ -98,7 +86,7 @@ public class MainActivity extends PinActivity implements
     @BindView(R.id.button) Button btn;
     @OnClick(R.id.button) void onButtonClicked(){
         MyLogic lgc = new MyLogic(DateTime.now(), DateTime.now());
-        lgc.RecalcDay(DateTime.parse("16.05.2016", DateTimeFormat.forPattern("dd.mm.yyyy")));
+        lgc.RecalcDay(DateTime.parse("25.10.2016", DateTimeFormat.forPattern("dd.MM.yyyy")));
     }
 
     @Override
@@ -145,13 +133,14 @@ public class MainActivity extends PinActivity implements
 
         final Context that = this;
 
-        String serverClientId = getString(R.string.default_web_client_id);
+        //String serverClientId = getString(R.string.default_web_client_id);
 
         mGoogle = new Google.Builder(this)
-                .enableSignIn(this, serverClientId)
+                //.enableSignIn(this, serverClientId)
+                .enableSignIn(this)
                 .build();
 
-        authDrawerItem = new SecondaryDrawerItem()
+        authDrawerItem = new PrimaryDrawerItem()
                 .withSelectable(false)
                 .withName(R.string.account_title)
                 .withIcon(CommunityMaterial.Icon.cmd_account)
@@ -316,11 +305,7 @@ public class MainActivity extends PinActivity implements
                                 break;
                             case II_ACCOUNT:
                                 if(mGoogle.getSignIn().isSignedIn()) {
-                                    mFirebaseAuth.signOut();
                                     mGoogle.getSignIn().signOut();
-                                    mFirebaseUser = null;
-                                    mUsername = ANONYMOUS;
-                                    //mPhotoUrl = null;
                                 }
                                 else {
                                     mGoogle.getSignIn().signIn();
@@ -335,26 +320,6 @@ public class MainActivity extends PinActivity implements
                         return true;
                     }} )
                 .build();
-
-
-        mUsername = ANONYMOUS;
-
-        // Initialize Firebase Auth
-        mFirebaseAuth = FirebaseAuth.getInstance();
-        mFirebaseUser = mFirebaseAuth.getCurrentUser();
-    }
-
-    @Override
-    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-
-        if (mFirebaseUser == null) {
-            // Not signed in, launch the Sign In activity
-            mGoogle.getSignIn().signIn();
-        } else {
-            mUsername = mFirebaseUser.getDisplayName();
-            //mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
-        }
     }
 
     private void logUser() {
@@ -543,31 +508,8 @@ public class MainActivity extends PinActivity implements
         }
     }
 
-    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        Log.d(TAG, "firebaseAuthWithGooogle:" + acct.getId());
-        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-        mFirebaseAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
-
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            Log.w(TAG, "signInWithCredential", task.getException());
-                            SuperToast.create(MainActivity.this, getString(R.string.error_signing_in), SuperToast.Duration.MEDIUM).show();
-                        } else {
-                            //SuperToast.create(MainActivity.this, mFirebaseUser.getDisplayName(), SuperToast.Duration.MEDIUM).show();
-                        }
-                    }
-                });
-    }
-
     @Override
     public void onSignedIn(GoogleSignInAccount googleSignInAccount) {
-        firebaseAuthWithGoogle(googleSignInAccount);
         authDrawerItem
                 .withName(R.string.account_signout)
                 .withIcon(CommunityMaterial.Icon.cmd_account_off);

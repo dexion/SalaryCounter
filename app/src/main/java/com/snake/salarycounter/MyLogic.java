@@ -68,6 +68,7 @@ public class MyLogic {
                 p.mSalary = st.fixedPrice;
             } else {
                 BigDecimal normohour = fc.salary.divide(new BigDecimal(t.hours), 2, BigDecimal.ROUND_HALF_UP);
+                p.mSalary = normohour.multiply(new BigDecimal(p.mHours));
             }
         }
     }
