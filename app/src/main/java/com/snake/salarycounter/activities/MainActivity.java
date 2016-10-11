@@ -401,15 +401,6 @@ public class MainActivity extends PinActivity implements
             case R.id.action_about:
                 showAbout(thisContext);
                 break;
-            case R.id.action_firebase_test:
-                DatabaseReference ref = FirebaseDatabase
-                        .getInstance()
-                        .getReference("/users/" + mFirebaseUser.getUid());
-
-                Tabel tbl = new Tabel(DateTime.now(), 164.5);
-                //ref.push().child("users").child(mFirebaseUser.getUid()).setValue(tbl);
-                ref.push().setValue(tbl);
-                break;
             default:
                 return false;
         }
