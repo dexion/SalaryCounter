@@ -27,7 +27,7 @@ import uk.me.lewisdeane.ldialogs.CustomDialog;
 
 public class CalendarFragment extends Fragment {
 
-    private CaldroidFragment caldroidFragment;
+    private CaldroidCustomFragment caldroidFragment;
     private final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
     private CaldroidListener listener = null;
     private boolean isCalendarEditable = true;
@@ -54,12 +54,12 @@ public class CalendarFragment extends Fragment {
 
         // Setup caldroid fragment
         // **** If you want normal CaldroidFragment, use below line ****
-        caldroidFragment = new CaldroidFragment();
+        //caldroidFragment = new CaldroidFragment();
 
         // //////////////////////////////////////////////////////////////////////
         // **** This is to show customized fragment. If you want customized
         // version, uncomment below line ****
-        // caldroidFragment = new CaldroidSampleCustomFragment();
+        caldroidFragment = new CaldroidCustomFragment();
 
         // Setup arguments
 

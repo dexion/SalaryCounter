@@ -79,14 +79,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.ShiftType.ListShiftTypeActivity" />
         </activity>
-        <activity android:name=".activities.FinanceCondition.ListFinanceConditionActivity"
+        <activity
+            android:name=".activities.FinanceCondition.ListFinanceConditionActivity"
             android:label="@string/title_activity_list_finance_condition"
             android:parentActivityName=".activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.snake.salarycounter.activities.MainActivity" />
         </activity>
-        <activity android:name=".activities.Tabel.ListTabelActivity"
+        <activity
+            android:name=".activities.Tabel.ListTabelActivity"
             android:label="@string/title_activity_list_tabel"
             android:parentActivityName=".activities.MainActivity">
             <meta-data
