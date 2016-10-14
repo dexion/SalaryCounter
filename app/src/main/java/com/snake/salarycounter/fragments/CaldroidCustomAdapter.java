@@ -27,6 +27,8 @@ public class CaldroidCustomAdapter extends CaldroidGridAdapter {
     @Override
     protected void setCustomResources(DateTime dateTime, View backgroundView,
                                       TextView textView) {
+        super.setCustomResources( dateTime, backgroundView, textView);
+
         // Set custom background resource
         Map<DateTime, Drawable> backgroundForDateTimeMap = (Map<DateTime, Drawable>) caldroidData
                 .get(CaldroidFragment._BACKGROUND_FOR_DATETIME_MAP);
@@ -40,19 +42,6 @@ public class CaldroidCustomAdapter extends CaldroidGridAdapter {
                 GradientDrawable gd = (GradientDrawable) backgroundView.getBackground();
                 //gd.setColor(drawable.getColor());
                 gd.setStroke(10, drawable.getColor());
-            }
-        }
-
-        // Set custom text color
-        Map<DateTime, Integer> textColorForDateTimeMap = (Map<DateTime, Integer>) caldroidData
-                .get(CaldroidFragment._TEXT_COLOR_FOR_DATETIME_MAP);
-        if (textColorForDateTimeMap != null) {
-            // Get textColor for the dateTime
-            Integer textColorResource = textColorForDateTimeMap.get(dateTime);
-
-            // Set it
-            if (textColorResource != null) {
-                textView.setTextColor(resources.getColor(textColorResource));
             }
         }
     }

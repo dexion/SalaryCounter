@@ -250,7 +250,7 @@ public class MainActivity extends PinActivity implements
                     }
                 })
                 .addStickyDrawerItems(
-                        authDrawerItem,
+                        //authDrawerItem,
                         new SecondaryDrawerItem()
                                 .withSelectable(false)
                                 .withName(R.string.drawer_item_settings)
