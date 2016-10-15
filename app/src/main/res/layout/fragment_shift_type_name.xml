@@ -19,8 +19,8 @@
             android:hint="@string/shift_type_name_hint"
             app:met_floatingLabel="normal"
             app:met_floatingLabelText="@string/shift_type_name"
-            android:singleLine="true"
-            android:inputType="textCapSentences" />
+            android:inputType="textCapSentences"
+            android:maxLines="1" />
 
         <Button
             android:layout_width="match_parent"

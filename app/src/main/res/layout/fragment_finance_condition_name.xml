@@ -19,8 +19,8 @@
             android:hint="@string/finance_condition_start_date_hint"
             app:met_floatingLabel="normal"
             app:met_floatingLabelText="@string/finance_condition_start_date"
-            android:singleLine="true"
-            android:inputType="none" />
+            android:inputType="none"
+            android:maxLines="1" />
 
     </LinearLayout>
 

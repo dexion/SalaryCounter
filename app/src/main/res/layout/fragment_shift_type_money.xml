@@ -32,9 +32,9 @@
         android:hint="@string/shift_type_money_fixed_price"
         app:met_floatingLabel="normal"
         app:met_floatingLabelText="@string/shift_type_money_fixed_price"
-        android:singleLine="true"
         android:inputType="numberDecimal"
-        android:ems="10" />
+        android:ems="10"
+        android:maxLines="1" />
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/shift_type_money_additional_price"
@@ -43,9 +43,9 @@
         android:hint="@string/shift_type_money_additional_price"
         app:met_floatingLabel="normal"
         app:met_floatingLabelText="@string/shift_type_money_additional_price"
-        android:singleLine="true"
         android:inputType="numberDecimal"
-        android:ems="10" />
+        android:ems="10"
+        android:maxLines="1" />
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/shift_type_money_multiplier"
@@ -54,8 +54,8 @@
         android:hint="@string/shift_type_money_multiplier"
         app:met_floatingLabel="normal"
         app:met_floatingLabelText="@string/shift_type_money_multiplier"
-        android:singleLine="true"
         android:inputType="numberDecimal"
-        android:ems="10" />
+        android:ems="10"
+        android:maxLines="1" />
 
 </LinearLayout>
