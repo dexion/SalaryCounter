@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <EditTextPreference
+    <!--<EditTextPreference
         android:defaultValue="10000"
         android:dialogTitle="@string/pref_salary_dialog"
         android:key="salary"
@@ -69,6 +69,6 @@
         android:defaultValue="true"
         android:key="enable_tax"
         android:summary="@string/pref_enable_tax_sum"
-        android:title="@string/pref_enable_tax" />
+        android:title="@string/pref_enable_tax" />-->
 
 </PreferenceScreen>
