@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="aboutLibraries_description_name">Зарплатный счётчик</string>
     <string name="aboutLibraries_description_showIcon" translatable="false">true</string>
     <string name="aboutLibraries_description_showVersion" translatable="false">true</string>
-    <string name="aboutLibraries_description_text">
+    <string name="aboutLibraries_description_text" translatable="false">
         <![CDATA[Зарплатный счётчик-калькулятор, позволяющий определить размер денежных средств, причитающихся вам за некоторый период времени. Основной категорией пользователей являются люди, работающие вахтовым методом, но и представитель любой другой профессии сможет настроить приложение под собственные нужды.
 Множество настроек, изменяя которые вы сможете точно установить все параметры, учитывающиеся бухгалтерией при расчёте.]]>
     </string>
 
     <!-- Just remove those entries if you don't want to use a special button with a text within your about this app view :D -->
-    <string name="aboutLibraries_description_special1_name">Введение</string>
+    <string name="aboutLibraries_description_special1_name">Intro</string>
     <string name="aboutLibraries_description_special1_text" translatable="false"></string>
-    <string name="aboutLibraries_description_special3_name">История изменений</string>
     <string name="aboutLibraries_description_special3_text" translatable="false"></string>
 </resources>

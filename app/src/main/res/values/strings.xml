@@ -3,21 +3,21 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_settings">Settings</string>
     <string name="title_activity_calendar">CalendarActivity</string>
-    <string name="title_activity_shift_type">ShiftTypeActivity</string>
+    <string name="title_activity_shift_type">Shift types</string>
     <!-- Strings related to Settings -->
 
     <!-- Example General settings -->
-    <string name="pref_header_general">General</string>
+    <string name="pref_header_general" translatable="false">General</string>
 
-    <string name="pref_title_social_recommendations">Enable social recommendations</string>
-    <string name="pref_description_social_recommendations">Recommendations for people to contact
+    <string name="pref_title_social_recommendations" translatable="false">Enable social recommendations</string>
+    <string name="pref_description_social_recommendations" translatable="false">Recommendations for people to contact
         based on your message history
     </string>
 
-    <string name="pref_title_display_name">Display name</string>
-    <string name="pref_default_display_name">John Smith</string>
+    <string name="pref_title_display_name" translatable="false">Display name</string>
+    <string name="pref_default_display_name" translatable="false">John Smith</string>
 
-    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+    <string name="pref_title_add_friends_to_messages" translatable="false">Add friends to messages</string>
     <string-array name="pref_example_list_titles">
         <item>Always</item>
         <item>When possible</item>
@@ -30,9 +30,9 @@
     </string-array>
 
     <!-- Example settings for Data & Sync -->
-    <string name="pref_header_data_sync">Data &amp; sync</string>
+    <string name="pref_header_data_sync" translatable="false">Data &amp; sync</string>
 
-    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string name="pref_title_sync_frequency" translatable="false">Sync frequency</string>
     <string-array name="pref_sync_frequency_titles">
         <item>15 minutes</item>
         <item>30 minutes</item>
@@ -50,72 +50,28 @@
         <item>-1</item>
     </string-array>
 
-    <string name="pref_title_system_sync_settings">System sync settings</string>
+    <string name="pref_title_system_sync_settings" translatable="false">System sync settings</string>
 
     <!-- Example settings for Notifications -->
-    <string name="pref_header_notifications">Notifications</string>
+    <string name="pref_header_notifications" translatable="false">Notifications</string>
 
-    <string name="pref_title_new_message_notifications">New message notifications</string>
+    <string name="pref_title_new_message_notifications" translatable="false">New message notifications</string>
 
-    <string name="pref_title_ringtone">Ringtone</string>
-    <string name="pref_ringtone_silent">Silent</string>
+    <string name="pref_title_ringtone" translatable="false">Ringtone</string>
+    <string name="pref_ringtone_silent" translatable="false">Silent</string>
 
-    <string name="pref_title_vibrate">Vibrate</string>
-
-    <!-- Drawer Items -->
-    <string name="drawer_item_persistent_compact_header">PersistentHeader Drawer</string>
-    <string name="drawer_item_persistent_compact_header_desc">Smaller persistent account header</string>
-    <string name="drawer_item_compact_header">CompactHeader Drawer</string>
-    <string name="drawer_item_compact_header_desc">Smaller account header</string>
-    <string name="drawer_item_action_bar_drawer">ActionBar Drawer</string>
-    <string name="drawer_item_action_bar_drawer_desc">Shows how to use with an actionbar</string>
-    <string name="drawer_item_multi_drawer">Multi Drawer</string>
-    <string name="drawer_item_multi_drawer_desc">Left and Right side drawer</string>
-    <string name="drawer_item_non_translucent_status_drawer">NonTranslucentStatus Drawer</string>
-    <string name="drawer_item_non_translucent_status_drawer_desc">Drawer below statusBar</string>
-    <string name="drawer_item_advanced_drawer">Advanced Drawer</string>
-    <string name="drawer_item_advanced_drawer_desc">More advanced drawer features</string>
-    <string name="drawer_item_keyboard_util_drawer">KeyboardUtil Drawer</string>
-    <string name="drawer_item_keyboard_util_drawer_desc">KeyboardUtil to (fix) adjustResize</string>
-    <string name="drawer_item_embedded_drawer">Embedded Drawer</string>
-    <string name="drawer_item_embedded_drawer_desc">Embed the drawer anywhere</string>
-    <string name="drawer_item_mini_drawer">MiniDrawer</string>
-    <string name="drawer_item_mini_drawer_desc">Always visible MiniDrawer</string>
-    <string name="drawer_item_fullscreen_drawer">FullScreen Drawer</string>
-    <string name="drawer_item_fullscreen_drawer_desc">Drawer in FullScreen activity</string>
-    <string name="drawer_item_custom_container_drawer">CustomContainer Drawer</string>
-    <string name="drawer_item_custom_container_drawer_desc">Drawer in different view hirachy</string>
-    <string name="drawer_item_menu_drawer">Menu Drawer</string>
-    <string name="drawer_item_menu_drawer_desc">Drawer from menu.xml</string>
-    <string name="drawer_item_fragment_drawer">Fragment Drawer</string>
-    <string name="drawer_item_fragment_drawer_desc">Use drawer within fragments</string>
-    <string name="drawer_item_collapsing_toolbar_drawer">CollapsingToolbar Drawer</string>
-    <string name="drawer_item_collapsing_toolbar_drawer_desc">Uses a CollapsingToolbarLayout</string>
-    <string name="drawer_item_crossfade_drawer_layout_drawer">CrossfadeDrawerLayout</string>
-    <string name="drawer_item_crossfade_drawer_layout_drawer_desc">PREVIEW of a CrossfadeDrawerLayout</string>
-
-    <string name="drawer_item_menu_drawer_item">Menu Drawer Item</string>
-    <string name="drawer_item_menu_drawer_item_desc">Sample menu item with overflow button</string>
-
-    <string name="drawer_item_home">Home</string>
-    <string name="drawer_item_free_play">Free Play</string>
-    <string name="drawer_item_custom">Custom</string>
-    <string name="drawer_item_section_header">Section Header</string>
-    <string name="drawer_item_settings">Settings</string>
-    <string name="drawer_item_help">Help</string>
-    <string name="drawer_item_open_source">Open Source</string>
-    <string name="drawer_item_contact">Contact</string>
+    <string name="pref_title_vibrate" translatable="false">Vibrate</string>
 
     <string name="lorem_ipsum" translatable="false">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</string>
     <string name="action_about">About</string>
 
     <string name="hello_world" translatable="false">Hello world!</string>
-    <string name="activity_not_locked_text">Nothing should happen on this page, here for test purpose</string>
+    <string name="activity_not_locked_text" translatable="false">Nothing should happen on this page, here for test purpose</string>
     <string name="activity_dialog_title">Forgot you Pincode?</string>
     <string name="activity_dialog_accept">Ok</string>
     <string name="activity_dialog_decline">Cancel</string>
     <string name="activity_dialog_content">Tap \'OK\' to log out, when you log back in you\'ll be able to create a new Pincode.\n\nIf you remember your Pincode, tap \'Cancel\' to go back.</string>
-    <string name="title_activity_locked_scrolling">LockedScrollingActivity</string>
+    <string name="title_activity_locked_scrolling" translatable="false">LockedScrollingActivity</string>
     <string name="attempts_remaining">Attempts remaining: %d</string>
     <string name="restart_needed">You need restart app</string>
 
@@ -154,7 +110,7 @@
     <string name="action_close">Close</string>
     <string name="drawer_item_shift_types">Shift types</string>
     <string name="drawer_item_calendar">Calendar</string>
-    <string name="title_activity_show_shift_type">ShowShiftTypeActivity</string>
+    <string name="title_activity_show_shift_type">Shift type</string>
     <string name="action_delete">Delete</string>
     <string name="action_edit">Edit</string>
 
@@ -172,77 +128,81 @@
     <string name="incorrect_value">Incorrect value</string>
     <string name="shift_type_main_settings">Main settings</string>
     <string name="must_create_one_shift_type">You must create at least one shift type</string>
-    <string name="dialog_delete" />
+    <string name="dialog_delete" translatable="false" >Delete</string>
     <string name="realy_clear">Do you realy want to clear shift type for this date?</string>
-    <string name="other_bonus_proc">Прочие доплаты</string>
-    <string name="other_bonus_proc_sum">в % от оклада</string>
-    <string name="other_bonus_proc_dialog">Введите % от оклада</string>
-    <string name="other_bonus">Прочие доплаты</string>
-    <string name="other_bonus_sum">в жесткой сумме</string>
-    <string name="other_bonus_dialog">Введите размер доплаты</string>
+    <string name="aboutLibraries_description_name">SalaryCounter</string>
+    <string name="account_signout">Sign out</string>
+    <string name="account_title">Authentication</string>
+    <string name="action_undo">Undo</string>
+    <string name="cannot_delete">Cannot delete</string>
+    <string name="drawer_item_finance_conditions">Finance conditions</string>
+    <string name="drawer_item_home">Home</string>
+    <string name="drawer_item_settings">Settings</string>
+    <string name="drawer_item_tabel">Main table</string>
+    <string name="error_deleting">Error</string>
+    <string name="error_signing_in">Error at sign in</string>
+    <string name="finance_condition_addition">Addition</string>
+    <string name="finance_condition_addition_hint">Addition</string>
+    <string name="finance_condition_addition_proc">Addition %</string>
+    <string name="finance_condition_addition_proc_hint">Addition %</string>
+    <string name="finance_condition_alimony">Alimony</string>
+    <string name="finance_condition_alimony_hint">Alimony</string>
+    <string name="finance_condition_alimony_proc">Alimony %</string>
+    <string name="finance_condition_alimony_proc_hint">Alimony %</string>
+    <string name="finance_condition_bonus">Bonus</string>
+    <string name="finance_condition_bonus_hint">Bonus</string>
+    <string name="finance_condition_district">District</string>
+    <string name="finance_condition_district_hint">District</string>
+    <string name="finance_condition_enable_tax">Enable tax 13%</string>
+    <string name="finance_condition_main_settings">Main</string>
+    <string name="finance_condition_money_settings">Money</string>
+    <string name="finance_condition_north">North</string>
+    <string name="finance_condition_north_hint">North</string>
+    <string name="finance_condition_residue">Residue</string>
+    <string name="finance_condition_residue_hint">Residue</string>
+    <string name="finance_condition_residue_proc">Residue %</string>
+    <string name="finance_condition_residue_proc_hint">Residue %</string>
+    <string name="finance_condition_salary">Salary</string>
+    <string name="finance_condition_salary_hint">Salary</string>
+    <string name="finance_condition_start_date">Start date</string>
+    <string name="finance_condition_start_date_hint">Start date</string>
     <string name="gcm_permission" translatable="false">com.snake.salarycounter.permission.test</string>
-    <string name="account_title">Авторизация</string>
-    <string name="account_signout">Выйти</string>
-    <!--<string name="server_client_id">291188666729-7etfgsm7f9hu7rb8sqbjtffbq99p7u32.apps.googleusercontent.com</string>-->
-    <string name="server_client_id">291188666729-ll8538jvqi7q39ea9gtvo122j80b5nul.apps.googleusercontent.com</string>
-    <string name="error_signing_in">Ошибка при авторизации</string>
-    <string name="signed_out">Успешный выход из аккаунта</string>
-    <string name="about">О программе</string>
-    <string name="search_title">Поиск</string>
-    <string name="action_undo">Отменить</string>
-    <string name="removed">Удалено</string>
-    <string name="error_deleting">Не все записи получилось удалить</string>
-    <string name="cannot_delete">Удаление невозможно, т.к. существуют связанные записи</string>
-    <string name="shift_type_time_settings">Настройки времени</string>
-    <string name="shift_type_day_start_hint">Начало рабочего дня</string>
-    <string name="shift_type_day_end_hint">Окончание рабочего дня</string>
-    <string name="shift_type_time_day">Рабочий день</string>
-    <string name="shift_type_time_dinner">Обед</string>
-    <string name="start_cannot_after_end">Начало периода не может быть позже окончания</string>
-    <string name="time_from_to">С: %1$s  До: %2$s</string>
-    <string name="shift_type_time_duration">Продолжительность рабочего дня</string>
-    <string name="time_duration">Часов: %1$d, минут: %2$d</string>
-    <string name="shift_type_money_settings">Финансовые свойства</string>
-    <string name="shift_type_money_is_fixed_price">Смена с фиксированной стоимостью</string>
-    <string name="shift_type_money_fixed_price">Фиксированная ставка за смену</string>
-    <string name="shift_type_money_additional_price">Разовая доплата за конкретную смену</string>
-    <string name="shift_type_money_multiplier">Кратность оплаты</string>
-    <string name="shift_type_money_is_count_hours">Учитывать часы при табелировании</string>
-    <string name="shift_type_money_is_average_price">Оплачивается по среднему заработку</string>
-    <string name="drawer_item_finance_conditions">Условия труда</string>
-    <string name="drawer_item_tabel">Опорный табель</string>
-    <string name="title_activity_list_finance_condition">Условия труда</string>
-    <string name="title_activity_list_tabel">Табель</string>
-    <string name="title_activity_show_tabel">Табель</string>
-    <string name="tabel_start_date_hint">Начало действия</string>
-    <string name="tabel_start_date">Начало действия</string>
-    <string name="tabel_hours_hint">Количество часов</string>
-    <string name="tabel_hours">Количество часов</string>
-    <string name="tabel_main_settings">Основные настройки</string>
-    <string name="finance_condition_main_settings">Основные свойства</string>
-    <string name="title_activity_show_finance_condition">Условия труда</string>
-    <string name="finance_condition_start_date_hint">Начало действия</string>
-    <string name="finance_condition_start_date">Начало действия</string>
-    <string name="finance_condition_money_settings">Финансы</string>
-    <string name="finance_condition_salary_hint">Оклад</string>
-    <string name="finance_condition_salary">Оклад</string>
-    <string name="finance_condition_addition_hint">Надбавка к окладу</string>
-    <string name="finance_condition_addition_proc_hint">Надбавка к окладу в %</string>
-    <string name="finance_condition_addition">Надбавка к окладу</string>
-    <string name="finance_condition_addition_proc">Надбавка к окладу в %</string>
-    <string name="finance_condition_north_hint">Северный коэффициент</string>
-    <string name="finance_condition_district_hint">Районный коэффициент</string>
-    <string name="finance_condition_bonus_hint">Премия</string>
-    <string name="finance_condition_bonus">Премия</string>
-    <string name="finance_condition_district">Районный коэффициент</string>
-    <string name="finance_condition_north">Северный коэффициент</string>
-    <string name="finance_condition_alimony_hint">Алименты в жёсткой сумме</string>
-    <string name="finance_condition_alimony">Алименты в жёсткой сумме</string>
-    <string name="finance_condition_alimony_proc_hint">Алименты в % от начисления</string>
-    <string name="finance_condition_alimony_proc">Алименты в % от начисления</string>
-    <string name="finance_condition_residue_hint">Прочие вычеты</string>
-    <string name="finance_condition_residue">Прочие вычеты</string>
-    <string name="finance_condition_residue_proc_hint">Прочие вычеты в %</string>
-    <string name="finance_condition_residue_proc">Прочие вычеты в %</string>
-    <string name="finance_condition_enable_tax">Вычитать подоходный налог 13%</string>
+    <string name="server_client_id" translatable="false">291188666729-ll8538jvqi7q39ea9gtvo122j80b5nul.apps.googleusercontent.com</string>
+    <string name="aboutLibraries_description_special3_name">Change log</string>
+    <string name="other_bonus">Other bonus</string>
+    <string name="removed">Removed</string>
+    <string name="search_title">Search</string>
+    <string name="shift_type_day_end_hint">Day end</string>
+    <string name="shift_type_day_start_hint">Day start</string>
+    <string name="shift_type_money_additional_price">Additional price</string>
+    <string name="shift_type_money_fixed_price">Fixed price</string>
+    <string name="shift_type_money_is_average_price">Average price</string>
+    <string name="shift_type_money_is_count_hours">Count hours</string>
+    <string name="shift_type_money_is_fixed_price">Fixed price</string>
+    <string name="shift_type_money_multiplier">Multiplier</string>
+    <string name="shift_type_money_settings">Money</string>
+    <string name="shift_type_time_day">Time day</string>
+    <string name="shift_type_time_dinner">Dinner</string>
+    <string name="shift_type_time_duration">Duration</string>
+    <string name="shift_type_time_settings">Time settings</string>
+    <string name="signed_out">Signed out</string>
+    <string name="tabel_hours">Hours</string>
+    <string name="tabel_hours_hint">Hours</string>
+    <string name="tabel_main_settings">Main settings</string>
+    <string name="tabel_start_date">Start date</string>
+    <string name="tabel_start_date_hint">start date</string>
+    <string name="time_duration">Houes: %1$d, minutes: %2$d</string>
+    <string name="time_from_to">From: %1$s  To: %2$s</string>
+    <string name="title_activity_list_finance_condition">Finance conditions</string>
+    <string name="title_activity_list_tabel">Table</string>
+    <string name="title_activity_show_finance_condition">Finance condition</string>
+    <string name="title_activity_show_tabel">Table</string>
+    <string name="start_cannot_after_end">End cannot be before start</string>
+    <string name="other_bonus_dialog">Bonus</string>
+    <string name="other_bonus_proc">Bonus %</string>
+    <string name="other_bonus_proc_dialog">Bonus %</string>
+    <string name="other_bonus_proc_sum">Bonus %</string>
+    <string name="other_bonus_sum">Bonus</string>
+    <string name="about">About</string>
+
 </resources>
