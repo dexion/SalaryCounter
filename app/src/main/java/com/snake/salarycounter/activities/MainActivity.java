@@ -5,12 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +18,6 @@ import com.crashlytics.android.Crashlytics;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.github.orangegangsters.lollipin.lib.PinActivity;
 import com.github.orangegangsters.lollipin.lib.managers.AppLock;
-
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
@@ -43,7 +40,7 @@ import com.snake.salarycounter.R;
 import com.snake.salarycounter.activities.FinanceCondition.ListFinanceConditionActivity;
 import com.snake.salarycounter.activities.ShiftType.ListShiftTypeActivity;
 import com.snake.salarycounter.activities.Tabel.ListTabelActivity;
-import com.snake.salarycounter.models.Tabel;
+import com.snake.salarycounter.fragments.CalendarFragment;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -63,10 +60,6 @@ public class MainActivity extends PinActivity implements
     private static final int REQUEST_CODE_ENABLE = 11;
     private static final String PASSWORD_PREFERENCE_KEY = "PASSCODE";
 
-    public static final String ANONYMOUS = "anonymous";
-
-    private static final String TAG = "SignInActivity";
-
     //save our header or drawerResult
     private AccountHeader headerResult = null;
     private Drawer drawerResult = null;
@@ -83,11 +76,11 @@ public class MainActivity extends PinActivity implements
     final static int II_ABOUT = 102;
     final static int II_ACCOUNT = 103;
 
-    @BindView(R.id.button) Button btn;
+    /*@BindView(R.id.button) Button btn;
     @OnClick(R.id.button) void onButtonClicked(){
         MyLogic lgc = new MyLogic(DateTime.now(), DateTime.now());
         lgc.RecalcDay(DateTime.parse("25.10.2016", DateTimeFormat.forPattern("dd.MM.yyyy")));
-    }
+    }*/
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -100,21 +93,18 @@ public class MainActivity extends PinActivity implements
 
         Fabric.with(this, new Crashlytics());
 
-        SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        /*SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         if (!mSharedPreferences.contains(PASSWORD_PREFERENCE_KEY)) {
             Intent intent = new Intent(MainActivity.this, CustomPinActivity.class);
             intent.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);
             startActivityForResult(intent, REQUEST_CODE_ENABLE);
         }
-        /*else
+        else
         {
             Intent intent = new Intent(MainActivity.this, CustomPinActivity.class);
             intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
             startActivity(intent);
         }*/
-
-        // TODO: Move this to where you establish a user session
-        //logUser();
 
         LayoutInflaterCompat.setFactory(getLayoutInflater(), new IconicsLayoutInflater(getDelegate()));
 
@@ -123,22 +113,28 @@ public class MainActivity extends PinActivity implements
 
         ButterKnife.bind(this);
 
-        // Handle Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //getSupportActionBar().setTitle("Setted title");
 
-        // Create the AccountHeader
-        buildHeader(true, savedInstanceState);
+        initializeGoogle();
 
-        final Context that = this;
+        buildDrawer(this, savedInstanceState, toolbar);
 
-        //String serverClientId = getString(R.string.default_web_client_id);
+        Intent intent = new Intent();
+        intent.setClass(this, ListShiftTypeActivity.class);
+        startActivity(intent);
+    }
 
+    private void initializeGoogle(){
         mGoogle = new Google.Builder(this)
                 //.enableSignIn(this, serverClientId)
                 .enableSignIn(this)
                 .build();
+    }
+
+    private void buildDrawer(final Context context, Bundle savedInstanceState, Toolbar toolbar){
+        // Create the AccountHeader
+        buildHeader(true, savedInstanceState);
 
         authDrawerItem = new PrimaryDrawerItem()
                 .withSelectable(false)
@@ -150,6 +146,7 @@ public class MainActivity extends PinActivity implements
         drawerResult = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
+                .withFullscreen(true)
                 .withAccountHeader(headerResult) //set the AccountHeader we created earlier for the header
                 .addDrawerItems(
                         /*new PrimaryDrawerItem()
@@ -271,37 +268,37 @@ public class MainActivity extends PinActivity implements
 
                         switch((int)drawerItem.getIdentifier()) {
                             case 1000:
-                                intent.setClass(that, CustomPinActivity.class);
+                                intent.setClass(context, CustomPinActivity.class);
                                 intent.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);
                                 startActivity(intent);
                                 break;
                             case 2000:
-                                intent.setClass(that, ListShiftTypeActivity.class);
+                                intent.setClass(context, ListShiftTypeActivity.class);
                                 intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
                                 startActivity(intent);
                                 break;
                             case II_SHIFT_TYPES:
-                                intent.setClass(that, ListShiftTypeActivity.class);
+                                intent.setClass(context, ListShiftTypeActivity.class);
                                 startActivity(intent);
                                 break;
                             case II_FINANCE_CONDITIONS:
-                                intent.setClass(that, ListFinanceConditionActivity.class);
+                                intent.setClass(context, ListFinanceConditionActivity.class);
                                 startActivity(intent);
                                 break;
                             case II_TABLE:
-                                intent.setClass(that, ListTabelActivity.class);
+                                intent.setClass(context, ListTabelActivity.class);
                                 startActivity(intent);
                                 break;
                             case II_CALENDAR:
-                                intent.setClass(that, CalendarActivity.class);
+                                intent.setClass(context, CalendarActivity.class);
                                 startActivity(intent);
                                 break;
                             case II_SETTINGS:
-                                intent.setClass(that, SettingsActivity.class);
+                                intent.setClass(context, SettingsActivity.class);
                                 startActivity(intent);
                                 break;
                             case II_ABOUT:
-                                showAbout(that);
+                                showAbout(context);
                                 break;
                             case II_ACCOUNT:
                                 if(mGoogle.getSignIn().isSignedIn()) {
@@ -366,7 +363,7 @@ public class MainActivity extends PinActivity implements
                     public boolean onProfileChanged(View view, IProfile profile, boolean current) {
                         //sample usage of the onProfileChanged listener
                         //if the clicked item has the identifier 1 add a new profile ;)
-                        if (profile instanceof IDrawerItem && ((IDrawerItem) profile).getIdentifier() == PROFILE_SETTING) {
+                        if (profile instanceof IDrawerItem && profile.getIdentifier() == PROFILE_SETTING) {
                             IProfile newProfile = new ProfileDrawerItem().withNameShown(true).withName("Batman").withEmail("batman@gmail.com").withIcon(getResources().getDrawable(R.drawable.profile5));
                             if (headerResult.getProfiles() != null) {
                                 //we know that there are 2 setting elements. set the new profile above them ;)
