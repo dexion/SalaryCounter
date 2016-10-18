@@ -58,6 +58,12 @@ public class ListShiftTypeActivity extends AppCompatActivity
     private ItemTouchHelper touchHelper;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        fastAdapter.notifyAdapterDataSetChanged();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_shift_type);
