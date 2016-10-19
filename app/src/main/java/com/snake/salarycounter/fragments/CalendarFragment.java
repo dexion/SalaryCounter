@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
 import com.snake.salarycounter.R;
+import com.snake.salarycounter.events.SwitchEvent;
 import com.snake.salarycounter.models.Day;
 import com.snake.salarycounter.models.ShiftType;
 
@@ -22,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import de.greenrobot.event.EventBus;
 import uk.me.lewisdeane.ldialogs.BaseDialog;
 import uk.me.lewisdeane.ldialogs.CustomDialog;
 
@@ -30,7 +32,7 @@ public class CalendarFragment extends Fragment {
     private CaldroidCustomFragment caldroidFragment;
     private final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
     private CaldroidListener listener = null;
-    private boolean isCalendarEditable = true;
+    private boolean isCalendarEditable = false;
 
     public CalendarFragment() {
     }
@@ -44,6 +46,8 @@ public class CalendarFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_calendar, container, false);
+
+        EventBus.getDefault().register(this);
 
         if(ShiftType.allShiftTypes().size() < 1) {
             Snackbar.make(v, R.string.must_create_one_shift_type, Snackbar.LENGTH_INDEFINITE)
@@ -222,6 +226,17 @@ public class CalendarFragment extends Fragment {
 
         if (caldroidFragment != null) {
             caldroidFragment.saveStatesToKey(outState, "CALDROID_SAVED_STATE");
+        }
+    }
+
+    public void onEvent(SwitchEvent event){
+        if(event.mChecked){
+            // можно редактировать
+            caldroidFragment.setCaldroidListener(listener);
+        }
+        else{
+            // нельзя редактировать календарь
+            caldroidFragment.setCaldroidListener(null);
         }
     }
 }

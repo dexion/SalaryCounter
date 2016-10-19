@@ -93,4 +93,15 @@
         <item name="android:paddingBottom">5dp</item>
     </style>
 
+    <style name="CalendarSwitch" parent="Theme.AppCompat.Light">
+        <!-- active thumb & track color (30% transparency) -->
+        <item name="colorControlActivated">@color/colorAccent</item>
+
+        <!-- inactive thumb color -->
+        <item name="colorSwitchThumbNormal">@color/bg_swipe_item_dismiss</item>
+
+        <!-- inactive track color (30% transparency) -->
+        <item name="android:colorForeground">@color/secondary_text</item>
+    </style>
+
 </resources>
