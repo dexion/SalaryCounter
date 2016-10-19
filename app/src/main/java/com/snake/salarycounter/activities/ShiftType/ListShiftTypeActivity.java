@@ -60,6 +60,8 @@ public class ListShiftTypeActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+        itemAdapter.clear();
+        itemAdapter.addModel(ShiftType.allShiftTypes());
         fastAdapter.notifyAdapterDataSetChanged();
     }
 

@@ -48,6 +48,14 @@ public class ListFinanceConditionActivity extends AppCompatActivity
     private ItemTouchHelper touchHelper;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        itemAdapter.clear();
+        itemAdapter.addModel(FinanceCondition.allFinanceConditions());
+        fastAdapter.notifyAdapterDataSetChanged();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_finance_condition);

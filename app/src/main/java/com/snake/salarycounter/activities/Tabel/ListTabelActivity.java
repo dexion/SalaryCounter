@@ -50,6 +50,14 @@ public class ListTabelActivity extends AppCompatActivity
     private ItemTouchHelper touchHelper;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        itemAdapter.clear();
+        itemAdapter.addModel(Tabel.allTabel());
+        fastAdapter.notifyAdapterDataSetChanged();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_tabel);
