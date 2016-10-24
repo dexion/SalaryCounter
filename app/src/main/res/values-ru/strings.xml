@@ -83,7 +83,7 @@
     <string name="shift_type_money_fixed_price">Фиксированная ставка за смену</string>
     <string name="shift_type_money_additional_price">Разовая доплата за конкретную смену</string>
     <string name="shift_type_money_multiplier">Кратность оплаты</string>
-    <string name="shift_type_money_is_count_hours">Учитывать часы при табелировании</string>
+    <string name="shift_type_money_is_count_hours">Прибавлять часы при табелировании</string>
     <string name="shift_type_money_is_average_price">Оплачивается по среднему заработку</string>
     <string name="drawer_item_finance_conditions">Условия труда</string>
     <string name="drawer_item_tabel">Опорный табель</string>
@@ -125,5 +125,8 @@
     <string name="aboutLibraries_description_special1_name">Введение</string>
     <string name="aboutLibraries_description_special3_name">История изменений</string>
     <string name="dialog_delete">Удалить</string>
+    <string name="start_date">Начало периода</string>
+    <string name="end_date">Окончание периода</string>
+    <string name="shift_type_money_only_salary">Оплачивается только оклад, без надбавок</string>
 
 </resources>

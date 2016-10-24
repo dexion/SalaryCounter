@@ -66,6 +66,9 @@ public class ShiftType extends Model
     @Column (name = "is_average_price")
     public boolean isAveragePrice;
 
+    @Column (name = "only_salary")
+    public boolean onlySalary; // в эту смену только оклад считается, остальные надбавки не учитываются
+
     public ShiftType()
     {
         super();
@@ -91,6 +94,7 @@ public class ShiftType extends Model
         multiplier = new BigDecimal(1.0);
         isCountHours = true;
         isAveragePrice = false;
+        onlySalary = false;
     }
 
     public static ArrayList<ShiftType> allShiftTypes()

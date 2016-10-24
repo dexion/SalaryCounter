@@ -204,5 +204,8 @@
     <string name="other_bonus_proc_sum">Bonus %</string>
     <string name="other_bonus_sum">Bonus</string>
     <string name="about">About</string>
+    <string name="start_date">Start date</string>
+    <string name="end_date">End date</string>
+    <string name="shift_type_money_only_salary">Only salary</string>
 
 </resources>

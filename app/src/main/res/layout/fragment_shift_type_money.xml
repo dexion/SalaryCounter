@@ -16,6 +16,12 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/shift_type_money_only_salary"
+        android:id="@+id/shift_type_money_only_salary" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/shift_type_money_is_average_price"
         android:id="@+id/shift_type_money_is_average_price" />
 

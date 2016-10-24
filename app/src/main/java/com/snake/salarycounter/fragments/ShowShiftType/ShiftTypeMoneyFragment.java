@@ -48,6 +48,12 @@ public class ShiftTypeMoneyFragment extends Fragment {
         st.save();
     }
 
+    @BindView(R.id.shift_type_money_only_salary) CheckBox onlySalary;
+    @OnCheckedChanged(R.id.shift_type_money_only_salary) void onOnlySalaryChecked(boolean checked) {
+        st.onlySalary = checked;
+        st.save();
+    }
+
     @BindView(R.id.shift_type_money_fixed_price) EditText fixedPrice;
     @BindView(R.id.shift_type_money_additional_price) EditText additionalPrice;
     @BindView(R.id.shift_type_money_multiplier) EditText multiplier;
