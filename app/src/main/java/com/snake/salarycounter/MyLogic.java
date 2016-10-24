@@ -26,6 +26,7 @@ public class MyLogic {
 
         ShiftType mShiftType;
         Day mDay;
+        double mCountedHours = 0.0;
         double mHours = 0.0;
         boolean mEnableTax = true;
 
@@ -78,9 +79,9 @@ public class MyLogic {
 
         for (Payslip p: mPayslips) {
             if(totalPayslip[p.mShiftType.weight] == null){
-                totalPayslip[p.mShiftType.weight] = new BigDecimal[8];
+                totalPayslip[p.mShiftType.weight] = new BigDecimal[9];
 
-                for(int i = 0; i < 8; i++){
+                for(int i = 0; i < 9; i++){
                     totalPayslip[p.mShiftType.weight][i] = new BigDecimal(0.0);
                 }
             }
@@ -95,6 +96,7 @@ public class MyLogic {
             totalPayslip[p.mShiftType.weight][5] = totalPayslip[p.mShiftType.weight][5].add(p.mDistrict);
             totalPayslip[p.mShiftType.weight][6] = totalPayslip[p.mShiftType.weight][6].add(p.mBonus);
             totalPayslip[p.mShiftType.weight][7] = totalPayslip[p.mShiftType.weight][7].add(p.mOtherBonusProc);
+            totalPayslip[p.mShiftType.weight][8] = totalPayslip[p.mShiftType.weight][8].add(BigDecimal.valueOf(p.mCountedHours));
 
             tTotalAmount = tTotalAmount.add(p.mSalary);
             tTotalAmount = tTotalAmount.add(p.mAddition);
@@ -141,13 +143,19 @@ public class MyLogic {
             p.mAdditionalPrice = st.additionalPrice;
             p.mEnableTax = fc.enable_tax;
 
+            p.mHours = (new Period(st.dayDuration).getHours()) + (new Period(st.dayDuration).getMinutes() / 60.0);
+
             if (st.isCountHours) {
-                p.mHours = (new Period(st.dayDuration).getHours()) + (new Period(st.dayDuration).getMinutes() / 60.0);
+                p.mCountedHours = p.mHours;
             }
 
             if (st.isFixedPrice) {
                 p.mSalary = st.fixedPrice;
-            } else {
+            } else
+            if (st.isAveragePrice){
+                // надо как-то расчитывать средний заработок
+            }
+            else{
                 BigDecimal normohour = fc.salary.divide(new BigDecimal(t.hours), 15, BigDecimal.ROUND_HALF_UP);
                 p.mSalary = normohour.multiply(new BigDecimal(p.mHours));
 
@@ -171,7 +179,6 @@ public class MyLogic {
 
                     p.mDistrict = (p.mSalary.add(p.mAddition).add(p.mAdditionProc).add(p.mBonus).add(p.mOtherBonus)).multiply(new BigDecimal(fc.district / 100.0));
                 }
-
             }
         }
         return p;
