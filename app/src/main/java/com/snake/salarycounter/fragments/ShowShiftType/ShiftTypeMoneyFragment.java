@@ -30,13 +30,13 @@ public class ShiftTypeMoneyFragment extends Fragment {
     private ShiftType st;
 
     @BindView(R.id.shift_type_money_is_count_hours) CheckBox isCountHours;
-    @OnCheckedChanged(R.id.shift_type_money_is_fixed_price) void onIsCountHoursChecked(boolean checked) {
+    @OnCheckedChanged(R.id.shift_type_money_is_count_hours) void onIsCountHoursChecked(boolean checked) {
         st.isCountHours = checked;
         st.save();
     }
 
     @BindView(R.id.shift_type_money_is_average_price) CheckBox isAveragePrice;
-    @OnCheckedChanged(R.id.shift_type_money_is_fixed_price) void onIsAverageChecked(boolean checked) {
+    @OnCheckedChanged(R.id.shift_type_money_is_average_price) void onIsAverageChecked(boolean checked) {
         st.isAveragePrice = checked;
         st.save();
     }
@@ -82,6 +82,7 @@ public class ShiftTypeMoneyFragment extends Fragment {
         isCountHours.setChecked(st.isCountHours);
         isAveragePrice.setChecked(st.isAveragePrice);
         isFixedPrice.setChecked(st.isFixedPrice);
+        onlySalary.setChecked(st.onlySalary);
         fixedPrice.setText(st.fixedPrice.toString());
         fixedPrice.setEnabled(st.isFixedPrice);
         fixedPrice.addTextChangedListener(new TextValidator(getActivity(), fixedPrice, st.getId()));
