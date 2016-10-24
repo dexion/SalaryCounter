@@ -5,14 +5,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
 import com.github.johnpersano.supertoasts.SuperToast;
@@ -40,10 +40,14 @@ import com.snake.salarycounter.R;
 import com.snake.salarycounter.activities.FinanceCondition.ListFinanceConditionActivity;
 import com.snake.salarycounter.activities.ShiftType.ListShiftTypeActivity;
 import com.snake.salarycounter.activities.Tabel.ListTabelActivity;
-import com.snake.salarycounter.fragments.CalendarFragment;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,8 +63,11 @@ public class MainActivity extends PinActivity implements
     private static final int PROFILE_SETTING = 1;
     private static final int REQUEST_CODE_ENABLE = 11;
     private static final String PASSWORD_PREFERENCE_KEY = "PASSCODE";
+    private static final String START_DATE_PREFERENCE_KEY = "START_DATE";
+    private static final String END_DATE_PREFERENCE_KEY = "END_DATE";
 
-    //save our header or drawerResult
+    private SharedPreferences mSharedPreferences;
+
     private AccountHeader headerResult = null;
     private Drawer drawerResult = null;
     private PrimaryDrawerItem authDrawerItem = null;
@@ -76,11 +83,84 @@ public class MainActivity extends PinActivity implements
     final static int II_ABOUT = 102;
     final static int II_ACCOUNT = 103;
 
+    private DateTime startDate = DateTime.now();
+    private int currentStartYear;
+    private int currentStartMonth;
+    private int currentStartDay;
+
+    private DateTime endDate = startDate.plusMonths(1);
+    private int currentEndYear;
+    private int currentEndMonth;
+    private int currentEndDay;
+
+    MyLogic lgc = new MyLogic(startDate, endDate);
+
+    private final static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+
     /*@BindView(R.id.button) Button btn;
     @OnClick(R.id.button) void onButtonClicked(){
         MyLogic lgc = new MyLogic(DateTime.now(), DateTime.now());
-        lgc.RecalcDay(DateTime.parse("25.10.2016", DateTimeFormat.forPattern("dd.MM.yyyy")));
+        lgc.recalcDay(DateTime.parse("25.10.2016", DateTimeFormat.forPattern("dd.MM.yyyy")));
     }*/
+
+    @BindView(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout ctl;
+
+    @BindView(R.id.calculator_start_date)
+    TextView calcStartDate;
+    @OnClick(R.id.calculator_start_date) void onStartDateClicked(){
+        DatePickerDialog tpd = DatePickerDialog.newInstance(
+                new DatePickerDialog.OnDateSetListener(){
+                    @Override
+                    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+                        currentStartYear = year;
+                        currentStartMonth = monthOfYear;
+                        currentStartDay = dayOfMonth;
+
+                        resetDates();
+                        calcStartDate.setText(sdf.format(startDate.getMillis()));
+                        lgc.recalcAll();
+                        setTitleAmount();
+
+                        SharedPreferences.Editor ed = mSharedPreferences.edit();
+                        ed.putLong(START_DATE_PREFERENCE_KEY, startDate.getMillis()).apply();
+                    }
+                },
+                currentStartYear,
+                currentStartMonth,
+                currentStartDay
+        );
+        tpd.setAccentColor(getResources().getColor(R.color.mdtp_accent_color));
+        tpd.show(getFragmentManager(), "startDate");
+    }
+
+    @BindView(R.id.calculator_end_date)
+    TextView calcEndDate;
+    @OnClick(R.id.calculator_end_date) void onEndDateClicked(){
+        DatePickerDialog tpd = DatePickerDialog.newInstance(
+                new DatePickerDialog.OnDateSetListener(){
+                    @Override
+                    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+                        currentEndYear = year;
+                        currentEndMonth = monthOfYear;
+                        currentEndDay = dayOfMonth;
+
+                        resetDates();
+                        calcEndDate.setText(sdf.format(endDate.getMillis()));
+                        lgc.recalcAll();
+                        setTitleAmount();
+
+                        SharedPreferences.Editor ed = mSharedPreferences.edit();
+                        ed.putLong(END_DATE_PREFERENCE_KEY, endDate.getMillis()).apply();
+                    }
+                },
+                currentEndYear,
+                currentEndMonth,
+                currentEndDay
+        );
+        tpd.setAccentColor(getResources().getColor(R.color.mdtp_accent_color));
+        tpd.show(getFragmentManager(), "endDate");
+    }
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -93,8 +173,8 @@ public class MainActivity extends PinActivity implements
 
         Fabric.with(this, new Crashlytics());
 
-        /*SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if (!mSharedPreferences.contains(PASSWORD_PREFERENCE_KEY)) {
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        /*if (!mSharedPreferences.contains(PASSWORD_PREFERENCE_KEY)) {
             Intent intent = new Intent(MainActivity.this, CustomPinActivity.class);
             intent.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);
             startActivityForResult(intent, REQUEST_CODE_ENABLE);
@@ -113,16 +193,32 @@ public class MainActivity extends PinActivity implements
 
         ButterKnife.bind(this);
 
+        initDates();
+        resetDates();
+
+        lgc.recalcAll();
+
+        calcStartDate.setText(sdf.format(startDate.getMillis()));
+        calcEndDate.setText(sdf.format(endDate.getMillis()));
+        setTitleAmount();
+
+        //initializeGoogle();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        initializeGoogle();
-
         buildDrawer(this, savedInstanceState, toolbar);
+    }
 
-        Intent intent = new Intent();
-        intent.setClass(this, ListShiftTypeActivity.class);
-        startActivity(intent);
+    private void initDates() {
+        startDate = new DateTime(mSharedPreferences.getLong(START_DATE_PREFERENCE_KEY, DateTime.now().getMillis()));
+        endDate = new DateTime(mSharedPreferences.getLong(END_DATE_PREFERENCE_KEY, startDate.plusMonths(1).getMillis()));
+        currentStartYear = startDate.getYear();
+        currentStartMonth = startDate.getMonthOfYear() - 1;
+        currentStartDay = startDate.getDayOfMonth();
+
+        currentEndYear = endDate.getYear();
+        currentEndMonth = endDate.getMonthOfYear() - 1;
+        currentEndDay = endDate.getDayOfMonth();
     }
 
     private void initializeGoogle(){
@@ -134,19 +230,18 @@ public class MainActivity extends PinActivity implements
 
     private void buildDrawer(final Context context, Bundle savedInstanceState, Toolbar toolbar){
         // Create the AccountHeader
-        buildHeader(true, savedInstanceState);
+        buildHeader(false, savedInstanceState);
 
-        authDrawerItem = new PrimaryDrawerItem()
+        /*authDrawerItem = new PrimaryDrawerItem()
                 .withSelectable(false)
                 .withName(R.string.account_title)
                 .withIcon(CommunityMaterial.Icon.cmd_account)
-                .withIdentifier(II_ACCOUNT);
+                .withIdentifier(II_ACCOUNT);*/
 
         //Create the drawer
         drawerResult = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
-                .withFullscreen(true)
                 .withAccountHeader(headerResult) //set the AccountHeader we created earlier for the header
                 .addDrawerItems(
                         /*new PrimaryDrawerItem()
@@ -248,11 +343,11 @@ public class MainActivity extends PinActivity implements
                 })
                 .addStickyDrawerItems(
                         //authDrawerItem,
-                        new SecondaryDrawerItem()
+                        /*new SecondaryDrawerItem()
                                 .withSelectable(false)
                                 .withName(R.string.drawer_item_settings)
                                 .withIcon(CommunityMaterial.Icon.cmd_settings)
-                                .withIdentifier(II_SETTINGS),
+                                .withIdentifier(II_SETTINGS),*/
                         new SecondaryDrawerItem()
                                 .withSelectable(false)
                                 .withName(R.string.drawer_item_about)
@@ -327,6 +422,18 @@ public class MainActivity extends PinActivity implements
         Crashlytics.setUserName("Test User");
     }
 
+    private void setTitleAmount(){
+        NumberFormat numberFormat = DecimalFormat.getCurrencyInstance(Locale.getDefault());
+        ctl.setTitle(numberFormat.format(lgc.getTotalAmount()));
+    }
+
+    private void resetDates(){
+        startDate = new DateTime(currentStartYear, currentStartMonth + 1, currentStartDay, 0, 0);
+        endDate = new DateTime(currentEndYear, currentEndMonth + 1, currentEndDay, 0, 0);
+        lgc.setStart(startDate);
+        lgc.setEnd(endDate);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -334,13 +441,6 @@ public class MainActivity extends PinActivity implements
         return true;
     }
 
-    /**
-     * small helper method to reuse the logic to build the AccountHeader
-     * this will be used to replace the header of the drawer with a compact/normal header
-     *
-     * @param compact
-     * @param savedInstanceState
-     */
     private void buildHeader(boolean compact, Bundle savedInstanceState) {
         // Create the AccountHeader
         headerResult = new AccountHeaderBuilder()
