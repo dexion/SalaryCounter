@@ -124,5 +124,6 @@
     <string name="aboutLibraries_description_name">Зарплатный счётчик</string>
     <string name="aboutLibraries_description_special1_name">Введение</string>
     <string name="aboutLibraries_description_special3_name">История изменений</string>
+    <string name="dialog_delete">Удалить</string>
 
 </resources>
