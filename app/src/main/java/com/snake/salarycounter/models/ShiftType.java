@@ -113,6 +113,11 @@ public class ShiftType extends Model
         return new Select().from(ShiftType.class).where("_id = ?", _id).limit(1).executeSingle();
     }
 
+    public static ShiftType getByWeight(int weight)
+    {
+        return new Select().from(ShiftType.class).where("weight = ?", weight).limit(1).executeSingle();
+    }
+
     public static void reorderBottom(int fromPosition, int ignorePosition)
     {
         int weight = ((ShiftType) new Select().from(ShiftType.class).orderBy("weight ASC").limit(1).offset(fromPosition).executeSingle()).weight;

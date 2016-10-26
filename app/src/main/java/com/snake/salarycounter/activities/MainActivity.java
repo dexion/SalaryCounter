@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
@@ -40,10 +41,14 @@ import com.snake.salarycounter.R;
 import com.snake.salarycounter.activities.FinanceCondition.ListFinanceConditionActivity;
 import com.snake.salarycounter.activities.ShiftType.ListShiftTypeActivity;
 import com.snake.salarycounter.activities.Tabel.ListTabelActivity;
+import com.snake.salarycounter.fragments.PayslipFragment;
+import com.snake.salarycounter.models.ShiftType;
+import com.snake.salarycounter.utils.Toolz;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.joda.time.DateTime;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -97,12 +102,6 @@ public class MainActivity extends PinActivity implements
 
     private final static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
 
-    /*@BindView(R.id.button) Button btn;
-    @OnClick(R.id.button) void onButtonClicked(){
-        MyLogic lgc = new MyLogic(DateTime.now(), DateTime.now());
-        lgc.recalcDay(DateTime.parse("25.10.2016", DateTimeFormat.forPattern("dd.MM.yyyy")));
-    }*/
-
     @BindView(R.id.collapsing_toolbar)
     CollapsingToolbarLayout ctl;
 
@@ -121,6 +120,7 @@ public class MainActivity extends PinActivity implements
                         calcStartDate.setText(sdf.format(startDate.getMillis()));
                         lgc.recalcAll();
                         setTitleAmount();
+                        setPayslipList();
 
                         SharedPreferences.Editor ed = mSharedPreferences.edit();
                         ed.putLong(START_DATE_PREFERENCE_KEY, startDate.getMillis()).apply();
@@ -149,6 +149,7 @@ public class MainActivity extends PinActivity implements
                         calcEndDate.setText(sdf.format(endDate.getMillis()));
                         lgc.recalcAll();
                         setTitleAmount();
+                        setPayslipList();
 
                         SharedPreferences.Editor ed = mSharedPreferences.edit();
                         ed.putLong(END_DATE_PREFERENCE_KEY, endDate.getMillis()).apply();
@@ -161,6 +162,9 @@ public class MainActivity extends PinActivity implements
         tpd.setAccentColor(getResources().getColor(R.color.mdtp_accent_color));
         tpd.show(getFragmentManager(), "endDate");
     }
+
+    @BindView(R.id.list_payslip)
+    LinearLayout llPayslip;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -201,12 +205,36 @@ public class MainActivity extends PinActivity implements
         calcStartDate.setText(sdf.format(startDate.getMillis()));
         calcEndDate.setText(sdf.format(endDate.getMillis()));
         setTitleAmount();
+        setPayslipList();
 
         //initializeGoogle();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         buildDrawer(this, savedInstanceState, toolbar);
+    }
+
+    private void setPayslipList(){
+        if(llPayslip.getChildCount() > 0)
+            llPayslip.removeAllViews();
+
+        getSupportFragmentManager().beginTransaction().add(
+                llPayslip.getId(),
+                PayslipFragment.newInstance(lgc.getTotalPayslipDouble()[lgc.getTotalPayslipDouble().length - 1], getString(R.string.payslip_total_amount)),
+                getString(R.string.payslip_total))
+                .commit();
+
+        for (int i = 0; i < lgc.getTotalPayslipDouble().length - 1; i++) {
+            if(null != lgc.getTotalPayslip()[i] && 0 != lgc.getTotalPayslip()[i][9].compareTo( BigDecimal.ZERO)){
+                getSupportFragmentManager().beginTransaction().add(
+                        llPayslip.getId(),
+                        PayslipFragment.newInstance(lgc.getTotalPayslipDouble()[i], ShiftType.getByWeight(i).getText()),
+                        ShiftType.getByWeight(i).getText())
+                        .commit();
+            }
+        }
+
+        llPayslip.invalidate();
     }
 
     private void initDates() {
@@ -423,8 +451,7 @@ public class MainActivity extends PinActivity implements
     }
 
     private void setTitleAmount(){
-        NumberFormat numberFormat = DecimalFormat.getCurrencyInstance(Locale.getDefault());
-        ctl.setTitle(numberFormat.format(lgc.getTotalAmount()));
+        ctl.setTitle(Toolz.money(lgc.getTotalAmount()));
     }
 
     private void resetDates(){

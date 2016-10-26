@@ -9,9 +9,11 @@ import org.joda.time.DateTime;
 import org.joda.time.Period;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 public class MyLogic {
+    private final int SIZE_OF_PAYSLIP = 11;
 
     private DateTime mStart;
     private DateTime mEnd;
@@ -46,23 +48,23 @@ public class MyLogic {
         BigDecimal mResidue = BigDecimal.valueOf(0.0);
         BigDecimal mRecidueProc = BigDecimal.valueOf(0.0);
 
-        public Payslip(Day day){
+        public Payslip(Day day) {
             mDay = day;
         }
 
-        Payslip(Day day, ShiftType shiftType){
+        Payslip(Day day, ShiftType shiftType) {
             mDay = day;
             mShiftType = shiftType;
         }
     }
 
-    public MyLogic(DateTime start, DateTime end){
+    public MyLogic(DateTime start, DateTime end) {
         mStart = start;
         mEnd = end;
 
     }
 
-    public void recalcAll(){
+    public void recalcAll() {
 
         mPayslips.clear();
 
@@ -73,20 +75,29 @@ public class MyLogic {
         totalTax = BigDecimal.valueOf(0.0);
         totalAmountOnHand = BigDecimal.valueOf(0.0);
 
-        for(DateTime i = new DateTime(mStart); i.isBefore(mEnd.plusDays(1)); i = i.plusDays(1)){
+        for (DateTime i = new DateTime(mStart); i.isBefore(mEnd.plusDays(1)); i = i.plusDays(1)) {
             recalcDay(i);
         }
 
-        for (Payslip p: mPayslips) {
-            if(totalPayslip[p.mShiftType.weight] == null){
-                totalPayslip[p.mShiftType.weight] = new BigDecimal[9];
+        for (Payslip p : mPayslips) {
+            if (totalPayslip[p.mShiftType.weight] == null) {
+                totalPayslip[p.mShiftType.weight] = new BigDecimal[SIZE_OF_PAYSLIP];
 
-                for(int i = 0; i < 9; i++){
+                for (int i = 0; i < SIZE_OF_PAYSLIP; i++) {
                     totalPayslip[p.mShiftType.weight][i] = new BigDecimal(0.0);
                 }
             }
 
+            BigDecimal tTax = BigDecimal.valueOf(0.0);
+
             BigDecimal tTotalAmount = BigDecimal.valueOf(0.0); // временная переменная для суммирования. Нужна потому, что не на все применяется налог.
+            tTotalAmount = tTotalAmount.add(p.mSalary);
+            tTotalAmount = tTotalAmount.add(p.mAddition);
+            tTotalAmount = tTotalAmount.add(p.mAdditionProc);
+            tTotalAmount = tTotalAmount.add(p.mNorth);
+            tTotalAmount = tTotalAmount.add(p.mDistrict);
+            tTotalAmount = tTotalAmount.add(p.mBonus);
+            tTotalAmount = tTotalAmount.add(p.mOtherBonusProc);
 
             totalPayslip[p.mShiftType.weight][0] = totalPayslip[p.mShiftType.weight][0].add(p.mSalary);
             totalPayslip[p.mShiftType.weight][1] = totalPayslip[p.mShiftType.weight][1].add(p.mAddition);
@@ -97,18 +108,14 @@ public class MyLogic {
             totalPayslip[p.mShiftType.weight][6] = totalPayslip[p.mShiftType.weight][6].add(p.mBonus);
             totalPayslip[p.mShiftType.weight][7] = totalPayslip[p.mShiftType.weight][7].add(p.mOtherBonusProc);
             totalPayslip[p.mShiftType.weight][8] = totalPayslip[p.mShiftType.weight][8].add(BigDecimal.valueOf(p.mCountedHours));
+            totalPayslip[p.mShiftType.weight][9] = totalPayslip[p.mShiftType.weight][9].add(tTotalAmount).add(p.mAdditionalPrice);
 
-            tTotalAmount = tTotalAmount.add(p.mSalary);
-            tTotalAmount = tTotalAmount.add(p.mAddition);
-            tTotalAmount = tTotalAmount.add(p.mAdditionProc);
-            tTotalAmount = tTotalAmount.add(p.mNorth);
-            tTotalAmount = tTotalAmount.add(p.mDistrict);
-            tTotalAmount = tTotalAmount.add(p.mBonus);
-            tTotalAmount = tTotalAmount.add(p.mOtherBonusProc);
-
-            if(p.mEnableTax && !p.mShiftType.onlySalary){
-                totalTax = totalTax.add(tTotalAmount.multiply(new BigDecimal(0.13)));
+            if (p.mEnableTax && !p.mShiftType.onlySalary) {
+                tTax = tTotalAmount.multiply(new BigDecimal(0.13));
             }
+
+            totalTax = totalTax.add(tTax);
+            totalPayslip[p.mShiftType.weight][10] = totalPayslip[p.mShiftType.weight][10].add(tTax);
 
             totalAmount = totalAmount.add(tTotalAmount).add(p.mAdditionalPrice); // на это налог не начисляется
 
@@ -123,16 +130,16 @@ public class MyLogic {
         return;
     }
 
-    public Payslip recalcDay(DateTime date){
+    public Payslip recalcDay(DateTime date) {
         Payslip p = null;
 
         Day d = Day.getByDate(date);
-        if(null != d) {
+        if (null != d) {
             ShiftType st = d.getShiftType();
             FinanceCondition fc = FinanceCondition.getByDate(date);
             Tabel t = Tabel.getByDate(date);
 
-            if(null == st || null == fc || null == t){
+            if (null == st || null == fc || null == t) {
                 return null;
             }
 
@@ -151,15 +158,13 @@ public class MyLogic {
 
             if (st.isFixedPrice) {
                 p.mSalary = st.fixedPrice;
-            } else
-            if (st.isAveragePrice){
+            } else if (st.isAveragePrice) {
                 // надо как-то расчитывать средний заработок
-            }
-            else{
+            } else {
                 BigDecimal normohour = fc.salary.divide(new BigDecimal(t.hours), 15, BigDecimal.ROUND_HALF_UP);
                 p.mSalary = normohour.multiply(new BigDecimal(p.mHours));
 
-                if(!st.onlySalary){
+                if (!st.onlySalary) {
                     BigDecimal normohourAddition = fc.addition.divide(new BigDecimal(t.hours), 15, BigDecimal.ROUND_HALF_UP);
                     p.mAddition = normohourAddition.multiply(new BigDecimal(p.mHours));
 
@@ -203,16 +208,50 @@ public class MyLogic {
         return this;
     }
 
-    public ArrayList<Payslip> getPayslips() {
+    public ArrayList<Payslip> getDailyPayslips() {
         return mPayslips;
+    }
+
+    public BigDecimal[][] getTotalPayslip() {
+        return totalPayslip;
+    }
+
+    public double[][] getTotalPayslipDouble() {
+        int SIZE = totalPayslip.length;
+        double[][] tArray = new double[SIZE + 1][];
+        for (int i = 0; i < SIZE; i++) {
+            if (null != totalPayslip[i]) {
+                tArray[i] = new double[totalPayslip[i].length];
+                for (int ii = 0; ii < totalPayslip[i].length; ii++) {
+                    tArray[i][ii] = totalPayslip[i][ii].setScale(2, RoundingMode.HALF_UP).doubleValue();
+                }
+            }
+        }
+        if (null != totalPayslip[0]) {
+            tArray[SIZE] = new double[totalPayslip[0].length];
+        }
+
+        for (int i = 0; i < totalPayslip.length; i++) {
+            if (null != totalPayslip[i]) {
+                for (int ii = 0; ii < totalPayslip[i].length; ii++) {
+                    tArray[SIZE][ii] += tArray[i][ii];
+                }
+            }
+        }
+
+        return tArray;
     }
 
     public BigDecimal getTotalAmount() {
         return totalAmount;
     }
 
-    public BigDecimal[][] getTotalPayslip() {
-        return totalPayslip;
+    public BigDecimal getTotalTax() {
+        return totalTax;
+    }
+
+    public BigDecimal getTotalAmountOnHand() {
+        return totalAmountOnHand;
     }
 
     //endregion

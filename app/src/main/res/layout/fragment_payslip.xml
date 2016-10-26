@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_marginBottom="16dp"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/payslip_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/payslip_title"
+            android:textSize="30sp"
+            android:textColor="@color/secondary_text"
+            android:padding="0dip"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimary" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="3dip"
+            android:paddingBottom="3dip"
+            android:paddingLeft="15dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                android:padding="0dip">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|start"
+                    android:text="@string/payslip_salary"
+                    android:textColor="@color/secondary_text" />
+
+                <TextView
+                    android:id="@+id/payslip_salary"
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="50dp"
+                    android:text="0,00"
+                    android:textStyle="bold"
+                    android:textColor="@color/secondary_text"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                android:padding="0dip">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+                    android:text="@string/payslip_addition"
+                    android:textColor="@color/secondary_text" />
+
+                <TextView
+                    android:id="@+id/payslip_addition"
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="50dp"
+                    android:text="0,00"
+                    android:textStyle="bold"
+                    android:textColor="@color/secondary_text"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                android:padding="0dip">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+                    android:text="@string/payslip_addition_proc"
+                    android:textColor="@color/secondary_text"
+                    android:gravity="center_vertical|start" />
+
+                <TextView
+                    android:id="@+id/payslip_addition_proc"
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="50dp"
+                    android:text="0,00"
+                    android:textStyle="bold"
+                    android:textColor="@color/secondary_text"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                android:padding="0dip">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+                    android:text="@string/payslip_addition_price"
+                    android:textColor="@color/secondary_text"
+                    android:gravity="center_vertical|start" />
+
+                <TextView
+                    android:id="@+id/payslip_addition_price"
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="50dp"
+                    android:text="0,00"
+                    android:textStyle="bold"
+                    android:textColor="@color/secondary_text"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                android:padding="0dip">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+                    android:text="@string/payslip_north"
+                    android:textColor="@color/secondary_text"
+                    android:gravity="center_vertical|left" />
+
+                <TextView
+                    android:id="@+id/payslip_north"
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="50dp"
+                    android:text="0,00"
+                    android:textStyle="bold"
+                    android:textColor="@color/secondary_text"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                android:padding="0dip">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+                    android:text="@string/payslip_regional"
+                    android:textColor="@color/secondary_text"
+                    android:gravity="center_vertical|left" />
+
+                <TextView
+                    android:id="@+id/payslip_regional"
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="50dp"
+                    android:text="0,00"
+                    android:textStyle="bold"
+                    android:textColor="@color/secondary_text"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                android:padding="0dip">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+                    android:text="@string/payslip_bonus"
+                    android:textColor="@color/secondary_text"
+                    android:gravity="center_vertical|start" />
+
+                <TextView
+                    android:id="@+id/payslip_bonus"
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="50dp"
+                    android:text="0,00"
+                    android:textStyle="bold"
+                    android:textColor="@color/secondary_text"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                android:padding="0dip">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+                    android:text="@string/payslip_total_amount"
+                    android:textSize="18sp"
+                    android:textColor="@color/secondary_text"
+                    android:gravity="center_vertical|start" />
+
+                <TextView
+                    android:id="@+id/payslip_total_amount"
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="0dp"
+                    android:text="0,00"
+                    android:textStyle="bold"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                android:padding="0dip">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+                    android:text="@string/payslip_total_tax"
+                    android:textSize="18sp"
+                    android:textColor="@color/secondary_text"
+                    android:gravity="center_vertical|start" />
+
+                <TextView
+                    android:id="@+id/payslip_total_tax"
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="0dp"
+                    android:text="0,00"
+                    android:textStyle="bold"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                android:padding="0dip">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+                    android:text="@string/payslip_cash"
+                    android:textSize="18sp"
+                    android:textColor="@color/colorAccent"
+                    android:gravity="center_vertical|start" />
+
+                <TextView
+                    android:id="@+id/payslip_cash"
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="0dp"
+                    android:text="0,00"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <!--<LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                android:padding="0dip">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+                    android:text="@string/payslip_nalog"
+                    android:textColor="@color/secondary_text"
+                    android:gravity="center_vertical|left"
+ />
+
+                <TextView
+                    android:id="@+id/payslip_nalog"
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+
+                    android:padding="0dip"
+                    android:text="0,00"
+                    android:textStyle="bold"
+                    android:textColor="@color/secondary_text"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                android:padding="0dip">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+                    android:text="@string/payslip_alimony"
+                    android:textColor="@color/secondary_text"
+                    android:gravity="center_vertical|left"
+ />
+
+                <TextView
+                    android:id="@+id/payslip_alimony"
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+
+                    android:padding="0dip"
+                    android:text="0,00"
+                    android:textStyle="bold"
+                    android:textColor="@color/secondary_text"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                android:padding="0dip">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+                    android:text="@string/payslip_residue"
+                    android:textColor="@color/secondary_text"
+                    android:gravity="center_vertical|left"
+ />
+
+                <TextView
+                    android:id="@+id/payslip_residue"
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+
+                    android:padding="0dip"
+                    android:text="0,00"
+                    android:textStyle="bold"
+                    android:textColor="@color/secondary_text"/>
+
+            </LinearLayout>-->
+
+        </LinearLayout>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

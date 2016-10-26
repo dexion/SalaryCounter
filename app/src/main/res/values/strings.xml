@@ -207,5 +207,17 @@
     <string name="start_date">Start date</string>
     <string name="end_date">End date</string>
     <string name="shift_type_money_only_salary">Only salary</string>
+    <string name="payslip_title">Title</string>
+    <string name="payslip_salary">Salary</string>
+    <string name="payslip_addition">Addition</string>
+    <string name="payslip_addition_proc">Addition, %</string>
+    <string name="payslip_addition_price">Addition price</string>
+    <string name="payslip_north">North</string>
+    <string name="payslip_regional">Regional</string>
+    <string name="payslip_bonus">Bonus</string>
+    <string name="payslip_total_amount">Total amount</string>
+    <string name="payslip_total">Total</string>
+    <string name="payslip_total_tax">Tax</string>
+    <string name="payslip_cash">Cash</string>
 
 </resources>
