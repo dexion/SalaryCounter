@@ -1,4 +1,4 @@
-package com.snake.salarycounter.generic;
+package com.snake.salarycounter.items;
 
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -8,8 +8,9 @@ import android.widget.TextView;
 
 import com.mikepenz.fastadapter.items.GenericAbstractItem;
 import com.mikepenz.fastadapter.utils.ViewHolderFactory;
+import com.mikepenz.materialdrawer.holder.StringHolder;
 import com.snake.salarycounter.R;
-import com.snake.salarycounter.models.Tabel;
+import com.snake.salarycounter.models.ShiftType;
 
 import java.util.List;
 
@@ -17,23 +18,31 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class GenericTabelItem extends GenericAbstractItem<Tabel, GenericTabelItem, GenericTabelItem.ViewHolder>{
+public class GenericShiftTypeItem extends GenericAbstractItem<ShiftType, GenericShiftTypeItem, GenericShiftTypeItem.ViewHolder> {
     //the static ViewHolderFactory which will be used to generate the ViewHolder for this Item
-    private static final ViewHolderFactory<?extends RecyclerView.ViewHolder> FACTORY = new ItemFactory();
+    private static final ViewHolderFactory<? extends ViewHolder> FACTORY = new ItemFactory();
+
+    public StringHolder undoTextSwipeFromRight;
+    public StringHolder undoTextSwipeFromLeft;
+    public StringHolder undoTextSwipeFromTop;
+    public StringHolder undoTextSwipeFromBottom;
 
     public int swipedDirection;
     private Runnable swipedAction;
 
-    public GenericTabelItem(Tabel stype){ super(stype);}
+    public GenericShiftTypeItem(ShiftType stype) {
+        super(stype);
+    }
+
     /**
      * defines the type defining this item. must be unique. preferably an id
      *
      * @return the type
      */
     @Override
-    public int getType(){
-            return R.id.fastadapter_generic_tabel_item_id;
-            }
+    public int getType() {
+        return R.id.fastadapter_generic_shift_type_item_id;
+    }
 
     /**
      * defines the layout which will be used for this item in the list
@@ -41,9 +50,9 @@ public class GenericTabelItem extends GenericAbstractItem<Tabel, GenericTabelIte
      * @return the layout for this item
      */
     @Override
-    public int getLayoutRes(){
-            return R.layout.tabel_item;
-            }
+    public int getLayoutRes() {
+        return R.layout.item_shift_type;
+    }
 
     /**
      * binds the data of this item onto the viewHolder
@@ -51,26 +60,27 @@ public class GenericTabelItem extends GenericAbstractItem<Tabel, GenericTabelIte
      * @param viewHolder the viewHolder of this item
      */
     @Override
-    public void bindView(ViewHolder viewHolder, List payloads){
-            super.bindView(viewHolder, payloads);
+    public void bindView(ViewHolder viewHolder, List payloads) {
+        super.bindView(viewHolder, payloads);
 
-            //define our data for the view
-            viewHolder.name.setText(getModel().getText());
+        //define our data for the view
+        viewHolder.name.setText(getModel().name);
+        viewHolder.colored_pane.setBackgroundColor(getModel().color);
 
-            viewHolder.swipeResultContent.setVisibility(swipedDirection!=0?View.VISIBLE:View.GONE);
-            viewHolder.itemContent.setVisibility(swipedDirection!=0?View.GONE:View.VISIBLE);
+        viewHolder.swipeResultContent.setVisibility(swipedDirection != 0 ? View.VISIBLE : View.GONE);
+        viewHolder.itemContent.setVisibility(swipedDirection != 0 ? View.GONE : View.VISIBLE);
 
-            CharSequence swipedAction=null;
-            CharSequence swipedText=null;
-            if(swipedDirection!=0){
-            swipedAction=viewHolder.itemView.getContext().getString(R.string.action_undo);
+        CharSequence swipedAction = null;
+        CharSequence swipedText = null;
+        if (swipedDirection != 0) {
+            swipedAction = viewHolder.itemView.getContext().getString(R.string.action_undo);
             swipedText = swipedDirection == ItemTouchHelper.LEFT ? "Удалено" : "Archived";
-            viewHolder.swipeResultContent.setBackgroundColor(ContextCompat.getColor(viewHolder.itemView.getContext(),swipedDirection==ItemTouchHelper.LEFT?R.color.md_red_900:R.color.md_blue_900));
-            }
-            viewHolder.swipedAction.setText(swipedAction==null?"":swipedAction);
-            viewHolder.swipedText.setText(swipedText==null?"":swipedText);
-            viewHolder.swipedActionRunnable=this.swipedAction;
-            }
+            viewHolder.swipeResultContent.setBackgroundColor(ContextCompat.getColor(viewHolder.itemView.getContext(), swipedDirection == ItemTouchHelper.LEFT ? R.color.md_red_900 : R.color.md_blue_900));
+        }
+        viewHolder.swipedAction.setText(swipedAction == null ? "" : swipedAction);
+        viewHolder.swipedText.setText(swipedText == null ? "" : swipedText);
+        viewHolder.swipedActionRunnable = this.swipedAction;
+    }
 
     /**
      * our ItemFactory implementation which creates the ViewHolder for our adapter.
@@ -90,7 +100,7 @@ public class GenericTabelItem extends GenericAbstractItem<Tabel, GenericTabelIte
      */
     @Override
     public ViewHolderFactory<? extends ViewHolder> getFactory() {
-        return (ViewHolderFactory<? extends ViewHolder>) FACTORY;
+        return FACTORY;
     }
 
     /**
@@ -100,7 +110,8 @@ public class GenericTabelItem extends GenericAbstractItem<Tabel, GenericTabelIte
         protected View view;
         @BindView(R.id.name)
         public TextView name;
-
+        @BindView(R.id.colored_pane)
+        public View colored_pane;
         @BindView(R.id.swipe_result_content)
         View swipeResultContent;
         @BindView(R.id.item_content)
@@ -124,7 +135,6 @@ public class GenericTabelItem extends GenericAbstractItem<Tabel, GenericTabelIte
                 }
             });
         }
-
     }
 
     public void setSwipedDirection(int swipedDirection) {

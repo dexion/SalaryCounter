@@ -20,7 +20,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.github.johnpersano.supertoasts.SuperCardToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.github.johnpersano.supertoasts.util.Style;
 import com.melnykov.fab.FloatingActionButton;
@@ -37,7 +36,7 @@ import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.itemanimators.SlideDownAlphaAnimator;
 import com.mikepenz.materialize.MaterializeBuilder;
 import com.snake.salarycounter.R;
-import com.snake.salarycounter.generic.GenericShiftTypeItem;
+import com.snake.salarycounter.items.GenericShiftTypeItem;
 import com.snake.salarycounter.models.ShiftType;
 
 public class ListShiftTypeActivity extends AppCompatActivity

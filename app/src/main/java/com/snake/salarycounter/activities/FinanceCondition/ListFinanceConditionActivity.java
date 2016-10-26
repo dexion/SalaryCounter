@@ -27,7 +27,7 @@ import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.itemanimators.SlideDownAlphaAnimator;
 import com.mikepenz.materialize.MaterializeBuilder;
 import com.snake.salarycounter.R;
-import com.snake.salarycounter.generic.GenericFinanceConditionItem;
+import com.snake.salarycounter.items.GenericFinanceConditionItem;
 import com.snake.salarycounter.models.FinanceCondition;
 
 

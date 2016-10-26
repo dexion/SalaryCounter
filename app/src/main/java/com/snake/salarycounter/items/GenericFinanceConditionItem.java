@@ -1,4 +1,4 @@
-package com.snake.salarycounter.generic;
+package com.snake.salarycounter.items;
 
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.mikepenz.fastadapter.items.GenericAbstractItem;
 import com.mikepenz.fastadapter.utils.ViewHolderFactory;
-import com.mikepenz.materialdrawer.holder.StringHolder;
 import com.snake.salarycounter.R;
 import com.snake.salarycounter.models.FinanceCondition;
 
@@ -43,7 +42,7 @@ public class GenericFinanceConditionItem  extends GenericAbstractItem<FinanceCon
      */
     @Override
     public int getLayoutRes(){
-            return R.layout.finance_condition_item;
+            return R.layout.item_finance_condition;
             }
 
     /**

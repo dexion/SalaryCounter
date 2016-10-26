@@ -27,10 +27,8 @@ import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.itemanimators.SlideDownAlphaAnimator;
 import com.mikepenz.materialize.MaterializeBuilder;
 import com.snake.salarycounter.R;
-import com.snake.salarycounter.generic.GenericTabelItem;
+import com.snake.salarycounter.items.GenericTabelItem;
 import com.snake.salarycounter.models.Tabel;
-
-import org.joda.time.DateTime;
 
 
 public class ListTabelActivity extends AppCompatActivity
