@@ -222,13 +222,13 @@ public class MyLogic {
         for (int i = 0; i < SIZE; i++) {
             if (null != totalPayslip[i]) {
                 tArray[i] = new double[totalPayslip[i].length];
+                if(null == tArray[SIZE]){
+                    tArray[SIZE] = new double[totalPayslip[i].length];
+                }
                 for (int ii = 0; ii < totalPayslip[i].length; ii++) {
                     tArray[i][ii] = totalPayslip[i][ii].setScale(2, RoundingMode.HALF_UP).doubleValue();
                 }
             }
-        }
-        if (null != totalPayslip[0]) {
-            tArray[SIZE] = new double[totalPayslip[0].length];
         }
 
         for (int i = 0; i < totalPayslip.length; i++) {
