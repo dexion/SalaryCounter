@@ -5,16 +5,26 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SwitchCompat;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
 import com.snake.salarycounter.R;
+import com.snake.salarycounter.activities.MainActivity;
 import com.snake.salarycounter.events.SwitchEvent;
 import com.snake.salarycounter.models.Day;
 import com.snake.salarycounter.models.ShiftType;
@@ -22,6 +32,7 @@ import com.snake.salarycounter.models.ShiftType;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.zip.Inflater;
 
 import de.greenrobot.event.EventBus;
 import uk.me.lewisdeane.ldialogs.BaseDialog;
@@ -44,8 +55,26 @@ public class CalendarFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_calendar, container, false);
+
+        Toolbar toolbar = (Toolbar) v.findViewById(R.id.toolbar);
+        if (null != toolbar) {
+            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.title_activity_calendar);
+            ActionBarDrawerToggle mActionBarDrawerToggle = new ActionBarDrawerToggle(getActivity(),  ((MainActivity) getActivity()).getDrawer().getDrawerLayout(), toolbar, R.string.drawer_open, R.string.drawer_close);
+            mActionBarDrawerToggle.syncState();
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            mActionBarDrawerToggle.setDrawerIndicatorEnabled(true);
+
+            ((MainActivity) getActivity()).getDrawer().setActionBarDrawerToggle(mActionBarDrawerToggle);
+        }
 
         EventBus.getDefault().register(this);
 
@@ -215,6 +244,27 @@ public class CalendarFragment extends Fragment {
         t.commit();
 
         return v;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Inflate your Menu
+        inflater.inflate(R.menu.menu_calendar, menu);
+
+        MenuItem switchEdit = menu.findItem(R.id.switch_edit);
+        switchEdit.setActionView(R.layout.menu_switch_layout);
+
+        final SwitchCompat actionView = (SwitchCompat) switchEdit.getActionView().findViewById(R.id.switchForActionBar);
+        actionView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                EventBus.getDefault().post(new SwitchEvent(isChecked));
+            }
+
+        });
+
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     /**

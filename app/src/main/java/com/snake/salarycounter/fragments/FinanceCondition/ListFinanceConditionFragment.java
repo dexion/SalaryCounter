@@ -1,17 +1,21 @@
-package com.snake.salarycounter.activities.Tabel;
+package com.snake.salarycounter.fragments.FinanceCondition;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.github.johnpersano.supertoasts.util.Style;
@@ -25,71 +29,88 @@ import com.mikepenz.fastadapter.adapters.ItemAdapter;
 import com.mikepenz.fastadapter_extensions.swipe.SimpleSwipeCallback;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.itemanimators.SlideDownAlphaAnimator;
-import com.mikepenz.materialize.MaterializeBuilder;
 import com.snake.salarycounter.R;
-import com.snake.salarycounter.items.GenericTabelItem;
-import com.snake.salarycounter.models.Tabel;
+import com.snake.salarycounter.activities.MainActivity;
+import com.snake.salarycounter.activities.ShowFinanceConditionActivity;
+import com.snake.salarycounter.events.ViewCreated;
+import com.snake.salarycounter.items.GenericFinanceConditionItem;
+import com.snake.salarycounter.models.FinanceCondition;
+
+import de.greenrobot.event.EventBus;
 
 
-public class ListTabelActivity extends AppCompatActivity
-        implements
+public class ListFinanceConditionFragment extends Fragment implements
         ItemAdapter.ItemFilterListener,
         SimpleSwipeCallback.ItemSwipeCallback,
-        FastAdapter.OnClickListener<GenericTabelItem>  {
+        FastAdapter.OnClickListener<GenericFinanceConditionItem> {
 
-    public static final long NEW_TABEL = -10;
+
+    public static final long NEW_FINANCE_CONDITION = -10;
 
     //save our FastAdapter
-    private FastAdapter<GenericTabelItem> fastAdapter;
-    GenericItemAdapter<Tabel, GenericTabelItem> itemAdapter;
+    private FastAdapter<GenericFinanceConditionItem> fastAdapter;
+    GenericItemAdapter<FinanceCondition, GenericFinanceConditionItem> itemAdapter;
 
-    //swipe
+    //drag & drop
     private SimpleSwipeCallback touchCallback;
     private ItemTouchHelper touchHelper;
 
+    View rootView;
+
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         itemAdapter.clear();
-        itemAdapter.addModel(Tabel.allTabel());
+        itemAdapter.addModel(FinanceCondition.allFinanceConditions());
         fastAdapter.notifyAdapterDataSetChanged();
     }
 
+    public ListFinanceConditionFragment() {
+        // Required empty public constructor
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_tabel);
+    }
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        rootView = inflater.inflate(R.layout.fragment_list_recycler_view, container, false);
 
-        ////////////////////////////////////////////////////////////////////////////////////////
+        Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
+        if (null != toolbar) {
+            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.title_activity_list_finance_condition);
+            ActionBarDrawerToggle mActionBarDrawerToggle = new ActionBarDrawerToggle(getActivity(),  ((MainActivity) getActivity()).getDrawer().getDrawerLayout(), toolbar, R.string.drawer_open, R.string.drawer_close);
+            mActionBarDrawerToggle.syncState();
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            mActionBarDrawerToggle.setDrawerIndicatorEnabled(true);
 
-        new MaterializeBuilder()
-                .withActivity(this)
-                .withTranslucentStatusBarProgrammatically(true)
-                .build();
+            ((MainActivity) getActivity()).getDrawer().setActionBarDrawerToggle(mActionBarDrawerToggle);
+        }
 
         //create our FastAdapter which will manage everything
         fastAdapter = new FastAdapter();
         fastAdapter.withSelectable(false);
 
-        itemAdapter = new GenericItemAdapter<>(GenericTabelItem.class, Tabel.class);
+        itemAdapter = new GenericItemAdapter<>(GenericFinanceConditionItem.class, FinanceCondition.class);
 
-        RecyclerView rv = (RecyclerView) findViewById(R.id.rv);
+        RecyclerView rv = (RecyclerView) rootView.findViewById(R.id.rv);
 
         rv.setAdapter(itemAdapter.wrap(fastAdapter));
 
-        rv.setLayoutManager(new LinearLayoutManager(this));
+        rv.setLayoutManager(new LinearLayoutManager(getContext()));
         rv.setItemAnimator(new SlideDownAlphaAnimator());
 
-        itemAdapter.addModel(Tabel.allTabel());
+        itemAdapter.addModel(FinanceCondition.allFinanceConditions());
 
         //configure the itemAdapter
-        itemAdapter.withFilterPredicate(new IItemAdapter.Predicate<GenericTabelItem>() {
+        itemAdapter.withFilterPredicate(new IItemAdapter.Predicate<GenericFinanceConditionItem>() {
             @Override
-            public boolean filter(GenericTabelItem item, CharSequence constraint) {
+            public boolean filter(GenericFinanceConditionItem item, CharSequence constraint) {
                 //return true if we should filter it out
                 //return false to keep it
                 return !item.getModel().getText().toLowerCase().contains(constraint.toString().toLowerCase());
@@ -101,7 +122,7 @@ public class ListTabelActivity extends AppCompatActivity
 
         fastAdapter.withOnClickListener(this);
 
-        Drawable leaveBehindDrawableLeft = new IconicsDrawable(this)
+        Drawable leaveBehindDrawableLeft = new IconicsDrawable(getContext())
                 .icon(CommunityMaterial.Icon.cmd_delete)
                 .color(Color.WHITE)
                 .sizeDp(24);
@@ -111,32 +132,32 @@ public class ListTabelActivity extends AppCompatActivity
                 this,
                 leaveBehindDrawableLeft,
                 ItemTouchHelper.LEFT,
-                ContextCompat.getColor(this, R.color.md_red_900)
+                ContextCompat.getColor(getContext(), R.color.md_red_900)
         );
         //.withBackgroundSwipeRight(ContextCompat.getColor(this, R.color.md_blue_900))
         //.withLeaveBehindSwipeRight(leaveBehindDrawableRight);
         touchHelper = new ItemTouchHelper(touchCallback); // Create ItemTouchHelper and pass with parameter the SimpleDragCallback
         touchHelper.attachToRecyclerView(rv); // Attach ItemTouchHelper to RecyclerView
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         fab.attachToRecyclerView(rv);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.setClass(ListTabelActivity.this, ShowTabelActivity.class);
-                intent.putExtra("tabel_id", NEW_TABEL);
+                intent.setClass(getActivity(), ShowFinanceConditionActivity.class);
+                intent.putExtra("finance_condition_id", NEW_FINANCE_CONDITION);
                 startActivity(intent);
-                /*for(int i = 2012; i < 2016; i++)
-                    for(int ii = 1; ii < 13; ii++)
-                        new Tabel(DateTime.now().withYear(i).withMonthOfYear(ii).withDayOfMonth(1), 164.25).save();
-                SuperToast.create(ListTabelActivity.this, "Ok", SuperToast.Duration.MEDIUM, Style.getStyle(Style.BLUE)).show();*/
             }
         });
+
+        EventBus.getDefault().post(new ViewCreated(getActivity().getClass().toString()));
+
+        return rootView;
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(Bundle outState) {
         //add the values which need to be saved from the adapter to the bundel
         outState = fastAdapter.saveInstanceState(outState);
         super.onSaveInstanceState(outState);
@@ -156,10 +177,10 @@ public class ListTabelActivity extends AppCompatActivity
         //C) update item, set "read" if an email etc
 
         // -- Option 2: Delayed action --
-        final GenericTabelItem item = fastAdapter.getItem(position);
+        final GenericFinanceConditionItem item = fastAdapter.getItem(position);
         item.setSwipedDirection(direction);
 
-        final View rv = findViewById(R.id.rv);
+        final View rv = rootView.findViewById(R.id.rv);
 
         // This can vary depending on direction but remove & archive simulated here both results in
         // removal from list
@@ -170,20 +191,20 @@ public class ListTabelActivity extends AppCompatActivity
                 int position = itemAdapter.getAdapterPosition(item);
                 if (position != RecyclerView.NO_POSITION) {
                     try {
-                        if (Tabel.getByPosition(position).canDelete(position)) {
-                            Tabel.getByPosition(position).delete();
+                        if (FinanceCondition.getByPosition(position).canDelete(position)) {
+                            FinanceCondition.getByPosition(position).delete();
                             itemAdapter.remove(position);
                         }
                         else
                         {
                             item.setSwipedDirection(0);
 
-                            SuperToast.create(ListTabelActivity.this, getString(R.string.cannot_delete), SuperToast.Duration.MEDIUM, Style.getStyle(Style.ORANGE)).show();
+                            SuperToast.create(getActivity(), getString(R.string.cannot_delete), SuperToast.Duration.MEDIUM, Style.getStyle(Style.ORANGE)).show();
                             rv.removeCallbacks(this);
                         }
                     }
                     catch(SQLiteConstraintException sqlExc){
-                        SuperToast.create(ListTabelActivity.this, getString(R.string.error_deleting), SuperToast.Duration.MEDIUM, Style.getStyle(Style.RED)).show();
+                        SuperToast.create(getActivity(), getString(R.string.error_deleting), SuperToast.Duration.MEDIUM, Style.getStyle(Style.RED)).show();
                     }
                 }
             }
@@ -210,10 +231,10 @@ public class ListTabelActivity extends AppCompatActivity
 
 
     @Override
-    public boolean onClick(View v, IAdapter<GenericTabelItem> adapter, GenericTabelItem item, int position) {
+    public boolean onClick(View v, IAdapter<GenericFinanceConditionItem> adapter, GenericFinanceConditionItem item, int position) {
         Intent intent = new Intent();
-        intent.setClass(this, ShowTabelActivity.class);
-        intent.putExtra("tabel_id", Tabel.getByPosition(position).getId());
+        intent.setClass(getActivity(), ShowFinanceConditionActivity.class);
+        intent.putExtra("finance_condition_id", item.getModel().getId());
         startActivity(intent);
         return false;
     }

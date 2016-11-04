@@ -219,5 +219,9 @@
     <string name="payslip_total">Total</string>
     <string name="payslip_total_tax">Tax</string>
     <string name="payslip_cash">Cash</string>
+    <string name="drawer_item_calculator">Calculation</string>
+    <string name="drawer_item_statistic">Statistic</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
 
 </resources>

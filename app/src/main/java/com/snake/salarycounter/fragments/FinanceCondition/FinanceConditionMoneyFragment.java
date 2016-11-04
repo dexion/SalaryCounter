@@ -1,4 +1,4 @@
-package com.snake.salarycounter.fragments.ShowFinanceCondition;
+package com.snake.salarycounter.fragments.FinanceCondition;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

@@ -1,4 +1,4 @@
-package com.snake.salarycounter.activities.Tabel;
+package com.snake.salarycounter.activities;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -11,12 +11,14 @@ import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 import com.snake.salarycounter.R;
-import com.snake.salarycounter.fragments.ShowTabel.TabelNameFragment;
-import com.snake.salarycounter.models.Tabel;
+import com.snake.salarycounter.fragments.FinanceCondition.FinanceConditionMoneyFragment;
+import com.snake.salarycounter.fragments.FinanceCondition.FinanceConditionNameFragment;
+import com.snake.salarycounter.fragments.FinanceCondition.ListFinanceConditionFragment;
+import com.snake.salarycounter.models.FinanceCondition;
 
 import org.joda.time.DateTime;
 
-public class ShowTabelActivity extends AppCompatActivity{
+public class ShowFinanceConditionActivity extends AppCompatActivity{
 
     private long _id;
 
@@ -34,14 +36,21 @@ public class ShowTabelActivity extends AppCompatActivity{
                 .withTranslucentStatusBarProgrammatically(true)
                 .build();
 
-        _id = getIntent().getLongExtra("tabel_id", -1);
-        if(_id == ListTabelActivity.NEW_TABEL){
-            _id = new Tabel(DateTime.now(), 0).save();
+        _id = getIntent().getLongExtra("finance_condition_id", -1);
+        if(_id == ListFinanceConditionFragment.NEW_FINANCE_CONDITION){
+            if(FinanceCondition.allFinanceConditions().size() < 1) {
+                _id = new FinanceCondition(DateTime.now()).save();
+            }
+            else
+            {
+                _id = FinanceCondition.getLast().copy();
+            }
         }
 
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
                 getSupportFragmentManager(), FragmentPagerItems.with(this)
-                .add(R.string.tabel_main_settings, TabelNameFragment.class, new Bundler().putLong("_id", _id).get())
+                .add(R.string.finance_condition_main_settings, FinanceConditionNameFragment.class, new Bundler().putLong("_id", _id).get())
+                .add(R.string.finance_condition_money_settings, FinanceConditionMoneyFragment.class, new Bundler().putLong("_id", _id).get())
                 .create()
         );
 

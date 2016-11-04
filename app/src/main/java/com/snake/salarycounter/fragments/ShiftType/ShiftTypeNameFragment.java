@@ -1,4 +1,4 @@
-package com.snake.salarycounter.fragments.ShowShiftType;
+package com.snake.salarycounter.fragments.ShiftType;
 
 import android.content.DialogInterface;
 import android.os.Bundle;

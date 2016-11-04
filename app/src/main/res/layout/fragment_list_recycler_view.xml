@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:fab="http://schemas.android.com/apk/res-auto">
@@ -15,10 +14,11 @@
     </android.support.design.widget.AppBarLayout>
 
     <FrameLayout
-        android:id="@+id/frame_container"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="?attr/actionBarSize">
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv"
             android:layout_width="match_parent"
@@ -34,7 +34,6 @@
             fab:fab_colorNormal="@color/primary"
             fab:fab_colorPressed="@color/primary_dark"
             fab:fab_colorRipple="@color/primary_light" />
-
     </FrameLayout>
 
-</RelativeLayout>
+</FrameLayout>

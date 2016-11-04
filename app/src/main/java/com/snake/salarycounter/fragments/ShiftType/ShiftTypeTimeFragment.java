@@ -1,4 +1,4 @@
-package com.snake.salarycounter.fragments.ShowShiftType;
+package com.snake.salarycounter.fragments.ShiftType;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

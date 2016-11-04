@@ -1,20 +1,20 @@
-package com.snake.salarycounter.activities.ShiftType;
+package com.snake.salarycounter.activities;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import com.activeandroid.ActiveAndroid;
 import com.mikepenz.materialize.MaterializeBuilder;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 import com.snake.salarycounter.R;
-import com.snake.salarycounter.fragments.ShowShiftType.ShiftTypeMoneyFragment;
-import com.snake.salarycounter.fragments.ShowShiftType.ShiftTypeNameFragment;
-import com.snake.salarycounter.fragments.ShowShiftType.ShiftTypeTimeFragment;
+import com.snake.salarycounter.fragments.ShiftType.ListShiftTypeFragment;
+import com.snake.salarycounter.fragments.ShiftType.ShiftTypeMoneyFragment;
+import com.snake.salarycounter.fragments.ShiftType.ShiftTypeNameFragment;
+import com.snake.salarycounter.fragments.ShiftType.ShiftTypeTimeFragment;
 import com.snake.salarycounter.models.ShiftType;
 
 public class ShowShiftTypeActivity extends AppCompatActivity{
@@ -37,7 +37,7 @@ public class ShowShiftTypeActivity extends AppCompatActivity{
                 .build();
 
         _position = getIntent().getIntExtra("shift_type_position", -1);
-        if(_position == ListShiftTypeActivity.NEW_SHIFT_TYPE){
+        if(_position == ListShiftTypeFragment.NEW_SHIFT_TYPE){
             //_position = ShiftType.allShiftTypes().size() ;
             _id = new ShiftType("").save();
         }
