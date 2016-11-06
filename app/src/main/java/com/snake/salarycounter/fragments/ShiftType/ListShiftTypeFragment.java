@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -45,6 +46,8 @@ import com.snake.salarycounter.activities.ShowShiftTypeActivity;
 import com.snake.salarycounter.items.GenericShiftTypeItem;
 import com.snake.salarycounter.models.ShiftType;
 
+import java.util.ArrayList;
+
 public class ListShiftTypeFragment extends Fragment implements
         ItemTouchCallback,
         ItemAdapter.ItemFilterListener,
@@ -52,6 +55,8 @@ public class ListShiftTypeFragment extends Fragment implements
         FastAdapter.OnClickListener<GenericShiftTypeItem>{
 
     public static final int NEW_SHIFT_TYPE = -10;
+    protected ArrayList<ShiftType> models;
+    private LoadTask mLoadTask;
 
     //save our FastAdapter
     private FastAdapter<GenericShiftTypeItem> fastAdapter;
@@ -69,9 +74,8 @@ public class ListShiftTypeFragment extends Fragment implements
     @Override
     public void onResume() {
         super.onResume();
-        itemAdapter.clear();
-        itemAdapter.addModel(ShiftType.allShiftTypes());
-        fastAdapter.notifyAdapterDataSetChanged();
+        mLoadTask = new LoadTask();
+        mLoadTask.execute();
     }
 
     @Override
@@ -110,8 +114,6 @@ public class ListShiftTypeFragment extends Fragment implements
 
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         rv.setItemAnimator(new SlideDownAlphaAnimator());
-
-        itemAdapter.addModel(ShiftType.allShiftTypes());
 
         //configure the itemAdapter
         itemAdapter.withFilterPredicate(new IItemAdapter.Predicate<GenericShiftTypeItem>() {
@@ -159,6 +161,23 @@ public class ListShiftTypeFragment extends Fragment implements
         });
 
         return rootView;
+    }
+
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        //load the data (only possible if we were able to get the Arguments
+        if (view.getContext() != null) {
+            mLoadTask = new LoadTask();
+            mLoadTask.execute();
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (mLoadTask != null) {
+            mLoadTask.cancel(true);
+            mLoadTask = null;
+        }
+        super.onDestroyView();
     }
 
     @Override
@@ -298,6 +317,25 @@ public class ListShiftTypeFragment extends Fragment implements
         itemAdapter.notifyItemChanged(position);
 
         //TODO can this above be made more generic, along with the support in the item?
+    }
+
+    public class LoadTask extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            models = ShiftType.allShiftTypes();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if(null != itemAdapter && null != fastAdapter) {
+                itemAdapter.clear();
+                itemAdapter.addModel(models);
+                fastAdapter.notifyAdapterDataSetChanged();
+            }
+            super.onPostExecute(s);
+        }
     }
 
 }

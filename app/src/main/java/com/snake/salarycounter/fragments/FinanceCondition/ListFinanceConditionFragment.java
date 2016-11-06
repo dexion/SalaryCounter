@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -37,8 +38,11 @@ import com.mikepenz.itemanimators.SlideDownAlphaAnimator;
 import com.snake.salarycounter.R;
 import com.snake.salarycounter.activities.MainActivity;
 import com.snake.salarycounter.activities.ShowFinanceConditionActivity;
+import com.snake.salarycounter.fragments.MainCalcFragment;
 import com.snake.salarycounter.items.GenericFinanceConditionItem;
 import com.snake.salarycounter.models.FinanceCondition;
+
+import java.util.ArrayList;
 
 
 public class ListFinanceConditionFragment extends Fragment implements
@@ -46,8 +50,9 @@ public class ListFinanceConditionFragment extends Fragment implements
         SimpleSwipeCallback.ItemSwipeCallback,
         FastAdapter.OnClickListener<GenericFinanceConditionItem> {
 
-
     public static final long NEW_FINANCE_CONDITION = -10;
+    protected ArrayList<FinanceCondition> models;
+    private LoadTask mLoadTask;
 
     //save our FastAdapter
     private FastAdapter<GenericFinanceConditionItem> fastAdapter;
@@ -66,9 +71,8 @@ public class ListFinanceConditionFragment extends Fragment implements
     @Override
     public void onResume() {
         super.onResume();
-        itemAdapter.clear();
-        itemAdapter.addModel(FinanceCondition.allFinanceConditions());
-        fastAdapter.notifyAdapterDataSetChanged();
+        mLoadTask = new LoadTask();
+        mLoadTask.execute();
     }
 
     @Override
@@ -107,8 +111,6 @@ public class ListFinanceConditionFragment extends Fragment implements
 
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         rv.setItemAnimator(new SlideDownAlphaAnimator());
-
-        itemAdapter.addModel(FinanceCondition.allFinanceConditions());
 
         //configure the itemAdapter
         itemAdapter.withFilterPredicate(new IItemAdapter.Predicate<GenericFinanceConditionItem>() {
@@ -155,6 +157,23 @@ public class ListFinanceConditionFragment extends Fragment implements
         });
 
         return rootView;
+    }
+
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        //load the data (only possible if we were able to get the Arguments
+        if (view.getContext() != null) {
+            mLoadTask = new LoadTask();
+            mLoadTask.execute();
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (mLoadTask != null) {
+            mLoadTask.cancel(true);
+            mLoadTask = null;
+        }
+        super.onDestroyView();
     }
 
     @Override
@@ -264,5 +283,24 @@ public class ListFinanceConditionFragment extends Fragment implements
         intent.putExtra("finance_condition_id", item.getModel().getId());
         startActivity(intent);
         return false;
+    }
+
+    public class LoadTask extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            models = FinanceCondition.allFinanceConditions();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if(null != itemAdapter && null != fastAdapter) {
+                itemAdapter.clear();
+                itemAdapter.addModel(models);
+                fastAdapter.notifyAdapterDataSetChanged();
+            }
+            super.onPostExecute(s);
+        }
     }
 }

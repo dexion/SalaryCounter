@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -41,6 +42,8 @@ import com.snake.salarycounter.activities.ShowTabelActivity;
 import com.snake.salarycounter.items.GenericTabelItem;
 import com.snake.salarycounter.models.Tabel;
 
+import java.util.ArrayList;
+
 public class ListTabelFragment extends Fragment
         implements
         ItemAdapter.ItemFilterListener,
@@ -48,6 +51,9 @@ public class ListTabelFragment extends Fragment
         FastAdapter.OnClickListener<GenericTabelItem>{
 
     public static final long NEW_TABEL = -10;
+    protected ArrayList<Tabel> models;
+    private LoadTask mLoadTask;
+
 
     //save our FastAdapter
     private FastAdapter<GenericTabelItem> fastAdapter;
@@ -66,9 +72,8 @@ public class ListTabelFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
-        itemAdapter.clear();
-        itemAdapter.addModel(Tabel.allTabel());
-        fastAdapter.notifyAdapterDataSetChanged();
+        mLoadTask = new LoadTask();
+        mLoadTask.execute();
     }
 
     @Override
@@ -107,8 +112,6 @@ public class ListTabelFragment extends Fragment
 
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         rv.setItemAnimator(new SlideDownAlphaAnimator());
-
-        itemAdapter.addModel(Tabel.allTabel());
 
         //configure the itemAdapter
         itemAdapter.withFilterPredicate(new IItemAdapter.Predicate<GenericTabelItem>() {
@@ -155,6 +158,23 @@ public class ListTabelFragment extends Fragment
         });
 
         return rootView;
+    }
+
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        //load the data (only possible if we were able to get the Arguments
+        if (view.getContext() != null) {
+            mLoadTask = new LoadTask();
+            mLoadTask.execute();
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (mLoadTask != null) {
+            mLoadTask.cancel(true);
+            mLoadTask = null;
+        }
+        super.onDestroyView();
     }
 
     @Override
@@ -263,6 +283,25 @@ public class ListTabelFragment extends Fragment
         intent.putExtra("tabel_id", item.getModel().getId());
         startActivity(intent);
         return false;
+    }
+
+    public class LoadTask extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            models = Tabel.allTabel();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if(null != itemAdapter && null != fastAdapter) {
+                itemAdapter.clear();
+                itemAdapter.addModel(models);
+                fastAdapter.notifyAdapterDataSetChanged();
+            }
+            super.onPostExecute(s);
+        }
     }
 
 }
