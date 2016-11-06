@@ -173,18 +173,6 @@ public class ListShiftTypeFragment extends Fragment implements
         super.onSaveInstanceState(outState);
     }
 
-    /*@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        //handle the click on the back arrow click
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }*/
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Inflate the menu items for use in the action bar
@@ -234,7 +222,9 @@ public class ListShiftTypeFragment extends Fragment implements
         st1.weight = newPosition;
         st1.save();
 
-        fastAdapter.notifyAdapterItemMoved(oldPosition, newPosition);
+        //fastAdapter.notifyAdapterItemMoved(oldPosition, newPosition);
+        itemAdapter.moveModel(oldPosition, newPosition);
+
         return true;
     }
 
@@ -248,7 +238,7 @@ public class ListShiftTypeFragment extends Fragment implements
         //Toast.makeText(ListShiftTypeActivity.this, "clicked : " + item.getModel().name, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent();
         intent.setClass(getActivity(), ShowShiftTypeActivity.class);
-        intent.putExtra("shift_type_position", position);
+        intent.putExtra("shift_type_id", item.getModel().getId());
         startActivity(intent);
         return false;
     }
