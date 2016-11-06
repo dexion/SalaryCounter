@@ -4,7 +4,6 @@ package com.snake.salarycounter.fragments;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -21,11 +20,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.mikepenz.aboutlibraries.LibsFragmentCompat;
 import com.snake.salarycounter.MyLogic;
 import com.snake.salarycounter.R;
 import com.snake.salarycounter.activities.MainActivity;
-import com.snake.salarycounter.events.ViewCreated;
 import com.snake.salarycounter.models.ShiftType;
 import com.snake.salarycounter.utils.Toolz;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
@@ -39,7 +36,6 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.greenrobot.event.EventBus;
 
 public class MainCalcFragment extends Fragment {
 
