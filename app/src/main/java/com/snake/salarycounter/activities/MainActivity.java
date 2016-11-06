@@ -40,6 +40,7 @@ import com.snake.salarycounter.events.ViewCreated;
 import com.snake.salarycounter.fragments.CalendarFragment;
 import com.snake.salarycounter.fragments.FinanceCondition.ListFinanceConditionFragment;
 import com.snake.salarycounter.fragments.MainCalcFragment;
+import com.snake.salarycounter.fragments.PolygonFragment;
 import com.snake.salarycounter.fragments.ShiftType.ListShiftTypeFragment;
 import com.snake.salarycounter.fragments.Tabel.ListTabelFragment;
 
@@ -254,6 +255,9 @@ public class MainActivity extends PinActivity implements
                                 startActivity(intent);*/
                                 break;
                             case II_STATISTIC:
+                                drawerResult.closeDrawer();
+                                t.replace(R.id.main_content, new PolygonFragment());
+                                t.commit();
                                 /*intent.setClass(context, ListShiftTypeActivity.class);
                                 startActivity(intent);*/
                                 break;

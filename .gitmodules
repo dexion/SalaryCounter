@@ -1,0 +1,3 @@
+[submodule "libs/PolygonProgressView"]
+	path = libs/PolygonProgressView
+	url = http://github.com/tacticaltwerking/PolygonProgressView
