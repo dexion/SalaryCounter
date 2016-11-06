@@ -42,11 +42,8 @@ import com.mikepenz.itemanimators.SlideDownAlphaAnimator;
 import com.snake.salarycounter.R;
 import com.snake.salarycounter.activities.MainActivity;
 import com.snake.salarycounter.activities.ShowShiftTypeActivity;
-import com.snake.salarycounter.events.ViewCreated;
 import com.snake.salarycounter.items.GenericShiftTypeItem;
 import com.snake.salarycounter.models.ShiftType;
-
-import de.greenrobot.event.EventBus;
 
 public class ListShiftTypeFragment extends Fragment implements
         ItemTouchCallback,
@@ -160,8 +157,6 @@ public class ListShiftTypeFragment extends Fragment implements
                 startActivity(intent);
             }
         });
-
-        EventBus.getDefault().post(new ViewCreated(getActivity().getClass().toString()));
 
         return rootView;
     }

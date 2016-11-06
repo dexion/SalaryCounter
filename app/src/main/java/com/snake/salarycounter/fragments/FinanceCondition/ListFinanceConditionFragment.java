@@ -4,16 +4,21 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -32,11 +37,8 @@ import com.mikepenz.itemanimators.SlideDownAlphaAnimator;
 import com.snake.salarycounter.R;
 import com.snake.salarycounter.activities.MainActivity;
 import com.snake.salarycounter.activities.ShowFinanceConditionActivity;
-import com.snake.salarycounter.events.ViewCreated;
 import com.snake.salarycounter.items.GenericFinanceConditionItem;
 import com.snake.salarycounter.models.FinanceCondition;
-
-import de.greenrobot.event.EventBus;
 
 
 public class ListFinanceConditionFragment extends Fragment implements
@@ -57,6 +59,10 @@ public class ListFinanceConditionFragment extends Fragment implements
 
     View rootView;
 
+    public ListFinanceConditionFragment() {
+        // Required empty public constructor
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -65,13 +71,10 @@ public class ListFinanceConditionFragment extends Fragment implements
         fastAdapter.notifyAdapterDataSetChanged();
     }
 
-    public ListFinanceConditionFragment() {
-        // Required empty public constructor
-    }
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -151,8 +154,6 @@ public class ListFinanceConditionFragment extends Fragment implements
             }
         });
 
-        EventBus.getDefault().post(new ViewCreated(getActivity().getClass().toString()));
-
         return rootView;
     }
 
@@ -161,6 +162,32 @@ public class ListFinanceConditionFragment extends Fragment implements
         //add the values which need to be saved from the adapter to the bundel
         outState = fastAdapter.saveInstanceState(outState);
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Inflate the menu items for use in the action bar
+        inflater.inflate(R.menu.search, menu);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            final SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String s) {
+                    itemAdapter.filter(s);
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String s) {
+                    itemAdapter.filter(s);
+                    return true;
+                }
+            });
+        } else {
+            menu.findItem(R.id.search).setVisible(false);
+        }
+
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
