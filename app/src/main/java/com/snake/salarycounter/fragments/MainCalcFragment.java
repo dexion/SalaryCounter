@@ -1,7 +1,10 @@
 package com.snake.salarycounter.fragments;
 
 
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -18,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.mikepenz.aboutlibraries.LibsFragmentCompat;
 import com.snake.salarycounter.MyLogic;
 import com.snake.salarycounter.R;
 import com.snake.salarycounter.activities.MainActivity;
@@ -49,6 +53,9 @@ public class MainCalcFragment extends Fragment {
 
     View rootView;
 
+    private MainCalcTask mCalcTask;
+    private ProgressDialog mProgressDialog;
+
     private DateTime startDate = DateTime.now();
     private int currentStartYear;
     private int currentStartMonth;
@@ -79,9 +86,10 @@ public class MainCalcFragment extends Fragment {
 
                         resetDates();
                         calcStartDate.setText(sdf.format(startDate.getMillis()));
-                        lgc.recalcAll();
-                        setTitleAmount();
-                        setPayslipList();
+
+                        showSpinner();
+                        mCalcTask = new MainCalcTask();
+                        mCalcTask.execute();
 
                         SharedPreferences.Editor ed = mSharedPreferences.edit();
                         ed.putLong(START_DATE_PREFERENCE_KEY, startDate.getMillis()).apply();
@@ -108,9 +116,10 @@ public class MainCalcFragment extends Fragment {
 
                         resetDates();
                         calcEndDate.setText(sdf.format(endDate.getMillis()));
-                        lgc.recalcAll();
-                        setTitleAmount();
-                        setPayslipList();
+
+                        showSpinner();
+                        mCalcTask = new MainCalcTask();
+                        mCalcTask.execute();
 
                         SharedPreferences.Editor ed = mSharedPreferences.edit();
                         ed.putLong(END_DATE_PREFERENCE_KEY, endDate.getMillis()).apply();
@@ -155,17 +164,47 @@ public class MainCalcFragment extends Fragment {
 
         initDates();
         resetDates();
-
-        lgc.recalcAll();
+        setTitleAmount(0.0);
+        showSpinner();
 
         calcStartDate.setText(sdf.format(startDate.getMillis()));
         calcEndDate.setText(sdf.format(endDate.getMillis()));
-        setTitleAmount();
-        setPayslipList();
-
-        EventBus.getDefault().post(new ViewCreated(getActivity().getClass().toString()));
 
         return rootView;
+    }
+
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        //load the data (only possible if we were able to get the Arguments
+        if (view.getContext() != null) {
+            mCalcTask = new MainCalcTask();
+            mCalcTask.execute();
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (mCalcTask != null) {
+            mCalcTask.cancel(true);
+            mCalcTask = null;
+        }
+        super.onDestroyView();
+    }
+
+    private void showSpinner(){
+        if(llPayslip.getChildCount() > 0)
+            llPayslip.removeAllViews();
+        mProgressDialog = new ProgressDialog(getActivity());
+        mProgressDialog.setTitle(R.string.loading);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.setMessage(getString(R.string.loading_message));
+        mProgressDialog.show();
     }
 
     private void setPayslipList(){
@@ -176,7 +215,7 @@ public class MainCalcFragment extends Fragment {
                 llPayslip.getId(),
                 PayslipFragment.newInstance(lgc.getTotalPayslipDouble()[lgc.getTotalPayslipDouble().length - 1], getString(R.string.payslip_total_amount)),
                 getString(R.string.payslip_total))
-                .commit();
+                .commitAllowingStateLoss();
 
         for (int i = 0; i < lgc.getTotalPayslipDouble().length - 1; i++) {
             if(null != lgc.getTotalPayslip()[i] && 0 != lgc.getTotalPayslip()[i][9].compareTo( BigDecimal.ZERO)){
@@ -184,7 +223,7 @@ public class MainCalcFragment extends Fragment {
                         llPayslip.getId(),
                         PayslipFragment.newInstance(lgc.getTotalPayslipDouble()[i], ShiftType.getByWeight(i).getText()),
                         ShiftType.getByWeight(i).getText())
-                        .commit();
+                        .commitAllowingStateLoss();
             }
         }
 
@@ -203,21 +242,34 @@ public class MainCalcFragment extends Fragment {
         currentEndDay = endDate.getDayOfMonth();
     }
 
-    private void setTitleAmount(){
-        ctl.setTitle(Toolz.money(lgc.getTotalAmount()));
-    }
-
     private void resetDates(){
         startDate = new DateTime(currentStartYear, currentStartMonth + 1, currentStartDay, 0, 0);
         endDate = new DateTime(currentEndYear, currentEndMonth + 1, currentEndDay, 0, 0);
-        lgc.setStart(startDate);
-        lgc.setEnd(endDate);
+        lgc.setStart(startDate).setEnd(endDate);
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        inflater.inflate(R.menu.menu_main, menu);
-        super.onCreateOptionsMenu(menu, inflater);
+    private void setTitleAmount(Object value){
+        ctl.setTitle(Toolz.money(value));
+    }
+
+    public class MainCalcTask extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            lgc.recalcAll();
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            setTitleAmount(lgc.getTotalAmount());
+            setPayslipList();
+            if(null!= mProgressDialog){
+                mProgressDialog.dismiss();
+            }
+            super.onPostExecute(s);
+        }
     }
 }

@@ -142,5 +142,7 @@
     <string name="payslip_cash">Выплата</string>
     <string name="drawer_item_calculator">Расчет</string>
     <string name="drawer_item_statistic">Статистика</string>
+    <string name="loading">Загрузка...</string>
+    <string name="loading_message">Подготовка данных</string>
 
 </resources>
