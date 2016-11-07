@@ -48,12 +48,6 @@ public class CalendarFragment extends Fragment {
     public CalendarFragment() {
     }
 
-    private void setCustomResourceForDates() {
-        for(Day d : Day.allDays()){
-            caldroidFragment.setBackgroundDrawableForDate(new ColorDrawable(d.shiftType.color), d.date.toDate());
-        }
-    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -267,15 +261,18 @@ public class CalendarFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    /**
-     * Save current states of the Caldroid here
-     */
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
         if (caldroidFragment != null) {
             caldroidFragment.saveStatesToKey(outState, "CALDROID_SAVED_STATE");
+        }
+    }
+
+    private void setCustomResourceForDates() {
+        for(Day d : Day.allDays()){
+            caldroidFragment.setBackgroundDrawableForDate(new ColorDrawable(d.shiftType.color), d.date.toDate());
         }
     }
 

@@ -36,7 +36,6 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.snake.salarycounter.R;
-import com.snake.salarycounter.events.ViewCreated;
 import com.snake.salarycounter.fragments.CalendarFragment;
 import com.snake.salarycounter.fragments.FinanceCondition.ListFinanceConditionFragment;
 import com.snake.salarycounter.fragments.MainCalcFragment;
@@ -44,7 +43,6 @@ import com.snake.salarycounter.fragments.PolygonFragment;
 import com.snake.salarycounter.fragments.ShiftType.ListShiftTypeFragment;
 import com.snake.salarycounter.fragments.Tabel.ListTabelFragment;
 
-import de.greenrobot.event.EventBus;
 import io.fabric.sdk.android.Fabric;
 import pub.devrel.easygoogle.Google;
 import pub.devrel.easygoogle.gac.SignIn;

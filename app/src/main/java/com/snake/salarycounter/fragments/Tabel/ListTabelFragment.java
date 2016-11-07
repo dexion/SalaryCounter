@@ -5,16 +5,22 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -33,11 +39,10 @@ import com.mikepenz.itemanimators.SlideDownAlphaAnimator;
 import com.snake.salarycounter.R;
 import com.snake.salarycounter.activities.MainActivity;
 import com.snake.salarycounter.activities.ShowTabelActivity;
-import com.snake.salarycounter.events.ViewCreated;
 import com.snake.salarycounter.items.GenericTabelItem;
 import com.snake.salarycounter.models.Tabel;
 
-import de.greenrobot.event.EventBus;
+import java.util.ArrayList;
 
 public class ListTabelFragment extends Fragment
         implements
@@ -46,6 +51,9 @@ public class ListTabelFragment extends Fragment
         FastAdapter.OnClickListener<GenericTabelItem>{
 
     public static final long NEW_TABEL = -10;
+    protected ArrayList<Tabel> models;
+    private LoadTask mLoadTask;
+
 
     //save our FastAdapter
     private FastAdapter<GenericTabelItem> fastAdapter;
@@ -64,9 +72,14 @@ public class ListTabelFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
-        itemAdapter.clear();
-        itemAdapter.addModel(Tabel.allTabel());
-        fastAdapter.notifyAdapterDataSetChanged();
+        mLoadTask = new LoadTask();
+        mLoadTask.execute();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -99,8 +112,6 @@ public class ListTabelFragment extends Fragment
 
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         rv.setItemAnimator(new SlideDownAlphaAnimator());
-
-        itemAdapter.addModel(Tabel.allTabel());
 
         //configure the itemAdapter
         itemAdapter.withFilterPredicate(new IItemAdapter.Predicate<GenericTabelItem>() {
@@ -146,9 +157,24 @@ public class ListTabelFragment extends Fragment
             }
         });
 
-        EventBus.getDefault().post(new ViewCreated(getActivity().getClass().toString()));
-
         return rootView;
+    }
+
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        //load the data (only possible if we were able to get the Arguments
+        if (view.getContext() != null) {
+            mLoadTask = new LoadTask();
+            mLoadTask.execute();
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (mLoadTask != null) {
+            mLoadTask.cancel(true);
+            mLoadTask = null;
+        }
+        super.onDestroyView();
     }
 
     @Override
@@ -156,6 +182,32 @@ public class ListTabelFragment extends Fragment
         //add the values which need to be saved from the adapter to the bundel
         outState = fastAdapter.saveInstanceState(outState);
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Inflate the menu items for use in the action bar
+        inflater.inflate(R.menu.search, menu);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            final SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String s) {
+                    itemAdapter.filter(s);
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String s) {
+                    itemAdapter.filter(s);
+                    return true;
+                }
+            });
+        } else {
+            menu.findItem(R.id.search).setVisible(false);
+        }
+
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -224,14 +276,32 @@ public class ListTabelFragment extends Fragment
         //TODO can this above be made more generic, along with the support in the item?
     }
 
-
     @Override
     public boolean onClick(View v, IAdapter<GenericTabelItem> adapter, GenericTabelItem item, int position) {
         Intent intent = new Intent();
         intent.setClass(getActivity(), ShowTabelActivity.class);
-        intent.putExtra("tabel_id", Tabel.getByPosition(position).getId());
+        intent.putExtra("tabel_id", item.getModel().getId());
         startActivity(intent);
         return false;
+    }
+
+    public class LoadTask extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            models = Tabel.allTabel();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if(null != itemAdapter && null != fastAdapter) {
+                itemAdapter.clear();
+                itemAdapter.addModel(models);
+                fastAdapter.notifyAdapterDataSetChanged();
+            }
+            super.onPostExecute(s);
+        }
     }
 
 }

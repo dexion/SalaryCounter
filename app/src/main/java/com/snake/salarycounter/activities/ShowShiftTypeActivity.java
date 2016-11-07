@@ -36,14 +36,14 @@ public class ShowShiftTypeActivity extends AppCompatActivity{
                 .withTranslucentStatusBarProgrammatically(true)
                 .build();
 
-        _position = getIntent().getIntExtra("shift_type_position", -1);
-        if(_position == ListShiftTypeFragment.NEW_SHIFT_TYPE){
+        _id = getIntent().getLongExtra("shift_type_id", -1);
+        if(_id == ListShiftTypeFragment.NEW_SHIFT_TYPE){
             //_position = ShiftType.allShiftTypes().size() ;
             _id = new ShiftType("").save();
         }
-        else{
+        /*else{
             _id = ShiftType.getByPosition(_position).getId();
-        }
+        }*/
 
         /*ViewPagerItemAdapter adapter = new ViewPagerItemAdapter(ViewPagerItems.with(this)
                 .add("Title A", R.layout.partial_show_shift_type)
