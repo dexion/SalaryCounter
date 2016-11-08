@@ -54,7 +54,7 @@ public class ListShiftTypeFragment extends Fragment implements
         SimpleSwipeCallback.ItemSwipeCallback,
         FastAdapter.OnClickListener<GenericShiftTypeItem>{
 
-    public static final int NEW_SHIFT_TYPE = -10;
+    public static final long NEW_SHIFT_TYPE = -10;
     protected ArrayList<ShiftType> models;
     private LoadTask mLoadTask;
 
@@ -155,7 +155,7 @@ public class ListShiftTypeFragment extends Fragment implements
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setClass(getContext(), ShowShiftTypeActivity.class);
-                intent.putExtra("shift_type_position", NEW_SHIFT_TYPE);
+                intent.putExtra("shift_type_id", NEW_SHIFT_TYPE);
                 startActivity(intent);
             }
         });
