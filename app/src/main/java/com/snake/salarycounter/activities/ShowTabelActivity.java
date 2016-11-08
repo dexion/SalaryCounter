@@ -37,7 +37,7 @@ public class ShowTabelActivity extends AppCompatActivity{
 
         _id = getIntent().getLongExtra("tabel_id", -1);
         if(_id == ListTabelFragment.NEW_TABEL){
-            _id = new Tabel(DateTime.now(), 0).save();
+            _id = new Tabel(DateTime.now(), 164).save();
         }
 
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(

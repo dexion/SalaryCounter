@@ -45,8 +45,9 @@ public class Day extends Model {
         return new Select().from(Day.class).where("date = ?", new DateTime(date).getMillis()).limit(1).executeSingle();
     }
 
+    @Deprecated
     public static Day getByDate(DateTime date) {
-        return new Select().from(Day.class).where("date = ?", new DateTime(date).getMillis()).limit(1).executeSingle();
+        return new Select().from(Day.class).where("date = ?", date.toDate().getTime()).limit(1).executeSingle();
     }
 
     public static Day getById(int _id) {

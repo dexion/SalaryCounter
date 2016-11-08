@@ -95,6 +95,9 @@ public class TabelNameFragment extends Fragment {
             switch (event.mTextEditId) {
                 case R.id.tabel_hours:
                     t.hours = Double.valueOf(event.mValue);
+                    if(t.hours <= 0){
+                        t.hours = 1;
+                    }
                     t.save();
                     break;
             }

@@ -133,7 +133,7 @@ public class MyLogic {
     public Payslip recalcDay(DateTime date) {
         Payslip p = null;
 
-        Day d = Day.getByDate(date);
+        Day d = Day.getByDate(date.toDate());
         if (null != d) {
             ShiftType st = d.getShiftType();
             FinanceCondition fc = FinanceCondition.getByDate(date);
