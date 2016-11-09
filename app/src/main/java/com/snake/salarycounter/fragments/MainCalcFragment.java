@@ -198,7 +198,7 @@ public class MainCalcFragment extends Fragment {
             llPayslip.removeAllViews();
         mProgressDialog = new ProgressDialog(getActivity());
         mProgressDialog.setTitle(R.string.loading);
-        mProgressDialog.setCancelable(false);
+        mProgressDialog.setCancelable(true);
         mProgressDialog.setMessage(getString(R.string.loading_message));
         mProgressDialog.show();
     }

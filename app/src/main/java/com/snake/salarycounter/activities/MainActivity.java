@@ -100,10 +100,10 @@ public class MainActivity extends PinActivity implements
         LayoutInflaterCompat.setFactory(getLayoutInflater(), new IconicsLayoutInflater(getDelegate()));
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_frame);
 
         FragmentTransaction t = getSupportFragmentManager().beginTransaction();
-        t.replace(R.id.main_content, new MainCalcFragment());
+        t.replace(R.id.frame_container, new MainCalcFragment());
         t.commit();
 
         //initializeGoogle();
@@ -218,35 +218,35 @@ public class MainActivity extends PinActivity implements
                                 break;
                             case II_SHIFT_TYPES:
                                 drawerResult.closeDrawer();
-                                t.replace(R.id.main_content, new ListShiftTypeFragment());
+                                t.replace(R.id.frame_container, new ListShiftTypeFragment());
                                 t.commit();
                                 /*intent.setClass(context, ListShiftTypeActivity.class);
                                 startActivity(intent);*/
                                 break;
                             case II_FINANCE_CONDITIONS:
                                 drawerResult.closeDrawer();
-                                t.replace(R.id.main_content, new ListFinanceConditionFragment());
+                                t.replace(R.id.frame_container, new ListFinanceConditionFragment());
                                 t.commit();
                                 /*intent.setClass(context, ListFinanceConditionActivity.class);
                                 startActivity(intent);*/
                                 break;
                             case II_TABLE:
                                 drawerResult.closeDrawer();
-                                t.replace(R.id.main_content, new ListTabelFragment());
+                                t.replace(R.id.frame_container, new ListTabelFragment());
                                 t.commit();
                                 /*intent.setClass(context, ListTabelActivity.class);
                                 startActivity(intent);*/
                                 break;
                             case II_CALENDAR:
                                 drawerResult.closeDrawer();
-                                t.replace(R.id.main_content, new CalendarFragment());
+                                t.replace(R.id.frame_container, new CalendarFragment());
                                 t.commit();
                                 /*intent.setClass(context, CalendarActivity.class);
                                 startActivity(intent);*/
                                 break;
                             case II_MAIN_CALC:
                                 drawerResult.closeDrawer();
-                                t.replace(R.id.main_content, new MainCalcFragment());
+                                t.replace(R.id.frame_container, new MainCalcFragment());
                                 t.commit();
                                 /*intent.setClass(context, CalendarActivity.class);
                                 startActivity(intent);*/
