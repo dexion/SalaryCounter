@@ -3,7 +3,9 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:layout_gravity="center_vertical|center_horizontal">
+    android:layout_gravity="center_vertical|center_horizontal"
+    android:paddingEnd="8dp"
+    android:paddingRight="8dp">
 
     <android.support.v7.widget.SwitchCompat
         android:id="@+id/switchForActionBar"
@@ -11,6 +13,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical|center_horizontal"
         android:theme="@style/CalendarSwitch"
-        android:text="" />
+        android:textOn=" "
+        android:textOff=" "/>
 
 </RelativeLayout>

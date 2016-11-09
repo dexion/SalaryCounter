@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
+import com.mikepenz.iconics.IconicsDrawable;
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
 import com.snake.salarycounter.R;
@@ -249,10 +250,30 @@ public class CalendarFragment extends Fragment {
         switchEdit.setActionView(R.layout.menu_switch_layout);
 
         final SwitchCompat actionView = (SwitchCompat) switchEdit.getActionView().findViewById(R.id.switchForActionBar);
+        actionView.setShowText(true);
+        actionView.setThumbDrawable(
+                new IconicsDrawable(getContext(), "gmd_remove_red_eye")
+                        .color(Color.WHITE)
+                        .sizeDp(32)
+        );
         actionView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    actionView.setThumbDrawable(
+                            new IconicsDrawable(getContext(), "gmd_edit")
+                                    .color(Color.WHITE)
+                                    .sizeDp(32)
+                    );
+                }
+                else{
+                    actionView.setThumbDrawable(
+                            new IconicsDrawable(getContext(), "gmd_remove_red_eye")
+                                    .color(Color.WHITE)
+                                    .sizeDp(32)
+                    );
+                }
                 EventBus.getDefault().post(new SwitchEvent(isChecked));
             }
 
