@@ -1,7 +1,7 @@
 <resources>
     <style name="AppTheme"  parent="MaterialDrawerTheme.Light.DarkToolbar.TranslucentStatus">
         <!-- Customize your theme here.  -->
-        <item name="android:windowBackground">@drawable/splash</item>
+        <!--<item name="android:windowBackground">@drawable/splash</item>-->
 
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
