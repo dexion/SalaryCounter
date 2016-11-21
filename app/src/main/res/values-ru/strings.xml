@@ -129,7 +129,7 @@
     <string name="end_date">Окончание периода</string>
     <string name="shift_type_money_only_salary">Оплачивается только оклад, без надбавок</string>
     <string name="payslip_addition">Надбавка к окладу</string>
-    <string name="payslip_addition_price">Надбавка за каждую смену</string>
+    <string name="payslip_addition_price">Ежесменная оплата</string>
     <string name="payslip_addition_proc">Надбавка к окладу, %</string>
     <string name="payslip_bonus">Премия</string>
     <string name="payslip_north">Северная надбавка</string>
@@ -144,5 +144,9 @@
     <string name="drawer_item_statistic">Статистика</string>
     <string name="loading">Загрузка...</string>
     <string name="loading_message">Подготовка данных</string>
+    <string name="drawer_close">Закрыть</string>
+    <string name="drawer_open">Открыть</string>
+    <string name="payslip_alimony_proc">Алименты в %</string>
+    <string name="payslip_residue_proc">Вычеты в %</string>
 
 </resources>

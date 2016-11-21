@@ -225,5 +225,7 @@
     <string name="drawer_close">Close</string>
     <string name="loading_message">Prepare data</string>
     <string name="loading">Loading...</string>
+    <string name="payslip_alimony_proc">Alimony, %</string>
+    <string name="payslip_residue_proc">Residue, %</string>
 
 </resources>

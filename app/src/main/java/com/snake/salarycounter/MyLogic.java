@@ -13,7 +13,7 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 
 public class MyLogic {
-    private final int SIZE_OF_PAYSLIP = 11;
+    private final int SIZE_OF_PAYSLIP = 13;
 
     private DateTime mStart;
     private DateTime mEnd;
@@ -22,6 +22,8 @@ public class MyLogic {
     private BigDecimal[][] totalPayslip = new BigDecimal[ShiftType.allShiftTypes().size()][];
     private BigDecimal totalAmount;
     private BigDecimal totalTax;
+    private BigDecimal totalAlimony;
+    private BigDecimal totalResidue;
     private BigDecimal totalAmountOnHand;
 
     private class Payslip {
@@ -43,10 +45,11 @@ public class MyLogic {
         BigDecimal mOtherBonusProc = BigDecimal.valueOf(0.0);
 
         ////////////////////////////
+        BigDecimal mTax = BigDecimal.valueOf(0.0);
         BigDecimal mAlimony = BigDecimal.valueOf(0.0);
         BigDecimal mAlimonyProc = BigDecimal.valueOf(0.0);
         BigDecimal mResidue = BigDecimal.valueOf(0.0);
-        BigDecimal mRecidueProc = BigDecimal.valueOf(0.0);
+        BigDecimal mResidueProc = BigDecimal.valueOf(0.0);
 
         public Payslip(Day day) {
             mDay = day;
@@ -73,6 +76,8 @@ public class MyLogic {
         }
         totalAmount = BigDecimal.valueOf(0.0);
         totalTax = BigDecimal.valueOf(0.0);
+        totalAlimony = BigDecimal.valueOf(0.0);
+        totalResidue = BigDecimal.valueOf(0.0);
         totalAmountOnHand = BigDecimal.valueOf(0.0);
 
         for (DateTime i = new DateTime(mStart); i.isBefore(mEnd.plusDays(1)); i = i.plusDays(1)) {
@@ -87,8 +92,6 @@ public class MyLogic {
                     totalPayslip[p.mShiftType.weight][i] = new BigDecimal(0.0);
                 }
             }
-
-            BigDecimal tTax = BigDecimal.valueOf(0.0);
 
             BigDecimal tTotalAmount = BigDecimal.valueOf(0.0); // временная переменная для суммирования. Нужна потому, что не на все применяется налог.
             tTotalAmount = tTotalAmount.add(p.mSalary);
@@ -109,25 +112,18 @@ public class MyLogic {
             totalPayslip[p.mShiftType.weight][7] = totalPayslip[p.mShiftType.weight][7].add(p.mOtherBonusProc);
             totalPayslip[p.mShiftType.weight][8] = totalPayslip[p.mShiftType.weight][8].add(BigDecimal.valueOf(p.mCountedHours));
             totalPayslip[p.mShiftType.weight][9] = totalPayslip[p.mShiftType.weight][9].add(tTotalAmount).add(p.mAdditionalPrice);
+            totalPayslip[p.mShiftType.weight][10] = totalPayslip[p.mShiftType.weight][10].add(p.mTax);
+            totalPayslip[p.mShiftType.weight][11] = totalPayslip[p.mShiftType.weight][11].add(p.mAlimonyProc);
+            totalPayslip[p.mShiftType.weight][12] = totalPayslip[p.mShiftType.weight][12].add(p.mResidueProc);
 
-            if (p.mEnableTax && !p.mShiftType.onlySalary) {
-                tTax = tTotalAmount.multiply(new BigDecimal(0.13));
-            }
-
-            totalTax = totalTax.add(tTax);
-            totalPayslip[p.mShiftType.weight][10] = totalPayslip[p.mShiftType.weight][10].add(tTax);
-
+            totalTax = totalTax.add(p.mTax);
+            totalAlimony = totalAlimony.add(p.mAlimonyProc).add(p.mAlimony);
+            totalResidue = totalResidue.add(p.mResidueProc).add(p.mResidue);
             totalAmount = totalAmount.add(tTotalAmount).add(p.mAdditionalPrice); // на это налог не начисляется
 
-            /*totalAmount = totalAmount.subtract(p.mAlimony);
-            totalAmount = totalAmount.subtract(p.mAlimonyProc);
-            totalAmount = totalAmount.subtract(p.mResidue);
-            totalAmount = totalAmount.subtract(p.mRecidueProc);*/
         }
 
-        totalAmountOnHand = totalAmount.subtract(totalTax);
-
-        return;
+        totalAmountOnHand = totalAmount.subtract(totalTax).subtract(totalAlimony).subtract(totalResidue);
     }
 
     public Payslip recalcDay(DateTime date) {
@@ -183,6 +179,29 @@ public class MyLogic {
                     p.mNorth = (p.mSalary.add(p.mAddition).add(p.mAdditionProc).add(p.mBonus).add(p.mOtherBonus)).multiply(new BigDecimal(fc.north / 100.0));
 
                     p.mDistrict = (p.mSalary.add(p.mAddition).add(p.mAdditionProc).add(p.mBonus).add(p.mOtherBonus)).multiply(new BigDecimal(fc.district / 100.0));
+
+                    if (p.mEnableTax && !p.mShiftType.onlySalary) {
+                        p.mTax = (p.mSalary
+                                .add(p.mAddition)
+                                .add(p.mAdditionProc)
+                                .add(p.mNorth)
+                                .add(p.mDistrict)
+                                .add(p.mBonus)
+                                .add(p.mOtherBonusProc)
+                        ).multiply(new BigDecimal(0.13));
+                    }
+
+                    if (!p.mShiftType.onlySalary) {
+                        p.mAlimonyProc = (p.mSalary.add(p.mAddition).add(p.mAdditionProc).add(p.mNorth).add(p.mDistrict).add(p.mBonus).add(p.mOtherBonusProc).subtract(p.mTax)).multiply(new BigDecimal(fc.alimony_proc / 100.0));
+                    }
+
+                    if (!p.mShiftType.onlySalary) {
+                        p.mResidueProc = (p.mSalary.add(p.mAddition).add(p.mAdditionProc).add(p.mNorth).add(p.mDistrict).add(p.mBonus).add(p.mOtherBonusProc).subtract(p.mTax)).multiply(new BigDecimal(fc.residue_proc / 100.0));
+                    }
+
+                    /*if (!p.mShiftType.onlySalary) { // Как ежедневно вычитать алименты в жесткой сумме, если они со всей платежки за месяц утекают?
+                        p.mAlimony = p.mSalary.add(p.mAddition).add(p.mAdditionProc).add(p.mNorth).add(p.mDistrict).add(p.mBonus).add(p.mOtherBonusProc).subtract(p.mTax).subtract(fc.alimony.divide());
+                    }*/
                 }
             }
         }

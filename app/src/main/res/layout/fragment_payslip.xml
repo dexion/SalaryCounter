@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingTop="3dip"
-            android:paddingBottom="3dip"
+            android:paddingBottom="15dp"
             android:paddingLeft="15dp">
 
             <LinearLayout
@@ -272,6 +272,64 @@
 
                 <TextView
                     android:id="@+id/payslip_total_tax"
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="0dp"
+                    android:text="0,00"
+                    android:textStyle="bold"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                android:padding="0dip">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+                    android:text="@string/payslip_alimony_proc"
+                    android:textSize="18sp"
+                    android:textColor="@color/secondary_text"
+                    android:gravity="center_vertical|start" />
+
+                <TextView
+                    android:id="@+id/payslip_alimony_proc"
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="0dp"
+                    android:text="0,00"
+                    android:textStyle="bold"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                android:padding="0dip">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+                    android:text="@string/payslip_residue_proc"
+                    android:textSize="18sp"
+                    android:textColor="@color/secondary_text"
+                    android:gravity="center_vertical|start" />
+
+                <TextView
+                    android:id="@+id/payslip_residue_proc"
                     android:layout_width="0dp"
                     android:layout_weight=".50"
                     android:layout_height="wrap_content"

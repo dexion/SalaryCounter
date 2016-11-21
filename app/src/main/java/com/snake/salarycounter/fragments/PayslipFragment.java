@@ -65,6 +65,10 @@ public class PayslipFragment extends Fragment {
     TextView total;
     @BindView(R.id.payslip_total_tax)
     TextView tax;
+    @BindView(R.id.payslip_alimony_proc)
+    TextView alimony_proc;
+    @BindView(R.id.payslip_residue_proc)
+    TextView residue_proc;
     @BindView(R.id.payslip_cash)
     TextView cash;
 
@@ -85,8 +89,10 @@ public class PayslipFragment extends Fragment {
             regional.setText(Toolz.money(mMoney[5]));
             bonus.setText(Toolz.money(mMoney[6]));
             total.setText(Toolz.money(mMoney[9]));
-            tax.setText(Toolz.money(mMoney[10]));
-            cash.setText(Toolz.money(mMoney[9] - mMoney[10]));
+            tax.setText(Toolz.money(Toolz.round(mMoney[10], 0)));
+            alimony_proc.setText(Toolz.money(mMoney[11]));
+            residue_proc.setText(Toolz.money(mMoney[12]));
+            cash.setText(Toolz.money(mMoney[9] - Toolz.round(mMoney[10], 0)  - mMoney[11]  - mMoney[12]));
         }
 
         return rootView;
