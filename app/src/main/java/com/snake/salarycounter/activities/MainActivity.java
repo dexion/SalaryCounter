@@ -141,13 +141,121 @@ public class MainActivity extends AppCompatActivity implements
         super.onDestroy();
     }
 
-    private void initializeGoogle() {
-        mGoogle = new Google.Builder(this)
-                //.enableSignIn(this, serverClientId)
-                .enableSignIn(this)
-                .build();
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+
+        Intent intent = new Intent();
+        Context thisContext = this;
+
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                intent.setClass(thisContext, SettingsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.action_about:
+                showAbout(thisContext);
+                break;
+            default:
+                return false;
+        }
+
+        return true;
     }
 
+    public void showAbout(Context context) {
+        LibsConfiguration.LibsListener libsListener = new LibsConfiguration.LibsListener() {
+            @Override
+            public void onIconClicked(View v) {
+                //Toast.makeText(v.getContext(), "We are able to track this now ;)", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public boolean onLibraryAuthorClicked(View v, Library library) {
+                return false;
+            }
+
+            @Override
+            public boolean onLibraryContentClicked(View v, Library library) {
+                return false;
+            }
+
+            @Override
+            public boolean onLibraryBottomClicked(View v, Library library) {
+                return false;
+            }
+
+            @Override
+            public boolean onExtraClicked(View v, Libs.SpecialButton specialButton) {
+                if (specialButton.name().compareToIgnoreCase("special1") == 0) {
+                    //startActivity(new Intent(v.getContext(), MyIntro.class));
+                    return true;
+                }
+                if (specialButton.name().compareToIgnoreCase("special3") == 0) {
+                    //startActivity(new Intent(v.getContext(), ChangelogActivity.class));
+                    return true;
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onIconLongClicked(View v) {
+                return false;
+            }
+
+            @Override
+            public boolean onLibraryAuthorLongClicked(View v, Library library) {
+                return false;
+            }
+
+            @Override
+            public boolean onLibraryContentLongClicked(View v, Library library) {
+                return false;
+            }
+
+            @Override
+            public boolean onLibraryBottomLongClicked(View v, Library library) {
+                return false;
+            }
+        };
+
+        new LibsBuilder()
+                .withAutoDetect(true)
+                .withLicenseShown(true)
+                .withVersionShown(true)
+                .withActivityTitle(getString(R.string.about))
+                .withListener(libsListener)
+                //provide a style (optional) (LIGHT, DARK, LIGHT_DARK_TOOLBAR)
+                .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
+                .withAboutIconShown(true)
+                .withAboutVersionShown(true)
+                .withAboutDescription("{faw-android} This is a small sample which can be set in the about my app description file.<br /><b>You can style this with html markup :D</b>")
+                //start the activity
+                .start(context);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        //add the values which need to be saved from the drawer to the bundle
+        outState = drawerResult.saveInstanceState(outState);
+        //add the values which need to be saved from the accountHeader to the bundle
+        outState = headerResult.saveInstanceState(outState);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onBackPressed() {
+        //handle the back press :D close the drawer first and if the drawer is closed close the activity
+        if (drawerResult != null && drawerResult.isDrawerOpen()) {
+            drawerResult.closeDrawer();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    //region Drawer
     private void buildDrawer(final Context context, Bundle savedInstanceState, Toolbar toolbar) {
         // Create the AccountHeader
         buildHeader(false, savedInstanceState);
@@ -343,139 +451,17 @@ public class MainActivity extends AppCompatActivity implements
                 .build();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-
-        Intent intent = new Intent();
-        Context thisContext = this;
-
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                intent.setClass(thisContext, SettingsActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.action_about:
-                showAbout(thisContext);
-                break;
-            default:
-                return false;
-        }
-
-        return true;
+    public Drawer getDrawer(){
+        return drawerResult;
     }
+    //endregion
 
-    public void showAbout(Context context) {
-        LibsConfiguration.LibsListener libsListener = new LibsConfiguration.LibsListener() {
-            @Override
-            public void onIconClicked(View v) {
-                //Toast.makeText(v.getContext(), "We are able to track this now ;)", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public boolean onLibraryAuthorClicked(View v, Library library) {
-                return false;
-            }
-
-            @Override
-            public boolean onLibraryContentClicked(View v, Library library) {
-                return false;
-            }
-
-            @Override
-            public boolean onLibraryBottomClicked(View v, Library library) {
-                return false;
-            }
-
-            @Override
-            public boolean onExtraClicked(View v, Libs.SpecialButton specialButton) {
-                if (specialButton.name().compareToIgnoreCase("special1") == 0) {
-                    //startActivity(new Intent(v.getContext(), MyIntro.class));
-                    return true;
-                }
-                if (specialButton.name().compareToIgnoreCase("special3") == 0) {
-                    //startActivity(new Intent(v.getContext(), ChangelogActivity.class));
-                    return true;
-                }
-                return false;
-            }
-
-            @Override
-            public boolean onIconLongClicked(View v) {
-                return false;
-            }
-
-            @Override
-            public boolean onLibraryAuthorLongClicked(View v, Library library) {
-                return false;
-            }
-
-            @Override
-            public boolean onLibraryContentLongClicked(View v, Library library) {
-                return false;
-            }
-
-            @Override
-            public boolean onLibraryBottomLongClicked(View v, Library library) {
-                return false;
-            }
-        };
-
-        new LibsBuilder()
-                .withAutoDetect(true)
-                .withLicenseShown(true)
-                .withVersionShown(true)
-                .withActivityTitle(getString(R.string.about))
-                .withListener(libsListener)
-                //provide a style (optional) (LIGHT, DARK, LIGHT_DARK_TOOLBAR)
-                .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
-                .withAboutIconShown(true)
-                .withAboutVersionShown(true)
-                .withAboutDescription("{faw-android} This is a small sample which can be set in the about my app description file.<br /><b>You can style this with html markup :D</b>")
-                //start the activity
-                .start(context);
-    }
-
-    private void showDonateDialog(){
-        new MaterialDialog.Builder(this)
-                .title(R.string.donate)
-                .items(R.array.donate)
-                .itemsCallback(new MaterialDialog.ListCallback(){
-                    @Override
-                    public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
-                        //We make choice
-                        if(BillingProcessor.isIabServiceAvailable(getApplicationContext())){
-                            String[] donateStrings = getResources().getStringArray(R.array.donate_strings);
-                            bp.purchase(that, donateStrings[position]);
-                            //SuperToast.create(that, donateStrings[position] + " " + String.valueOf(position), SuperToast.Duration.LONG).show();
-                        }
-                        else{
-                            SuperToast.create(that, getString(R.string.market_unavailable), SuperToast.Duration.LONG).show();
-                        }
-                    }
-                })
-                .show();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        //add the values which need to be saved from the drawer to the bundle
-        outState = drawerResult.saveInstanceState(outState);
-        //add the values which need to be saved from the accountHeader to the bundle
-        outState = headerResult.saveInstanceState(outState);
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onBackPressed() {
-        //handle the back press :D close the drawer first and if the drawer is closed close the activity
-        if (drawerResult != null && drawerResult.isDrawerOpen()) {
-            drawerResult.closeDrawer();
-        } else {
-            super.onBackPressed();
-        }
+    //region Google SingIn
+    private void initializeGoogle() {
+        mGoogle = new Google.Builder(this)
+                //.enableSignIn(this, serverClientId)
+                .enableSignIn(this)
+                .build();
     }
 
     @Override
@@ -513,8 +499,28 @@ public class MainActivity extends AppCompatActivity implements
         SuperToast.create(MainActivity.this, getString(R.string.signed_out), SuperToast.Duration.MEDIUM).show();
     }
 
-    public Drawer getDrawer(){
-        return drawerResult;
+    //endregion
+
+    //region Google billing
+    private void showDonateDialog(){
+        new MaterialDialog.Builder(this)
+                .title(R.string.donate)
+                .items(R.array.donate)
+                .itemsCallback(new MaterialDialog.ListCallback(){
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                        //We make choice
+                        if(BillingProcessor.isIabServiceAvailable(getApplicationContext())){
+                            String[] donateStrings = getResources().getStringArray(R.array.donate_strings);
+                            bp.purchase(that, donateStrings[position]);
+                            //SuperToast.create(that, donateStrings[position] + " " + String.valueOf(position), SuperToast.Duration.LONG).show();
+                        }
+                        else{
+                            SuperToast.create(that, getString(R.string.market_unavailable), SuperToast.Duration.LONG).show();
+                        }
+                    }
+                })
+                .show();
     }
 
     @Override
@@ -543,4 +549,5 @@ public class MainActivity extends AppCompatActivity implements
     public void onBillingInitialized() {
 
     }
+    //endregion
 }
