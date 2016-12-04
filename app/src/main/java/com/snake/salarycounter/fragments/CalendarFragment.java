@@ -2,9 +2,9 @@ package com.snake.salarycounter.fragments;
 
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -21,6 +21,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
@@ -33,11 +35,8 @@ import com.snake.salarycounter.models.ShiftType;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.zip.Inflater;
 
 import de.greenrobot.event.EventBus;
-import uk.me.lewisdeane.ldialogs.BaseDialog;
-import uk.me.lewisdeane.ldialogs.CustomDialog;
 
 public class CalendarFragment extends Fragment {
 
@@ -168,52 +167,24 @@ public class CalendarFragment extends Fragment {
                 //        Toast.LENGTH_SHORT).show();
                 final Resources res = getResources();
 
-                CustomDialog.Builder builder = new CustomDialog.Builder(getActivity(),
-                        res.getString(R.string.dialog_delete),
-                        res.getString(R.string.activity_dialog_accept));
-                builder.content(res.getString(R.string.realy_clear));
-                builder.negativeText(res.getString(R.string.activity_dialog_decline));
-
-                //Set theme
-                builder.darkTheme(false);
-                builder.typeface(Typeface.SANS_SERIF);
-                builder.positiveColor(res.getColor(R.color.light_blue_500)); // int res, or int colorRes parameter versions available as well.
-                builder.negativeColor(res.getColor(R.color.light_blue_500));
-                builder.rightToLeft(false); // Enables right to left positioning for languages that may require so.
-                builder.titleAlignment(BaseDialog.Alignment.CENTER);
-                builder.buttonAlignment(BaseDialog.Alignment.CENTER);
-                builder.setButtonStacking(false);
-
-                //Set text sizes
-                builder.titleTextSize((int) res.getDimension(R.dimen.activity_dialog_title_size));
-                builder.contentTextSize((int) res.getDimension(R.dimen.activity_dialog_content_size));
-                builder.positiveButtonTextSize((int) res.getDimension(R.dimen.activity_dialog_positive_button_size));
-                builder.negativeButtonTextSize((int) res.getDimension(R.dimen.activity_dialog_negative_button_size));
-
-                //Build the dialog.
-                CustomDialog customDialog = builder.build();
-                customDialog.setCanceledOnTouchOutside(false);
-                customDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                customDialog.setClickListener(new CustomDialog.ClickListener() {
-                    @Override
-                    public void onConfirmClick() {
-                        //Toast.makeText(getApplicationContext(), getResources().getString(R.string.restart_needed), Toast.LENGTH_LONG).show();
-                        Day d = Day.getByDate(mDate);
-                        if(null != d) {
-                            d.delete();
-                            caldroidFragment.clearBackgroundDrawableForDate(mDate);
-                            caldroidFragment.refreshView();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelClick() {
-                        //Toast.makeText(getApplicationContext(), "Cancel", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-                // Show the dialog.
-                customDialog.show();
+                new MaterialDialog.Builder(getContext())
+                        .title(R.string.dialog_delete)
+                        .content(R.string.realy_clear)
+                        .positiveText(R.string.activity_dialog_accept)
+                        .negativeText(R.string.activity_dialog_decline)
+                        .canceledOnTouchOutside(false)
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                Day d = Day.getByDate(mDate);
+                                if(null != d) {
+                                    d.delete();
+                                    caldroidFragment.clearBackgroundDrawableForDate(mDate);
+                                    caldroidFragment.refreshView();
+                                }
+                            }
+                        })
+                        .show();
             }
 
             @Override

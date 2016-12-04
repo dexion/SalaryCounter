@@ -84,7 +84,6 @@ dependencies {
     compile 'com.mikepenz:community-material-typeface:1.5.54.2@aar'
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
     compile 'com.github.omadahealth.typefaceview:typefaceview:1.3.0@aar'
-    compile 'uk.me.lewisdeane.ldialogs:ldialogs:1.2.0@aar'
     compile 'de.greenrobot:eventbus:2.4.0'
     compile 'net.danlew:android.joda:2.9.1'
     compile 'com.google.code.gson:gson:2.5'
@@ -100,6 +99,9 @@ dependencies {
     compile 'com.wdullaer:materialdatetimepicker:2.5.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.robinhood.ticker:ticker:1.1.0'
+    compile 'com.github.afollestad.material-dialogs:core:0.9.1.0@aar'
+    compile 'com.github.afollestad.material-dialogs:commons:0.9.1.0@aar'
+    compile 'com.anjlab.android.iab.v3:library:1.0.36'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(path: ':libs:DateRangePicker')
 }

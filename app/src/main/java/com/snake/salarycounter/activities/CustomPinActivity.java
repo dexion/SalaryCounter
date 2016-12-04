@@ -2,10 +2,8 @@ package com.snake.salarycounter.activities;
 
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
@@ -13,11 +11,10 @@ import android.widget.Toast;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.util.ReflectionUtils;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.orangegangsters.lollipin.lib.managers.AppLockActivity;
 import com.snake.salarycounter.R;
-
-import uk.me.lewisdeane.ldialogs.BaseDialog;
-import uk.me.lewisdeane.ldialogs.CustomDialog;
 
 public class CustomPinActivity extends AppLockActivity {
 
@@ -27,57 +24,30 @@ public class CustomPinActivity extends AppLockActivity {
     public void showForgotDialog() {
         final Resources res = getResources();
         // Create the builder with required paramaters - Context, Title, Positive Text
-        CustomDialog.Builder builder = new CustomDialog.Builder(this,
-                res.getString(R.string.activity_dialog_title),
-                res.getString(R.string.activity_dialog_accept));
-        builder.content(res.getString(R.string.activity_dialog_content));
-        builder.negativeText(res.getString(R.string.activity_dialog_decline));
+        new MaterialDialog.Builder(this)
+                .title(R.string.activity_dialog_title)
+                .content(R.string.activity_dialog_content)
+                .positiveText(R.string.activity_dialog_accept)
+                .negativeText(R.string.activity_dialog_decline)
+                .canceledOnTouchOutside(false)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.restart_needed), Toast.LENGTH_LONG).show();
+                        //SharedPreferences.edit().clear().commit();
 
-        //Set theme
-        builder.darkTheme(false);
-        builder.typeface(Typeface.SANS_SERIF);
-        builder.positiveColor(res.getColor(R.color.light_blue_500)); // int res, or int colorRes parameter versions available as well.
-        builder.negativeColor(res.getColor(R.color.light_blue_500));
-        builder.rightToLeft(false); // Enables right to left positioning for languages that may require so.
-        builder.titleAlignment(BaseDialog.Alignment.CENTER);
-        builder.buttonAlignment(BaseDialog.Alignment.CENTER);
-        builder.setButtonStacking(false);
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(CustomPinActivity.this);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.clear();
+                        editor.commit();
 
-        //Set text sizes
-        builder.titleTextSize((int) res.getDimension(R.dimen.activity_dialog_title_size));
-        builder.contentTextSize((int) res.getDimension(R.dimen.activity_dialog_content_size));
-        builder.positiveButtonTextSize((int) res.getDimension(R.dimen.activity_dialog_positive_button_size));
-        builder.negativeButtonTextSize((int) res.getDimension(R.dimen.activity_dialog_negative_button_size));
-
-        //Build the dialog.
-        CustomDialog customDialog = builder.build();
-        customDialog.setCanceledOnTouchOutside(false);
-        customDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        customDialog.setClickListener(new CustomDialog.ClickListener() {
-            @Override
-            public void onConfirmClick() {
-                Toast.makeText(getApplicationContext(), getResources().getString(R.string.restart_needed), Toast.LENGTH_LONG).show();
-                //SharedPreferences.edit().clear().commit();
-
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(CustomPinActivity.this);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.clear();
-                editor.commit();
-
-                //ActiveAndroid.execSQL("delete from "+ Cache.getTableInfo(ShiftType.class).getTableName()+";");
-                //ActiveAndroid.execSQL("delete from sqlite_sequence where name='"+Cache.getTableInfo(ShiftType.class).getTableName()+"';");
-                deleteDb();
-                CustomPinActivity.this.finishAffinity();
-            }
-
-            @Override
-            public void onCancelClick() {
-                //Toast.makeText(getApplicationContext(), "Cancel", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        // Show the dialog.
-        customDialog.show();
+                        //ActiveAndroid.execSQL("delete from "+ Cache.getTableInfo(ShiftType.class).getTableName()+";");
+                        //ActiveAndroid.execSQL("delete from sqlite_sequence where name='"+Cache.getTableInfo(ShiftType.class).getTableName()+"';");
+                        deleteDb();
+                        CustomPinActivity.this.finishAffinity();
+                    }
+                })
+                .show();
     }
 
     @Override
