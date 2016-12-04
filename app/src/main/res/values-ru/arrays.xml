@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="donate">
+        <item>15 RUB</item>
+        <item>50 RUB</item>
+        <item>100 RUB</item>
+        <item>500 RUB</item>
+        <item>1000 RUB</item>
+        <item>5000 RUB</item>
+    </string-array>
+
+    <string-array name="donate_strings">
+        <item>vahta_donate_10</item>
+        <item>vahta_donate_50</item>
+        <item>vahta_donate_100</item>
+        <item>vahta_donate_500</item>
+        <item>vahta_donate_1000</item>
+        <item>vahta_donate_5000</item>
+    </string-array>
+</resources>

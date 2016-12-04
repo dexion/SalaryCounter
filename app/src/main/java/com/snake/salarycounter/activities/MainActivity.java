@@ -1,5 +1,6 @@
 package com.snake.salarycounter.activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,13 +10,16 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.LayoutInflaterCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.anjlab.android.iab.v3.BillingProcessor;
+import com.anjlab.android.iab.v3.TransactionDetails;
 import com.crashlytics.android.Crashlytics;
 import com.github.johnpersano.supertoasts.SuperToast;
-import com.github.orangegangsters.lollipin.lib.PinActivity;
 import com.github.orangegangsters.lollipin.lib.managers.AppLock;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.mikepenz.aboutlibraries.Libs;
@@ -47,8 +51,9 @@ import pub.devrel.easygoogle.Google;
 import pub.devrel.easygoogle.gac.SignIn;
 
 
-public class MainActivity extends PinActivity implements
-        SignIn.SignInListener {
+public class MainActivity extends AppCompatActivity implements
+        SignIn.SignInListener,
+        BillingProcessor.IBillingHandler {
 
     private static final int PROFILE_SETTING = 1;
     private static final int REQUEST_CODE_ENABLE = 11;
@@ -60,6 +65,9 @@ public class MainActivity extends PinActivity implements
     private PrimaryDrawerItem authDrawerItem = null;
 
     private Google mGoogle;
+    private BillingProcessor bp;
+
+    Activity that;
 
     final static int II_SHIFT_TYPES = 10;
     final static int II_FINANCE_CONDITIONS = 20;
@@ -71,7 +79,10 @@ public class MainActivity extends PinActivity implements
     final static int II_SETTINGS = 101;
     final static int II_ABOUT = 102;
     final static int II_ACCOUNT = 103;
+    final static int II_DONATE = 104;
 
+    //final static String LICENSE_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgm1rO1sNVQhKm0Ra7SceSzjS4Emj3dDpx+lTcT8b0WjwNifNV2AXve+4tqXq7luH/ZBzgBpQt938jSm61xpQhUGF18Hl+cz3hJ+TaAEPxHDwKiEsRk+JKwFNbrWrQ8xirW7vDHc6bpsTs3KM1ZzGnu+TtrhioIzV9j/Fm2dzlGQMrU1x42fGJCChex49VQbgTFfIoMMgZsuN7rMcq8wF5OXb+r4QoLZhbcG8v9DDmEmE+XjS+EUm0ajSqaSJVdxWwZ617V/JbOmEymf0irU+wErQf+IDRNUz8Mp4rrwhrJ/K+PKQd7/1Zu3ATAB7WiMjgwK0Epg7xulFR6tDdfqwnQIDAQAB";
+    final static String LICENSE_KEY = null;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -83,6 +94,9 @@ public class MainActivity extends PinActivity implements
         setTheme(R.style.AppTheme);
 
         Fabric.with(this, new Crashlytics());
+
+        bp = new BillingProcessor(this, LICENSE_KEY, this);
+        that = this;
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         /*if (!mSharedPreferences.contains(PASSWORD_PREFERENCE_KEY)) {
@@ -116,6 +130,15 @@ public class MainActivity extends PinActivity implements
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         buildDrawer(this, savedInstanceState, toolbar);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(null != bp){
+            bp.release();
+        }
+
+        super.onDestroy();
     }
 
     private void initializeGoogle() {
@@ -192,6 +215,12 @@ public class MainActivity extends PinActivity implements
                                 .withIdentifier(II_SETTINGS),*/
                         new SecondaryDrawerItem()
                                 .withSelectable(false)
+                                .withName(R.string.drawer_item_donate)
+                                .withIcon(CommunityMaterial.Icon.cmd_cake_variant)
+                                .withIdentifier(II_DONATE),
+                        new DividerDrawerItem(),
+                        new SecondaryDrawerItem()
+                                .withSelectable(false)
                                 .withName(R.string.drawer_item_about)
                                 .withIcon(CommunityMaterial.Icon.cmd_help)
                                 .withIdentifier(II_ABOUT)
@@ -220,40 +249,33 @@ public class MainActivity extends PinActivity implements
                                 drawerResult.closeDrawer();
                                 t.replace(R.id.frame_container, new ListShiftTypeFragment());
                                 t.commit();
-                                /*intent.setClass(context, ListShiftTypeActivity.class);
-                                startActivity(intent);*/
                                 break;
                             case II_FINANCE_CONDITIONS:
                                 drawerResult.closeDrawer();
                                 t.replace(R.id.frame_container, new ListFinanceConditionFragment());
                                 t.commit();
-                                /*intent.setClass(context, ListFinanceConditionActivity.class);
-                                startActivity(intent);*/
                                 break;
                             case II_TABLE:
                                 drawerResult.closeDrawer();
                                 t.replace(R.id.frame_container, new ListTabelFragment());
                                 t.commit();
-                                /*intent.setClass(context, ListTabelActivity.class);
-                                startActivity(intent);*/
                                 break;
                             case II_CALENDAR:
                                 drawerResult.closeDrawer();
                                 t.replace(R.id.frame_container, new CalendarFragment());
                                 t.commit();
-                                /*intent.setClass(context, CalendarActivity.class);
-                                startActivity(intent);*/
                                 break;
                             case II_MAIN_CALC:
                                 drawerResult.closeDrawer();
                                 t.replace(R.id.frame_container, new MainCalcFragment());
                                 t.commit();
-                                /*intent.setClass(context, CalendarActivity.class);
-                                startActivity(intent);*/
                                 break;
                             case II_STATISTIC:
                                 /*intent.setClass(context, ListShiftTypeActivity.class);
                                 startActivity(intent);*/
+                                break;
+                            case II_DONATE:
+                                showDonateDialog();
                                 break;
                             case II_SETTINGS:
                                 intent.setClass(context, SettingsActivity.class);
@@ -345,7 +367,7 @@ public class MainActivity extends PinActivity implements
         return true;
     }
 
-    public static void showAbout(Context context) {
+    public void showAbout(Context context) {
         LibsConfiguration.LibsListener libsListener = new LibsConfiguration.LibsListener() {
             @Override
             public void onIconClicked(View v) {
@@ -405,7 +427,7 @@ public class MainActivity extends PinActivity implements
                 .withAutoDetect(true)
                 .withLicenseShown(true)
                 .withVersionShown(true)
-                //.withActivityTitle(getString(R.string.about))
+                .withActivityTitle(getString(R.string.about))
                 .withListener(libsListener)
                 //provide a style (optional) (LIGHT, DARK, LIGHT_DARK_TOOLBAR)
                 .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
@@ -414,6 +436,27 @@ public class MainActivity extends PinActivity implements
                 .withAboutDescription("{faw-android} This is a small sample which can be set in the about my app description file.<br /><b>You can style this with html markup :D</b>")
                 //start the activity
                 .start(context);
+    }
+
+    private void showDonateDialog(){
+        new MaterialDialog.Builder(this)
+                .title(R.string.donate)
+                .items(R.array.donate)
+                .itemsCallback(new MaterialDialog.ListCallback(){
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                        //We make choice
+                        if(BillingProcessor.isIabServiceAvailable(getApplicationContext())){
+                            String[] donateStrings = getResources().getStringArray(R.array.donate_strings);
+                            bp.purchase(that, donateStrings[position]);
+                            //SuperToast.create(that, donateStrings[position] + " " + String.valueOf(position), SuperToast.Duration.LONG).show();
+                        }
+                        else{
+                            SuperToast.create(that, getString(R.string.market_unavailable), SuperToast.Duration.LONG).show();
+                        }
+                    }
+                })
+                .show();
     }
 
     @Override
@@ -472,5 +515,32 @@ public class MainActivity extends PinActivity implements
 
     public Drawer getDrawer(){
         return drawerResult;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(!bp.handleActivityResult(requestCode, resultCode, data)) {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    @Override
+    public void onProductPurchased(String productId, TransactionDetails details) {
+        //SuperToast.create(MainActivity.this, productId, SuperToast.Duration.MEDIUM).show();
+    }
+
+    @Override
+    public void onPurchaseHistoryRestored() {
+        //SuperToast.create(MainActivity.this, "onPurchaseHistoryRestored", SuperToast.Duration.MEDIUM).show();
+    }
+
+    @Override
+    public void onBillingError(int errorCode, Throwable error) {
+
+    }
+
+    @Override
+    public void onBillingInitialized() {
+
     }
 }

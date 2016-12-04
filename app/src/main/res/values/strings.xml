@@ -227,5 +227,8 @@
     <string name="loading">Loading...</string>
     <string name="payslip_alimony_proc">Alimony, %</string>
     <string name="payslip_residue_proc">Residue, %</string>
+    <string name="drawer_item_donate">Donate</string>
+    <string name="donate">Donate</string>
+    <string name="market_unavailable">Sorry, market unavailable</string>
 
 </resources>
