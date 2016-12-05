@@ -212,7 +212,7 @@ public class MainCalcFragment extends Fragment {
                 .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
                 .add(
                     llPayslip.getId(),
-                    PayslipFragment.newInstance(lgc.getTotalPayslipDouble()[lgc.getTotalPayslipDouble().length - 1], getString(R.string.payslip_total_amount)),
+                    PayslipFragment.newInstance(lgc.getTotalPayslipDouble()[lgc.getTotalPayslipDouble().length - 1], getString(R.string.payslip_total_amount), false),
                     getString(R.string.payslip_total))
                 .commitAllowingStateLoss();
 
@@ -223,7 +223,7 @@ public class MainCalcFragment extends Fragment {
                         .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
                         .add(
                             llPayslip.getId(),
-                            PayslipFragment.newInstance(lgc.getTotalPayslipDouble()[i], ShiftType.getByWeight(i).getText()),
+                            PayslipFragment.newInstance(lgc.getTotalPayslipDouble()[i], ShiftType.getByWeight(i).getText(), false),
                             ShiftType.getByWeight(i).getText())
                         .commitAllowingStateLoss();
             }
