@@ -196,15 +196,16 @@ public class CalendarFragment extends Fragment {
                 MyLogic lgc = new MyLogic();
                 Day d = Day.getByDate(mDate);
                 if (d != null) {
-                    /*if (llDailyPayslip.getChildCount() > 0)
-                        llDailyPayslip.removeAllViews();*/
                     getFragmentManager()
                             .beginTransaction()
                             .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
                             .replace(llDailyPayslip.getId(),
-                                PayslipFragment.newInstance(lgc.recalDay(new DateTime(mDate)), d.shiftType.getText()),
+                                PayslipFragment.newInstance(lgc.recalDay(new DateTime(mDate)), d.shiftType.getText(), true),
                                 d.shiftType.getText())
                             .commitAllowingStateLoss();
+                }
+                else{
+                    llDailyPayslip.removeAllViews();
                 }
             }
         };

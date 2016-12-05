@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.snake.salarycounter.R;
@@ -18,14 +19,17 @@ public class PayslipFragment extends Fragment {
 
     private static final String MONEY = "money_array";
     private static final String TITLE = "payslip_title";
+    private static final String SHORT = "short_payslip";
     private double[] mMoney;
     private String mTitle;
+    private boolean mShort;
 
-    public static PayslipFragment newInstance(double[] money, String title) {
+    public static PayslipFragment newInstance(double[] money, String title, boolean isShort) {
         PayslipFragment fragment = new PayslipFragment();
         Bundle args = new Bundle();
         args.putDoubleArray(MONEY, money);
         args.putString(TITLE, title);
+        args.putBoolean(SHORT, isShort);
         fragment.setArguments(args);
         return fragment;
     }
@@ -40,6 +44,7 @@ public class PayslipFragment extends Fragment {
         if (getArguments() != null) {
             mMoney = getArguments().getDoubleArray(MONEY);
             mTitle = getArguments().getString(TITLE);
+            mShort = getArguments().getBoolean(SHORT);
         }
     }
 
@@ -69,6 +74,10 @@ public class PayslipFragment extends Fragment {
     TextView residue_proc;
     @BindView(R.id.payslip_cash)
     TextView cash;
+    @BindView(R.id.hideable_details)
+    FrameLayout hideable_details;
+    @BindView(R.id.hideable_total)
+    FrameLayout hideable_total;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,6 +87,10 @@ public class PayslipFragment extends Fragment {
         ButterKnife.bind(this, rootView);
 
         title.setText(mTitle);
+        if (mShort){
+            hideable_details.setVisibility(View.GONE);
+            hideable_total.setVisibility(View.GONE);
+        }
         if (null != mMoney && mMoney.length > 12) {
             salarysum.setText(Toolz.money(mMoney[0]));
             addition.setText(Toolz.money(mMoney[1]));
