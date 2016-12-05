@@ -4,6 +4,7 @@ import com.snake.salarycounter.models.Day;
 import com.snake.salarycounter.models.FinanceCondition;
 import com.snake.salarycounter.models.ShiftType;
 import com.snake.salarycounter.models.Tabel;
+import com.snake.salarycounter.utils.Toolz;
 
 import org.joda.time.DateTime;
 import org.joda.time.Period;
@@ -122,7 +123,7 @@ public class MyLogic {
             totalAmount = totalAmount.add(tTotalAmount).add(p.mAdditionalPrice); // на это налог не начисляется
 
         }
-
+        totalTax = Toolz.round(totalTax, 0);
         totalAmountOnHand = totalAmount.subtract(totalTax).subtract(totalAlimony).subtract(totalResidue);
     }
 

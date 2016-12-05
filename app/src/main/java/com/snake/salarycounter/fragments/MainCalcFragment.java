@@ -260,7 +260,7 @@ public class MainCalcFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String s) {
-            setTitleAmount(lgc.getTotalAmount());
+            setTitleAmount(lgc.getTotalAmountOnHand());
             setPayslipList();
             if(null!= mProgressDialog){
                 mProgressDialog.dismiss();

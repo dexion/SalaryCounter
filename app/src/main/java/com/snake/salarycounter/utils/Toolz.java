@@ -25,8 +25,7 @@ public class Toolz {
     public static BigDecimal round(BigDecimal value, int places) {
         if (places < 0) throw new IllegalArgumentException();
         try {
-            value.setScale(places, BigDecimal.ROUND_HALF_UP);
-            return value;
+            return value.setScale(places, BigDecimal.ROUND_HALF_UP);
         } catch (java.lang.NumberFormatException e) {
             return new BigDecimal(0.0);
         }
