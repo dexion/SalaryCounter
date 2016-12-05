@@ -11,8 +11,6 @@ import android.widget.TextView;
 import com.snake.salarycounter.R;
 import com.snake.salarycounter.utils.Toolz;
 
-import java.util.Formatter;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -80,7 +78,7 @@ public class PayslipFragment extends Fragment {
         ButterKnife.bind(this, rootView);
 
         title.setText(mTitle);
-        if (null != mMoney) {
+        if (null != mMoney && mMoney.length > 12) {
             salarysum.setText(Toolz.money(mMoney[0]));
             addition.setText(Toolz.money(mMoney[1]));
             addition_proc.setText(Toolz.money(mMoney[2]));

@@ -207,18 +207,24 @@ public class MainCalcFragment extends Fragment {
         if(llPayslip.getChildCount() > 0)
             llPayslip.removeAllViews();
 
-        getFragmentManager().beginTransaction().add(
-                llPayslip.getId(),
-                PayslipFragment.newInstance(lgc.getTotalPayslipDouble()[lgc.getTotalPayslipDouble().length - 1], getString(R.string.payslip_total_amount)),
-                getString(R.string.payslip_total))
+        getFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+                .add(
+                    llPayslip.getId(),
+                    PayslipFragment.newInstance(lgc.getTotalPayslipDouble()[lgc.getTotalPayslipDouble().length - 1], getString(R.string.payslip_total_amount)),
+                    getString(R.string.payslip_total))
                 .commitAllowingStateLoss();
 
         for (int i = 0; i < lgc.getTotalPayslipDouble().length - 1; i++) {
             if(null != lgc.getTotalPayslip()[i] && 0 != lgc.getTotalPayslip()[i][9].compareTo( BigDecimal.ZERO)){
-                getFragmentManager().beginTransaction().add(
-                        llPayslip.getId(),
-                        PayslipFragment.newInstance(lgc.getTotalPayslipDouble()[i], ShiftType.getByWeight(i).getText()),
-                        ShiftType.getByWeight(i).getText())
+                getFragmentManager()
+                        .beginTransaction()
+                        .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+                        .add(
+                            llPayslip.getId(),
+                            PayslipFragment.newInstance(lgc.getTotalPayslipDouble()[i], ShiftType.getByWeight(i).getText()),
+                            ShiftType.getByWeight(i).getText())
                         .commitAllowingStateLoss();
             }
         }

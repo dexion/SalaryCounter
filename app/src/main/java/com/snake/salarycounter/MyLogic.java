@@ -62,10 +62,11 @@ public class MyLogic {
         }
     }
 
+    public MyLogic() {}
+
     public MyLogic(DateTime start, DateTime end) {
         mStart = start;
         mEnd = end;
-
     }
 
     public void recalcAll() {
@@ -125,6 +126,38 @@ public class MyLogic {
         }
         totalTax = Toolz.round(totalTax, 0);
         totalAmountOnHand = totalAmount.subtract(totalTax).subtract(totalAlimony).subtract(totalResidue);
+    }
+
+    public double[] recalDay(DateTime date){
+        double[] result = new double[SIZE_OF_PAYSLIP];
+        Payslip p = recalcDay(date);
+        if(null != p)
+        {
+            BigDecimal tTotalAmount = BigDecimal.valueOf(0.0); // временная переменная для суммирования. Нужна потому, что не на все применяется налог.
+            tTotalAmount = tTotalAmount.add(p.mSalary)
+                    .add(p.mAddition)
+                    .add(p.mAdditionProc)
+                    .add(p.mNorth)
+                    .add(p.mDistrict)
+                    .add(p.mBonus)
+                    .add(p.mOtherBonusProc)
+                    .add(p.mAdditionalPrice);
+
+            result[0] = p.mSalary.setScale(2, RoundingMode.HALF_UP).doubleValue();
+            result[1] = p.mAddition.setScale(2, RoundingMode.HALF_UP).doubleValue();
+            result[2] = p.mAdditionProc.setScale(2, RoundingMode.HALF_UP).doubleValue();
+            result[3] = p.mAdditionalPrice.setScale(2, RoundingMode.HALF_UP).doubleValue();
+            result[4] = p.mNorth.setScale(2, RoundingMode.HALF_UP).doubleValue();
+            result[5] = p.mDistrict.setScale(2, RoundingMode.HALF_UP).doubleValue();
+            result[6] = p.mBonus.setScale(2, RoundingMode.HALF_UP).doubleValue();
+            result[7] = p.mOtherBonusProc.setScale(2, RoundingMode.HALF_UP).doubleValue();
+            result[8] = p.mCountedHours;
+            result[9] = tTotalAmount.setScale(2, RoundingMode.HALF_UP).doubleValue();
+            result[10] = p.mTax.setScale(0, RoundingMode.HALF_UP).doubleValue();
+            result[11] = p.mAlimonyProc.setScale(2, RoundingMode.HALF_UP).doubleValue();
+            result[12] = p.mResidueProc.setScale(2, RoundingMode.HALF_UP).doubleValue();
+        }
+        return result;
     }
 
     public Payslip recalcDay(DateTime date) {

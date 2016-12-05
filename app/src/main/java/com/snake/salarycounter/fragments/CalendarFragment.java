@@ -20,30 +20,41 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
+import com.snake.salarycounter.MyLogic;
 import com.snake.salarycounter.R;
 import com.snake.salarycounter.activities.MainActivity;
 import com.snake.salarycounter.events.SwitchEvent;
 import com.snake.salarycounter.models.Day;
 import com.snake.salarycounter.models.ShiftType;
 
-import java.text.SimpleDateFormat;
+import org.joda.time.DateTime;
+
 import java.util.Calendar;
 import java.util.Date;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
 public class CalendarFragment extends Fragment {
 
     private CaldroidCustomFragment caldroidFragment;
-    private final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
-    private CaldroidListener listener = null;
+    private CaldroidListener caldroidEditListener = null;
+    private CaldroidListener caldroidShowListener = null;
     private boolean isCalendarEditable = false;
+
+    @BindView(R.id.daily_payslip)
+    LinearLayout llDailyPayslip;
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     public CalendarFragment() {
     }
@@ -56,13 +67,13 @@ public class CalendarFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_calendar, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_calendar, container, false);
+        ButterKnife.bind(this, rootView);
 
-        Toolbar toolbar = (Toolbar) v.findViewById(R.id.toolbar);
         if (null != toolbar) {
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.title_activity_calendar);
-            ActionBarDrawerToggle mActionBarDrawerToggle = new ActionBarDrawerToggle(getActivity(),  ((MainActivity) getActivity()).getDrawer().getDrawerLayout(), toolbar, R.string.drawer_open, R.string.drawer_close);
+            ActionBarDrawerToggle mActionBarDrawerToggle = new ActionBarDrawerToggle(getActivity(), ((MainActivity) getActivity()).getDrawer().getDrawerLayout(), toolbar, R.string.drawer_open, R.string.drawer_close);
             mActionBarDrawerToggle.syncState();
             ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             mActionBarDrawerToggle.setDrawerIndicatorEnabled(true);
@@ -72,23 +83,17 @@ public class CalendarFragment extends Fragment {
 
         EventBus.getDefault().register(this);
 
-        if(ShiftType.allShiftTypes().size() < 1) {
-            Snackbar.make(v, R.string.must_create_one_shift_type, Snackbar.LENGTH_INDEFINITE)
+        if (ShiftType.allShiftTypes().size() < 1) {
+            Snackbar.make(rootView, R.string.must_create_one_shift_type, Snackbar.LENGTH_INDEFINITE)
                     .setAction(R.string.action_close, null)
                     .show();
             isCalendarEditable = false;
         }
+        else {
+            isCalendarEditable = true;
+        }
 
-        // Setup caldroid fragment
-        // **** If you want normal CaldroidFragment, use below line ****
-        //caldroidFragment = new CaldroidFragment();
-
-        // //////////////////////////////////////////////////////////////////////
-        // **** This is to show customized fragment. If you want customized
-        // version, uncomment below line ****
         caldroidFragment = new CaldroidCustomFragment();
-
-        // Setup arguments
 
         // If Activity is created after rotation
         if (savedInstanceState != null) {
@@ -103,23 +108,15 @@ public class CalendarFragment extends Fragment {
             args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
             args.putBoolean(CaldroidFragment.ENABLE_SWIPE, true);
             args.putBoolean(CaldroidFragment.SIX_WEEKS_IN_CALENDAR, true);
-
-            // Uncomment this to customize startDayOfWeek
             args.putInt(CaldroidFragment.START_DAY_OF_WEEK, CaldroidFragment.MONDAY);
-
-            // Uncomment this line to use Caldroid in compact mode
-            // args.putBoolean(CaldroidFragment.SQUARE_TEXT_VIEW_CELL, false);
-
-            // Uncomment this line to use dark theme
-            //args.putInt(CaldroidFragment.THEME_RESOURCE, com.caldroid.R.style.CaldroidDefaultDark);
 
             caldroidFragment.setArguments(args);
         }
 
         setCustomResourceForDates();
 
-        // Setup listener
-        listener = new CaldroidListener() {
+        // Setup caldroidEditListener
+        caldroidEditListener = new CaldroidListener() {
 
             @Override
             public void onSelectDate(Date mDate, View view) {
@@ -128,22 +125,16 @@ public class CalendarFragment extends Fragment {
 
                 Day d = Day.getByDate(mDate);
 
-                if(d != null)
-                {
+                if (d != null) {
                     int tPostition;
-                    if(d.shiftType.weight + 1 == ShiftType.allShiftTypes().size())
-                    {
+                    if (d.shiftType.weight + 1 == ShiftType.allShiftTypes().size()) {
                         tPostition = 0;
-                    }
-                    else
-                    {
+                    } else {
                         tPostition = d.shiftType.weight + 1;
                     }
                     d.shiftType = ShiftType.getByPosition(tPostition);
                     d.save();
-                }
-                else
-                {
+                } else {
                     d = new Day(mDate);
                     d.shiftType = ShiftType.getByPosition(0);
                     d.save();
@@ -177,7 +168,7 @@ public class CalendarFragment extends Fragment {
                             @Override
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                 Day d = Day.getByDate(mDate);
-                                if(null != d) {
+                                if (null != d) {
                                     d.delete();
                                     caldroidFragment.clearBackgroundDrawableForDate(mDate);
                                     caldroidFragment.refreshView();
@@ -198,18 +189,34 @@ public class CalendarFragment extends Fragment {
 
         };
 
-        // Setup Caldroid
-        if(isCalendarEditable)
-        {
-            caldroidFragment.setCaldroidListener(listener);
-        }
+        caldroidShowListener = new CaldroidListener() {
+
+            @Override
+            public void onSelectDate(Date mDate, View view) {
+                MyLogic lgc = new MyLogic();
+                Day d = Day.getByDate(mDate);
+                if (d != null) {
+                    /*if (llDailyPayslip.getChildCount() > 0)
+                        llDailyPayslip.removeAllViews();*/
+                    getFragmentManager()
+                            .beginTransaction()
+                            .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+                            .replace(llDailyPayslip.getId(),
+                                PayslipFragment.newInstance(lgc.recalDay(new DateTime(mDate)), d.shiftType.getText()),
+                                d.shiftType.getText())
+                            .commitAllowingStateLoss();
+                }
+            }
+        };
+
+        caldroidFragment.setCaldroidListener(caldroidShowListener);
 
         FragmentTransaction t = getFragmentManager().beginTransaction();
         t.replace(R.id.calendar1, caldroidFragment);
         t.setCustomAnimations(R.anim.slide_down, R.anim.slide_down);
         t.commit();
 
-        return v;
+        return rootView;
     }
 
     @Override
@@ -269,13 +276,13 @@ public class CalendarFragment extends Fragment {
     }
 
     public void onEvent(SwitchEvent event){
-        if(event.mChecked){
+        if(event.mChecked && isCalendarEditable){
             // можно редактировать
-            caldroidFragment.setCaldroidListener(listener);
+            caldroidFragment.setCaldroidListener(caldroidEditListener);
         }
         else{
             // нельзя редактировать календарь
-            caldroidFragment.setCaldroidListener(null);
+            caldroidFragment.setCaldroidListener(caldroidShowListener);
         }
     }
 }

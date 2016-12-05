@@ -25,7 +25,18 @@
             android:orientation="vertical" >
         </LinearLayout>
 
-        <LinearLayout
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/daily_payslip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </ScrollView>
+
+        <!--<LinearLayout
             style="?android:attr/buttonBarStyle"
             android:id="@+id/button_layout"
             android:layout_width="match_parent"
@@ -60,7 +71,7 @@
         <TextView
             android:id="@+id/textview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" />-->
 
     </LinearLayout>
 
