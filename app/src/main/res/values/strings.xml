@@ -230,5 +230,7 @@
     <string name="drawer_item_donate">Donate</string>
     <string name="donate">Donate</string>
     <string name="market_unavailable">Sorry, market unavailable</string>
+    <string name="shift_type_money_hourly_rate">Hourly rate</string>
+    <string name="shift_type_money_is_hourly_rate">Hourly rate</string>
 
 </resources>

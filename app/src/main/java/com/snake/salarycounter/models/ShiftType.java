@@ -7,7 +7,6 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
-import com.activeandroid.util.SQLiteUtils;
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
@@ -54,6 +53,12 @@ public class ShiftType extends Model
     @Column (name = "fixed_price")
     public BigDecimal fixedPrice;
 
+    @Column (name = "is_hourly_rate")
+    public boolean isHourlyRate;
+
+    @Column (name = "hourly_rate")
+    public BigDecimal hourlyRate;
+
     @Column (name = "additional_price")
     public BigDecimal additionalPrice;
 
@@ -90,10 +95,12 @@ public class ShiftType extends Model
 
         isFixedPrice = false;
         fixedPrice = new BigDecimal(0.0);
+        hourlyRate = new BigDecimal(0.0);
         additionalPrice = new BigDecimal(250.0); // компенсация вахтового метода
         multiplier = new BigDecimal(1.0);
         isCountHours = true;
         isAveragePrice = false;
+        isHourlyRate = false;
         onlySalary = false;
     }
 

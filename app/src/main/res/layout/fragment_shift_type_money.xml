@@ -28,6 +28,23 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/shift_type_money_is_hourly_rate"
+        android:id="@+id/shift_type_money_is_hourly_rate" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/shift_type_money_hourly_rate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/shift_type_money_hourly_rate"
+        app:met_floatingLabel="normal"
+        app:met_floatingLabelText="@string/shift_type_money_hourly_rate"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:maxLines="1" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/shift_type_money_is_fixed_price"
         android:id="@+id/shift_type_money_is_fixed_price" />
 

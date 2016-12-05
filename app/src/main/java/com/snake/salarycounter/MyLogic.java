@@ -160,7 +160,7 @@ public class MyLogic {
         return result;
     }
 
-    public Payslip recalcDay(DateTime date) {
+    private Payslip recalcDay(DateTime date) {
         Payslip p = null;
 
         Day d = Day.getByDate(date.toDate());
@@ -169,7 +169,7 @@ public class MyLogic {
             FinanceCondition fc = FinanceCondition.getByDate(date);
             Tabel t = Tabel.getByDate(date);
 
-            if (null == st || null == fc || null == t) {
+            if (null == st) {
                 return null;
             }
 
@@ -178,7 +178,6 @@ public class MyLogic {
             mPayslips.add(p);
 
             p.mAdditionalPrice = st.additionalPrice;
-            p.mEnableTax = fc.enable_tax;
 
             p.mHours = (new Period(st.dayDuration).getHours()) + (new Period(st.dayDuration).getMinutes() / 60.0);
 
@@ -190,7 +189,13 @@ public class MyLogic {
                 p.mSalary = st.fixedPrice;
             } else if (st.isAveragePrice) {
                 // надо как-то расчитывать средний заработок
-            } else {
+            } else if (st.isHourlyRate) {
+                p.mSalary = st.hourlyRate.multiply(new BigDecimal(p.mHours));
+            }else {
+                if(null == fc || null == t){
+                    return null;
+                }
+                p.mEnableTax = fc.enable_tax;
                 BigDecimal normohour = fc.salary.divide(new BigDecimal(t.hours), 15, BigDecimal.ROUND_HALF_UP);
                 p.mSalary = normohour.multiply(new BigDecimal(p.mHours));
 
