@@ -11,9 +11,11 @@ import android.widget.TextView;
 
 import com.snake.salarycounter.R;
 import com.snake.salarycounter.utils.Toolz;
+import com.snake.salarycounter.views.FlippableView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class PayslipFragment extends Fragment {
 
@@ -78,6 +80,12 @@ public class PayslipFragment extends Fragment {
     FrameLayout hideable_details;
     @BindView(R.id.hideable_total)
     FrameLayout hideable_total;
+
+    @BindView(R.id.payslip_flipper)
+    FlippableView payslip_flipper;
+    @OnClick(R.id.payslip_flipper) void onPayslipFilpperClicked(){
+        payslip_flipper.flip(true);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

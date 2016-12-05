@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FlippableView" >
+
+        <!-- The views for the front and back of the FlippableView -->
+        <attr name="viewFront" format="reference" />
+        <attr name="viewBack" format="reference" />
+
+    </declare-styleable>
+</resources>
