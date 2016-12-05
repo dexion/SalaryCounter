@@ -203,7 +203,7 @@ public class MyLogic {
                     BigDecimal normohourAddition = fc.addition.divide(new BigDecimal(t.hours), 15, BigDecimal.ROUND_HALF_UP);
                     p.mAddition = normohourAddition.multiply(new BigDecimal(p.mHours));
 
-                    BigDecimal salaryWithAdditionProc = fc.salary.multiply(BigDecimal.valueOf(fc.addition_proc));
+                    BigDecimal salaryWithAdditionProc = fc.salary.multiply(BigDecimal.valueOf(fc.addition_proc / 100.0));
                     BigDecimal normohourAdditionProc = salaryWithAdditionProc.divide(new BigDecimal(t.hours), 15, BigDecimal.ROUND_HALF_UP);
                     p.mAdditionProc = normohourAdditionProc.multiply(new BigDecimal(p.mHours));
 
