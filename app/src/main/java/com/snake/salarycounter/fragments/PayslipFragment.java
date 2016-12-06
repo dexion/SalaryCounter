@@ -16,6 +16,7 @@ import com.snake.salarycounter.views.FlippableView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 
 public class PayslipFragment extends Fragment {
 
@@ -85,6 +86,18 @@ public class PayslipFragment extends Fragment {
     FlippableView payslip_flipper;
     @OnClick(R.id.payslip_flipper) void onPayslipFilpperClicked(){
         payslip_flipper.flip(true);
+	}
+	
+    @OnLongClick(R.id.payslip_cardview) boolean onLongClickPayslipCardView(){
+        if (hideable_details.getVisibility() == View.GONE){
+            hideable_details.setVisibility(View.VISIBLE);
+            hideable_total.setVisibility(View.VISIBLE);
+        }
+        else{
+            hideable_details.setVisibility(View.GONE);
+            hideable_total.setVisibility(View.GONE);
+        }
+        return true;
     }
 
     @Override

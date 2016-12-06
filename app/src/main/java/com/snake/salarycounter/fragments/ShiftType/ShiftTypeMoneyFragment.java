@@ -38,6 +38,25 @@ public class ShiftTypeMoneyFragment extends Fragment {
     @BindView(R.id.shift_type_money_is_average_price) CheckBox isAveragePrice;
     @OnCheckedChanged(R.id.shift_type_money_is_average_price) void onIsAverageChecked(boolean checked) {
         st.isAveragePrice = checked;
+        if(checked){
+            isFixedPrice.setChecked(false);
+            st.isFixedPrice = false;
+            isHourlyRate.setChecked(false);
+            st.isHourlyRate = false;
+        }
+        st.save();
+    }
+
+    @BindView(R.id.shift_type_money_is_hourly_rate) CheckBox isHourlyRate;
+    @OnCheckedChanged(R.id.shift_type_money_is_hourly_rate) void onIsHourlyRateChecked(boolean checked) {
+        hourlyRate.setEnabled(checked);
+        st.isHourlyRate = checked;
+        if(checked){
+            isFixedPrice.setChecked(false);
+            st.isFixedPrice = false;
+            isAveragePrice.setChecked(false);
+            st.isAveragePrice = false;
+        }
         st.save();
     }
 
@@ -45,6 +64,12 @@ public class ShiftTypeMoneyFragment extends Fragment {
     @OnCheckedChanged(R.id.shift_type_money_is_fixed_price) void onIsFixedPriceChecked(boolean checked) {
         fixedPrice.setEnabled(checked);
         st.isFixedPrice = checked;
+        if(checked){
+            isAveragePrice.setChecked(false);
+            st.isAveragePrice = false;
+            isHourlyRate.setChecked(false);
+            st.isHourlyRate = false;
+        }
         st.save();
     }
 
@@ -55,6 +80,7 @@ public class ShiftTypeMoneyFragment extends Fragment {
     }
 
     @BindView(R.id.shift_type_money_fixed_price) EditText fixedPrice;
+    @BindView(R.id.shift_type_money_hourly_rate) EditText hourlyRate;
     @BindView(R.id.shift_type_money_additional_price) EditText additionalPrice;
     @BindView(R.id.shift_type_money_multiplier) EditText multiplier;
 
@@ -82,10 +108,14 @@ public class ShiftTypeMoneyFragment extends Fragment {
         isCountHours.setChecked(st.isCountHours);
         isAveragePrice.setChecked(st.isAveragePrice);
         isFixedPrice.setChecked(st.isFixedPrice);
+        isHourlyRate.setChecked(st.isHourlyRate);
         onlySalary.setChecked(st.onlySalary);
         fixedPrice.setText(st.fixedPrice.toString());
         fixedPrice.setEnabled(st.isFixedPrice);
         fixedPrice.addTextChangedListener(new TextValidator(getActivity(), fixedPrice, st.getId()));
+        hourlyRate.setText(st.hourlyRate.toString());
+        hourlyRate.setEnabled(st.isHourlyRate);
+        hourlyRate.addTextChangedListener(new TextValidator(getActivity(), hourlyRate, st.getId()));
         additionalPrice.setText(st.additionalPrice.toString());
         additionalPrice.addTextChangedListener(new TextValidator(getActivity(), additionalPrice, st.getId()));
         multiplier.setText(st.multiplier.toString());
@@ -96,6 +126,10 @@ public class ShiftTypeMoneyFragment extends Fragment {
     public void onEvent(TextEvent event){
         if(st.getId() == event.mId) {
             switch (event.mTextEditId) {
+                case R.id.shift_type_money_hourly_rate:
+                    st.hourlyRate = new BigDecimal(event.mValue);
+                    st.save();
+                    break;
                 case R.id.shift_type_money_fixed_price:
                     st.fixedPrice = new BigDecimal(event.mValue);
                     st.save();
