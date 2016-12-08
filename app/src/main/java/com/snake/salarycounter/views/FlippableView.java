@@ -1,19 +1,3 @@
-/*
- * Copyright 2016 Farbod Salamat-Zadeh
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.snake.salarycounter.views;
 
 import android.annotation.TargetApi;
@@ -30,6 +14,8 @@ import android.widget.FrameLayout;
 import android.widget.ViewFlipper;
 
 import com.snake.salarycounter.R;
+
+import butterknife.ButterKnife;
 
 /**
  * A widget that can be 'flipped', like a card.
@@ -168,6 +154,8 @@ public class FlippableView extends FrameLayout {
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
         mViewFlipper = (ViewFlipper) getChildAt(0);
+        mFrontView = views[0];
+        mBackView = views[1];
 
         if (mFrontView != null && mBackView != null) {
             updateFrontAndBack();
@@ -194,7 +182,7 @@ public class FlippableView extends FrameLayout {
         };
         View[] views = new View[] {mFrontView, mBackView};
         for (int i = 0; i < 2; i++) {
-            views[i].setOnClickListener(onClickListener);
+            //views[i].setOnClickListener(onClickListener);
             mViewFlipper.addView(views[i]);
         }
         mIsBackShowing = false;
@@ -202,11 +190,14 @@ public class FlippableView extends FrameLayout {
         mViewFlipper.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                int flipperHeight = mViewFlipper.getHeight();
-                mFrontView.setMinimumHeight(flipperHeight);
-                mBackView.setMinimumHeight(flipperHeight);
+                //int minHeight = mFrontView.getHeight() > mBackView.getHeight() ? mFrontView.getHeight() : mBackView.getHeight();
+                /*int minHeight = mViewFlipper.getHeight();
+
+                mFrontView.setMinimumHeight(minHeight);
+                mBackView.setMinimumHeight(minHeight);*/
             }
         });
+        ButterKnife.bind(this);
     }
 
 

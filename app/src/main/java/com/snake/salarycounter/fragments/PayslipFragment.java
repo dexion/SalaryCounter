@@ -2,6 +2,7 @@ package com.snake.salarycounter.fragments;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -84,10 +85,11 @@ public class PayslipFragment extends Fragment {
 
     @BindView(R.id.payslip_flipper)
     FlippableView payslip_flipper;
-    @OnClick(R.id.payslip_flipper) void onPayslipFilpperClicked(){
-        payslip_flipper.flip(true);
-	}
-	
+
+    @OnClick(R.id.payslip_cardview) void onClickPayslipCardView(){
+        payslip_flipper.flip();
+    }
+
     @OnLongClick(R.id.payslip_cardview) boolean onLongClickPayslipCardView(){
         if (hideable_details.getVisibility() == View.GONE){
             hideable_details.setVisibility(View.VISIBLE);
@@ -101,11 +103,9 @@ public class PayslipFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View rootView = inflater.inflate(R.layout.fragment_payslip, container, false);
-        ButterKnife.bind(this, rootView);
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
 
         title.setText(mTitle);
         if (mShort){
@@ -126,6 +126,16 @@ public class PayslipFragment extends Fragment {
             residue_proc.setText(Toolz.money(mMoney[12]));
             cash.setText(Toolz.money(mMoney[9] - Toolz.round(mMoney[10], 0)  - mMoney[11]  - mMoney[12]));
         }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        View rootView = inflater.inflate(R.layout.fragment_payslip, container, false);
+        //ButterKnife.bind(this, rootView);
+
+
 
         return rootView;
     }

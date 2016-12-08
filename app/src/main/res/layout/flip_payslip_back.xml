@@ -1,29 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent">
 
-    <TextView
-        android:text="TextView"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView" />
+        android:layout_height="match_parent">
 
-    <Button
-        android:text="Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/button2" />
+        <TextView
+            android:id="@+id/payslip_title_back"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/payslip_title"
+            android:textSize="30sp"
+            android:textColor="@color/secondary_text"
+            android:padding="0dip"/>
 
-    <RadioButton
-        android:text="RadioButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/radioButton" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimary" />
 
-    <CheckBox
-        android:text="CheckBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/checkBox" />
-</LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="3dip"
+            android:paddingBottom="8dp"
+            android:paddingLeft="15dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                android:padding="0dip">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+                    android:text="@string/payslip_total_days"
+                    android:textSize="18sp"
+                    android:textColor="@color/secondary_text"
+                    android:gravity="center_vertical|start" />
+
+                <TextView
+                    android:id="@+id/payslip_total_days"
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="0dp"
+                    android:text="0,00"
+                    android:textStyle="bold"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                android:padding="0dip">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+                    android:text="@string/payslip_total_hours"
+                    android:textSize="18sp"
+                    android:textColor="@color/colorAccent"
+                    android:gravity="center_vertical|start" />
+
+                <TextView
+                    android:id="@+id/payslip_total_hours"
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="0dp"
+                    android:text="0,00"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

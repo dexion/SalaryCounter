@@ -232,5 +232,7 @@
     <string name="market_unavailable">Sorry, market unavailable</string>
     <string name="shift_type_money_hourly_rate">Hourly rate</string>
     <string name="shift_type_money_is_hourly_rate">Hourly rate</string>
+    <string name="payslip_total_days">Total days</string>
+    <string name="payslip_total_hours">Total hours</string>
 
 </resources>
