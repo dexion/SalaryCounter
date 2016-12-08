@@ -14,7 +14,7 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 
 public class MyLogic {
-    private final int SIZE_OF_PAYSLIP = 13;
+    private final int SIZE_OF_PAYSLIP = 15;
 
     private DateTime mStart;
     private DateTime mEnd;
@@ -117,6 +117,8 @@ public class MyLogic {
             totalPayslip[p.mShiftType.weight][10] = totalPayslip[p.mShiftType.weight][10].add(p.mTax);
             totalPayslip[p.mShiftType.weight][11] = totalPayslip[p.mShiftType.weight][11].add(p.mAlimonyProc);
             totalPayslip[p.mShiftType.weight][12] = totalPayslip[p.mShiftType.weight][12].add(p.mResidueProc);
+            totalPayslip[p.mShiftType.weight][13] = totalPayslip[p.mShiftType.weight][13].add(new BigDecimal(1.0));
+            totalPayslip[p.mShiftType.weight][14] = totalPayslip[p.mShiftType.weight][14].add(new BigDecimal(p.mCountedHours));
 
             totalTax = totalTax.add(p.mTax);
             totalAlimony = totalAlimony.add(p.mAlimonyProc).add(p.mAlimony);
@@ -128,11 +130,10 @@ public class MyLogic {
         totalAmountOnHand = totalAmount.subtract(totalTax).subtract(totalAlimony).subtract(totalResidue);
     }
 
-    public double[] recalDay(DateTime date){
+    public double[] recalDay(DateTime date) {
         double[] result = new double[SIZE_OF_PAYSLIP];
         Payslip p = recalcDay(date);
-        if(null != p)
-        {
+        if (null != p) {
             BigDecimal tTotalAmount = BigDecimal.valueOf(0.0); // временная переменная для суммирования. Нужна потому, что не на все применяется налог.
             tTotalAmount = tTotalAmount.add(p.mSalary)
                     .add(p.mAddition)
@@ -156,6 +157,8 @@ public class MyLogic {
             result[10] = p.mTax.setScale(0, RoundingMode.HALF_UP).doubleValue();
             result[11] = p.mAlimonyProc.setScale(2, RoundingMode.HALF_UP).doubleValue();
             result[12] = p.mResidueProc.setScale(2, RoundingMode.HALF_UP).doubleValue();
+            result[13] = 1;
+            result[14] = p.mCountedHours;
         }
         return result;
     }

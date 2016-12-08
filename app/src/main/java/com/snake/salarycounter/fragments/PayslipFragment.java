@@ -2,7 +2,6 @@ package com.snake.salarycounter.fragments;
 
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,6 +53,8 @@ public class PayslipFragment extends Fragment {
 
     @BindView(R.id.payslip_title)
     TextView title;
+    @BindView(R.id.payslip_title_back)
+    TextView titleBack;
     @BindView(R.id.payslip_salary)
     TextView salarysum;
     @BindView(R.id.payslip_addition)
@@ -82,6 +83,10 @@ public class PayslipFragment extends Fragment {
     FrameLayout hideable_details;
     @BindView(R.id.hideable_total)
     FrameLayout hideable_total;
+    @BindView(R.id.payslip_total_days)
+    TextView days;
+    @BindView(R.id.payslip_total_hours)
+    TextView hours;
 
     @BindView(R.id.payslip_flipper)
     FlippableView payslip_flipper;
@@ -103,11 +108,14 @@ public class PayslipFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        View rootView = inflater.inflate(R.layout.fragment_payslip, container, false);
+        ButterKnife.bind(this, rootView);
 
         title.setText(mTitle);
+        titleBack.setText(mTitle);
         if (mShort){
             hideable_details.setVisibility(View.GONE);
             hideable_total.setVisibility(View.GONE);
@@ -125,17 +133,9 @@ public class PayslipFragment extends Fragment {
             alimony_proc.setText(Toolz.money(mMoney[11]));
             residue_proc.setText(Toolz.money(mMoney[12]));
             cash.setText(Toolz.money(mMoney[9] - Toolz.round(mMoney[10], 0)  - mMoney[11]  - mMoney[12]));
+            days.setText(String.valueOf(mMoney[13]));
+            hours.setText(String.valueOf(mMoney[14]));
         }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View rootView = inflater.inflate(R.layout.fragment_payslip, container, false);
-        //ButterKnife.bind(this, rootView);
-
-
 
         return rootView;
     }
