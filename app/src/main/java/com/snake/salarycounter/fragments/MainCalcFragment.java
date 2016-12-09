@@ -212,7 +212,7 @@ public class MainCalcFragment extends Fragment {
                 .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
                 .add(
                     llPayslip.getId(),
-                    PayslipFragment.newInstance(lgc.getTotalPayslipDouble()[lgc.getTotalPayslipDouble().length - 1], getString(R.string.payslip_total_amount), false),
+                    PayslipFragment.newInstance(lgc.getTotalPayslipDouble()[lgc.getTotalPayslipDouble().length - 1], getString(R.string.payslip_total), false),
                     getString(R.string.payslip_total))
                 .commitAllowingStateLoss();
 
