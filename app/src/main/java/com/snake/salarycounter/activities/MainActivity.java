@@ -44,6 +44,7 @@ import com.snake.salarycounter.fragments.CalendarFragment;
 import com.snake.salarycounter.fragments.FinanceCondition.ListFinanceConditionFragment;
 import com.snake.salarycounter.fragments.MainCalcFragment;
 import com.snake.salarycounter.fragments.ShiftType.ListShiftTypeFragment;
+import com.snake.salarycounter.fragments.StatisticFragment;
 import com.snake.salarycounter.fragments.Tabel.ListTabelFragment;
 
 import io.fabric.sdk.android.Fabric;
@@ -379,8 +380,9 @@ public class MainActivity extends AppCompatActivity implements
                                 t.commit();
                                 break;
                             case II_STATISTIC:
-                                /*intent.setClass(context, ListShiftTypeActivity.class);
-                                startActivity(intent);*/
+                                drawerResult.closeDrawer();
+                                t.replace(R.id.frame_container, new StatisticFragment());
+                                t.commit();
                                 break;
                             case II_DONATE:
                                 showDonateDialog();
