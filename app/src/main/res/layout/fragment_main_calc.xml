@@ -51,7 +51,8 @@
                     android:textColor="@android:color/white"
                     android:textAlignment="center"
                     android:textSize="24sp"
-                    android:gravity="center_horizontal" />
+                    android:gravity="center_horizontal"
+                    style="@android:style/Widget.Holo.Light.Spinner"/>
 
                 <TextView
                     android:id="@+id/calculator_end_date"
@@ -65,7 +66,8 @@
                     android:textColor="@android:color/white"
                     android:textAlignment="center"
                     android:textSize="24sp"
-                    android:gravity="center_horizontal" />
+                    android:gravity="center_horizontal"
+                    style="@android:style/Widget.Holo.Light.Spinner"/>
 
             </LinearLayout>
 
