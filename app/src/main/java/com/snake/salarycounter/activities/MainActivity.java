@@ -43,6 +43,7 @@ import com.snake.salarycounter.R;
 import com.snake.salarycounter.fragments.CalendarFragment;
 import com.snake.salarycounter.fragments.FinanceCondition.ListFinanceConditionFragment;
 import com.snake.salarycounter.fragments.MainCalcFragment;
+import com.snake.salarycounter.fragments.PolygonFragment;
 import com.snake.salarycounter.fragments.ShiftType.ListShiftTypeFragment;
 import com.snake.salarycounter.fragments.StatisticFragment;
 import com.snake.salarycounter.fragments.Tabel.ListTabelFragment;
