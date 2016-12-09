@@ -12,6 +12,7 @@ import org.joda.time.Period;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MyLogic {
     private final int SIZE_OF_PAYSLIP = 15;
@@ -251,6 +252,13 @@ public class MyLogic {
     }
 
     //region Getters & Setters
+    public static DateTime getLastDay(DateTime date){
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(date.getMillis());
+        c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DAY_OF_MONTH));
+        return new DateTime(c.getTimeInMillis());
+    }
+
     public DateTime getStart() {
         return mStart;
     }

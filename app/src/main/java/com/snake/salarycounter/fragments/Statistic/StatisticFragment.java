@@ -1,4 +1,4 @@
-package com.snake.salarycounter.fragments;
+package com.snake.salarycounter.fragments.Statistic;
 
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
@@ -9,24 +9,25 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridLayout;
 import android.widget.TextView;
 
 import com.snake.salarycounter.MyLogic;
 import com.snake.salarycounter.R;
 import com.snake.salarycounter.activities.MainActivity;
-import com.snake.salarycounter.models.ShiftType;
 import com.snake.salarycounter.utils.Toolz;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.joda.time.DateTime;
+import org.joda.time.Duration;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -59,8 +60,13 @@ public class StatisticFragment extends Fragment {
     private int currentEndDay;
 
     MyLogic lgc = new MyLogic(startDate, endDate);
+    BigDecimal totalAmountOnHand;
+    ArrayList<Double> mValues = new ArrayList<>();
+    ArrayList<String> mTitles = new ArrayList<>();
 
-    private final static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+    private final static SimpleDateFormat sdfDay = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+    private final static SimpleDateFormat sdfMonth = new SimpleDateFormat("LLLL yyyy", Locale.getDefault());
+    private final static SimpleDateFormat sdfYear = new SimpleDateFormat("yyyy", Locale.getDefault());
 
     @BindView(R.id.collapsing_toolbar)
     CollapsingToolbarLayout ctl;
@@ -77,7 +83,7 @@ public class StatisticFragment extends Fragment {
                         currentStartDay = dayOfMonth;
 
                         resetDates();
-                        calcStartDate.setText(sdf.format(startDate.getMillis()));
+                        calcStartDate.setText(sdfDay.format(startDate.getMillis()));
 
                         showSpinner();
                         mStatTask = new StatisticTask();
@@ -107,7 +113,7 @@ public class StatisticFragment extends Fragment {
                         currentEndDay = dayOfMonth;
 
                         resetDates();
-                        calcEndDate.setText(sdf.format(endDate.getMillis()));
+                        calcEndDate.setText(sdfDay.format(endDate.getMillis()));
 
                         showSpinner();
                         mStatTask = new StatisticTask();
@@ -150,11 +156,11 @@ public class StatisticFragment extends Fragment {
 
         initDates();
         resetDates();
-        setTitleAmount(0.0);
+        setTitle(0.0);
         showSpinner();
 
-        calcStartDate.setText(sdf.format(startDate.getMillis()));
-        calcEndDate.setText(sdf.format(endDate.getMillis()));
+        calcStartDate.setText(sdfDay.format(startDate.getMillis()));
+        calcEndDate.setText(sdfDay.format(endDate.getMillis()));
 
         return rootView;
     }
@@ -186,30 +192,69 @@ public class StatisticFragment extends Fragment {
         mProgressDialog.show();
     }
 
-    private void setPayslipList(){
+    private void prepareData(){
+        int duration = new Duration(startDate, endDate).toStandardDays().getDays();
+        lgc.setStart(startDate).setEnd(endDate).recalcAll();
+        totalAmountOnHand = lgc.getTotalAmountOnHand();
+        mValues.clear();
+        mTitles.clear();
+        if(duration < 40){ // Считаем по дням
+            for (DateTime i = new DateTime(startDate); i.isBefore(endDate.plusDays(1)); i = i.plusDays(1)) {
+                mTitles.add(sdfDay.format(i.getMillis()));
+                double dayilyPayslip[] = lgc.recalDay(i);
+                mValues.add(dayilyPayslip[9] - Toolz.round(dayilyPayslip[10], 0)  - dayilyPayslip[11]  - dayilyPayslip[12]);
+            }
+        }else if(duration < 500){ // Считаем по месяцам
+            for (DateTime i = new DateTime(startDate); i.isBefore(endDate.plusDays(1));) {
+                mTitles.add(sdfMonth.format(i.getMillis()));
+
+                if(MyLogic.getLastDay(i).isBefore(endDate.plusDays(1))) {
+                    lgc.setStart(i).setEnd(MyLogic.getLastDay(i));
+                }
+                else{
+                    lgc.setStart(i).setEnd(endDate);
+                }
+                lgc.recalcAll();
+                int index = lgc.getTotalPayslipDouble().length - 1;
+                if(index > 0) {
+                    double payslip[] = lgc.getTotalPayslipDouble()[index];
+                    if(null == payslip) {
+                        mValues.add(0.0);
+                    }
+                    else {
+                        mValues.add(payslip[9] - Toolz.round(payslip[10], 0) - payslip[11] - payslip[12]);
+                    }
+                }
+                i = lgc.getEnd().plusDays(1);
+            }
+        }
+        else{ // Считаем по годам
+
+        }
+    }
+
+    private void fillStatisticCardViews(){
         if(glPayslip.getChildCount() > 0)
             glPayslip.removeAllViews();
 
-        getFragmentManager()
+        /*getFragmentManager()
                 .beginTransaction()
                 .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
                 .add(
                     glPayslip.getId(),
                     PayslipFragment.newInstance(lgc.getTotalPayslipDouble()[lgc.getTotalPayslipDouble().length - 1], getString(R.string.payslip_total_amount), false),
                     getString(R.string.payslip_total))
-                .commitAllowingStateLoss();
+                .commitAllowingStateLoss();*/
 
-        for (int i = 0; i < lgc.getTotalPayslipDouble().length - 1; i++) {
-            if(null != lgc.getTotalPayslip()[i] && 0 != lgc.getTotalPayslip()[i][9].compareTo( BigDecimal.ZERO)){
-                getFragmentManager()
-                        .beginTransaction()
-                        .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
-                        .add(
-                            glPayslip.getId(),
-                            PayslipFragment.newInstance(lgc.getTotalPayslipDouble()[i], ShiftType.getByWeight(i).getText(), false),
-                            ShiftType.getByWeight(i).getText())
-                        .commitAllowingStateLoss();
-            }
+        for (int i = 0; i < mTitles.size(); i++) {
+            getFragmentManager()
+                    .beginTransaction()
+                    .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+                    .add(
+                        glPayslip.getId(),
+                        StatisticCardFragment.newInstance(mTitles.get(i), mValues.get(i), i == 0 ? mValues.get(i) : mValues.get(i-1)),
+                        mTitles.get(i))
+                    .commitAllowingStateLoss();
         }
 
         glPayslip.invalidate();
@@ -233,7 +278,7 @@ public class StatisticFragment extends Fragment {
         lgc.setStart(startDate).setEnd(endDate);
     }
 
-    private void setTitleAmount(Object value){
+    private void setTitle(Object value){
         ctl.setTitle(Toolz.money(value));
     }
 
@@ -242,15 +287,15 @@ public class StatisticFragment extends Fragment {
         @Override
         protected String doInBackground(String... params) {
 
-            lgc.recalcAll();
+            prepareData();
 
             return null;
         }
 
         @Override
         protected void onPostExecute(String s) {
-            setTitleAmount(lgc.getTotalAmountOnHand());
-            //setPayslipList();
+            setTitle(totalAmountOnHand);
+            fillStatisticCardViews();
             if(null!= mProgressDialog){
                 mProgressDialog.dismiss();
             }

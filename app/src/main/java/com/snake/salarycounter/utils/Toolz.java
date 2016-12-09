@@ -7,8 +7,12 @@ import java.util.Locale;
 
 public class Toolz {
     public static String money(Object value){
-        NumberFormat numberFormat = DecimalFormat.getCurrencyInstance(Locale.getDefault());
-        return numberFormat.format(value);
+        try {
+            NumberFormat numberFormat = DecimalFormat.getCurrencyInstance(Locale.getDefault());
+            return numberFormat.format(value);
+        } catch (Exception e) {
+            return "Exception raised";
+        }
     }
     public static double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
