@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fv="http://schemas.android.com/apk/res-auto"
     android:id="@+id/payslip_cardview"
@@ -10,12 +10,10 @@
         android:id="@+id/payslip_flipper"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:paddingEnd="16dp"
-        android:paddingStart="16dp"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
         android:paddingBottom="8dp"
-        android:paddingTop="8dp"
         fv:viewFront="@layout/flip_payslip_front"
         fv:viewBack="@layout/flip_payslip_back" />
 
-
-</RelativeLayout>
+</FrameLayout>
