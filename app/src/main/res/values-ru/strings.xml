@@ -155,5 +155,6 @@
     <string name="shift_type_money_is_hourly_rate">Оплачивается по часам</string>
     <string name="payslip_total_days">Дни</string>
     <string name="payslip_total_hours">Часы</string>
+    <string name="no_data">Нет данных для отображения</string>
 
 </resources>

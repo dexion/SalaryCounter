@@ -16,6 +16,7 @@
 #   public *;
 #}
 
+# AboutLibrary
 -keep class .R
 -keep class **.R$* {
     <fields>;
@@ -68,13 +69,18 @@
     private <fields>;
 }
 
+# EventBus
 -keepclassmembers class ** {
     public void onEvent*(**);
 }
 
+# Glide
 -keep public class * implements com.bumptech.glide.module.GlideModule
 -keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
   **[] $VALUES;
   public *;
 }
 -keepresourcexmlelements manifest/application/meta-data@value=GlideModule
+
+# MPAndroidChart
+-keep class com.github.mikephil.charting.** { *; }

@@ -234,5 +234,6 @@
     <string name="shift_type_money_is_hourly_rate">Hourly rate</string>
     <string name="payslip_total_days">Total days</string>
     <string name="payslip_total_hours">Total hours</string>
+    <string name="no_data">No chart data available</string>
 
 </resources>

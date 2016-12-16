@@ -79,25 +79,37 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.v7.widget.GridLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/grid_payslip"
-            app:columnCount="2"
-            app:orientation="horizontal"
-            app:alignmentMode="alignBounds"
-            app:rowOrderPreserved="false"
-            app:useDefaultMargins="true">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <include layout="@layout/fragment_statistic_card"/>
-            <include layout="@layout/fragment_statistic_card"/>
-            <include layout="@layout/fragment_statistic_card"/>
-            <include layout="@layout/fragment_statistic_card"/>
-            <include layout="@layout/fragment_statistic_card"/>
-            <include layout="@layout/fragment_statistic_card"/>
-            <include layout="@layout/fragment_statistic_card"/>
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/statistic_chart"
+                android:layout_height="175dp"
+                android:layout_width="match_parent" />
 
-        </android.support.v7.widget.GridLayout>
+            <android.support.v7.widget.GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/grid_payslip"
+                app:columnCount="2"
+                app:orientation="horizontal"
+                app:alignmentMode="alignBounds"
+                app:rowOrderPreserved="false"
+                app:useDefaultMargins="true">
+
+                <include layout="@layout/fragment_statistic_card"/>
+                <include layout="@layout/fragment_statistic_card"/>
+                <include layout="@layout/fragment_statistic_card"/>
+                <include layout="@layout/fragment_statistic_card"/>
+                <include layout="@layout/fragment_statistic_card"/>
+                <include layout="@layout/fragment_statistic_card"/>
+                <include layout="@layout/fragment_statistic_card"/>
+
+            </android.support.v7.widget.GridLayout>
+
+        </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
 

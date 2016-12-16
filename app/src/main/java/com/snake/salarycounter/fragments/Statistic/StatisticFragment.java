@@ -2,6 +2,7 @@ package com.snake.salarycounter.fragments.Statistic;
 
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -16,6 +17,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.snake.salarycounter.MyLogic;
 import com.snake.salarycounter.R;
 import com.snake.salarycounter.activities.MainActivity;
@@ -28,6 +35,7 @@ import org.joda.time.Duration;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -63,6 +71,7 @@ public class StatisticFragment extends Fragment {
     BigDecimal totalAmountOnHand;
     ArrayList<Double> mValues = new ArrayList<>();
     ArrayList<String> mTitles = new ArrayList<>();
+    List<Entry> mEntries = new ArrayList<>();
 
     private final static SimpleDateFormat sdfDay = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
     private final static SimpleDateFormat sdfMonth = new SimpleDateFormat("LLLL yyyy", Locale.getDefault());
@@ -134,6 +143,9 @@ public class StatisticFragment extends Fragment {
     @BindView(R.id.grid_payslip)
     GridLayout glPayslip;
 
+    @BindView(R.id.statistic_chart)
+    LineChart mLineChart;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -154,6 +166,7 @@ public class StatisticFragment extends Fragment {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         ButterKnife.bind(this, rootView);
 
+        mLineChart.setNoDataText(getString(R.string.no_data));
         initDates();
         resetDates();
         setTitle(0.0);
@@ -198,11 +211,13 @@ public class StatisticFragment extends Fragment {
         totalAmountOnHand = lgc.getTotalAmountOnHand();
         mValues.clear();
         mTitles.clear();
-        if(duration < 40){ // Считаем по дням
+        mEntries.clear();
+
+        if(duration < 50){ // Считаем по дням
             for (DateTime i = new DateTime(startDate); i.isBefore(endDate.plusDays(1)); i = i.plusDays(1)) {
                 mTitles.add(sdfDay.format(i.getMillis()));
-                double dayilyPayslip[] = lgc.recalDay(i);
-                mValues.add(dayilyPayslip[9] - Toolz.round(dayilyPayslip[10], 0)  - dayilyPayslip[11]  - dayilyPayslip[12]);
+                double dailyPayslip[] = lgc.recalDay(i);
+                mValues.add(dailyPayslip[9] - Toolz.round(dailyPayslip[10], 0)  - dailyPayslip[11]  - dailyPayslip[12]);
             }
         }else if(duration < 500){ // Считаем по месяцам
             for (DateTime i = new DateTime(startDate); i.isBefore(endDate.plusDays(1));) {
@@ -231,6 +246,69 @@ public class StatisticFragment extends Fragment {
         else{ // Считаем по годам
 
         }
+
+        for(int i = 0; i < mValues.size(); i++){
+            mEntries.add(new Entry(i, mValues.get(i).floatValue()));
+        }
+    }
+
+    private void fillChart(){
+        LineDataSet dataSet = new LineDataSet(mEntries, "Label");
+        dataSet.setColor(Color.WHITE);
+        dataSet.setDrawFilled(true);
+        dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        dataSet.setLineWidth(1.8f);
+        dataSet.setCircleRadius(4f);
+        dataSet.setCircleColor(Color.WHITE);
+        dataSet.setFillColor(Color.WHITE);
+        dataSet.setFillAlpha(100);
+
+        LineData lineData = new LineData(dataSet);
+        //lineData.setValueTypeface(mTfLight);
+        lineData.setValueTextSize(9f);
+        lineData.setDrawValues(false);
+        lineData.setHighlightEnabled(false);
+
+        mLineChart.setViewPortOffsets(0, 0, 0, 0);
+        mLineChart.setBackgroundColor(getResources().getColor(R.color.primary));
+        mLineChart.setDrawGridBackground(false);
+        mLineChart.getDescription().setEnabled(false);
+        mLineChart.getLegend().setEnabled(false);
+        mLineChart.setData(lineData);
+
+        /*IAxisValueFormatter formatter = new IAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                if(mTitles.size() > 0)
+                    return mTitles.get((int) value);
+                else
+                    return "";
+            }
+
+            @Override
+            public int getDecimalDigits() {
+                return 0;
+            }
+        };*/
+
+        XAxis xAxis = mLineChart.getXAxis();
+        xAxis.setGranularity(1f);
+        //xAxis.setValueFormatter(formatter);
+        xAxis.setEnabled(false);
+
+        YAxis y = mLineChart.getAxisLeft();
+        //y.setTypeface(mTfLight);
+        y.setLabelCount(4, false);
+        y.setTextColor(Color.WHITE);
+        y.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART);
+        y.setDrawGridLines(false);
+        y.setAxisLineColor(Color.WHITE);
+
+        mLineChart.getAxisRight().setEnabled(false);
+
+        mLineChart.animateXY(2000, 2000);
+
+        mLineChart.invalidate();
     }
 
     private void fillStatisticCardViews(){
@@ -295,6 +373,7 @@ public class StatisticFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             setTitle(totalAmountOnHand);
+            fillChart();
             fillStatisticCardViews();
             if(null!= mProgressDialog){
                 mProgressDialog.dismiss();
