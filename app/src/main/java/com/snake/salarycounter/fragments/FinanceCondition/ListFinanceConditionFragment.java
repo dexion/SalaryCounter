@@ -39,7 +39,6 @@ import com.mikepenz.itemanimators.SlideDownAlphaAnimator;
 import com.snake.salarycounter.R;
 import com.snake.salarycounter.activities.MainActivity;
 import com.snake.salarycounter.activities.ShowFinanceConditionActivity;
-import com.snake.salarycounter.fragments.MainCalcFragment;
 import com.snake.salarycounter.items.GenericFinanceConditionItem;
 import com.snake.salarycounter.models.FinanceCondition;
 
@@ -89,7 +88,7 @@ public class ListFinanceConditionFragment extends Fragment implements
         rootView = inflater.inflate(R.layout.fragment_list_recycler_view, container, false);
 
         Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
-        if (null != toolbar) {
+        if (null != toolbar && null != ((MainActivity) getActivity()).getDrawer()) {
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.title_activity_list_finance_condition);
             ActionBarDrawerToggle mActionBarDrawerToggle = new ActionBarDrawerToggle(getActivity(),  ((MainActivity) getActivity()).getDrawer().getDrawerLayout(), toolbar, R.string.drawer_open, R.string.drawer_close);
