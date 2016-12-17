@@ -80,7 +80,7 @@
   **[] $VALUES;
   public *;
 }
--keepresourcexmlelements manifest/application/meta-data@value=GlideModule
+#-keepresourcexmlelements manifest/application/meta-data@value=GlideModule
 
 # MPAndroidChart
 -keep class com.github.mikephil.charting.** { *; }
