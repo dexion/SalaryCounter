@@ -17,4 +17,11 @@
         <item>vahta_donate_1000</item>
         <item>vahta_donate_5000</item>
     </string-array>
+
+    <string-array name="calendar_menu">
+        <item>Clear date</item>
+        <item>Set N days</item>
+        <item>Set with template</item>
+    </string-array>
+
 </resources>

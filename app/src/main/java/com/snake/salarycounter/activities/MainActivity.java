@@ -40,7 +40,7 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.snake.salarycounter.R;
-import com.snake.salarycounter.fragments.CalendarFragment;
+import com.snake.salarycounter.fragments.Calendar.CalendarFragment;
 import com.snake.salarycounter.fragments.FinanceCondition.ListFinanceConditionFragment;
 import com.snake.salarycounter.fragments.MainCalcFragment;
 import com.snake.salarycounter.fragments.ShiftType.ListShiftTypeFragment;

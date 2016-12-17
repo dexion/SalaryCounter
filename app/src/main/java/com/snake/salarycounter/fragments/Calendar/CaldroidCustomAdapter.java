@@ -1,4 +1,4 @@
-package com.snake.salarycounter.fragments;
+package com.snake.salarycounter.fragments.Calendar;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;

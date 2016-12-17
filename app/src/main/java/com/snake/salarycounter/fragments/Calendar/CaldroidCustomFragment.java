@@ -1,4 +1,4 @@
-package com.snake.salarycounter.fragments;
+package com.snake.salarycounter.fragments.Calendar;
 
 
 import com.roomorama.caldroid.CaldroidFragment;

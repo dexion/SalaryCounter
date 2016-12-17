@@ -1,6 +1,5 @@
-package com.snake.salarycounter.fragments;
+package com.snake.salarycounter.fragments.Calendar;
 
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -31,6 +30,7 @@ import com.snake.salarycounter.MyLogic;
 import com.snake.salarycounter.R;
 import com.snake.salarycounter.activities.MainActivity;
 import com.snake.salarycounter.events.SwitchEvent;
+import com.snake.salarycounter.fragments.PayslipFragment;
 import com.snake.salarycounter.models.Day;
 import com.snake.salarycounter.models.ShiftType;
 
@@ -120,9 +120,6 @@ public class CalendarFragment extends Fragment {
 
             @Override
             public void onSelectDate(Date mDate, View view) {
-                //Toast.makeText(getActivity(), formatter.format(mDate),
-                //        Toast.LENGTH_SHORT).show();
-
                 Day d = Day.getByDate(mDate);
 
                 if (d != null) {
@@ -153,12 +150,49 @@ public class CalendarFragment extends Fragment {
 
             @Override
             public void onLongClickDate(final Date mDate, View view) {
-                //Toast.makeText(getActivity(),
-                //        "Long click " + formatter.format(mDate),
-                //        Toast.LENGTH_SHORT).show();
-                final Resources res = getResources();
 
                 new MaterialDialog.Builder(getContext())
+                        //.title(R.string.donate)
+                        //.content(R.string.lorem_ipsum)
+                        .negativeText(R.string.activity_dialog_decline)
+                        .canceledOnTouchOutside(false)
+                        .items(R.array.calendar_menu)
+                        .itemsCallback(new MaterialDialog.ListCallback(){
+                            @Override
+                            public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                                //We make choice
+                                switch(position){
+                                    case 0: //clear date
+                                        new MaterialDialog.Builder(getContext())
+                                                .title(R.string.dialog_delete)
+                                                .content(R.string.realy_clear)
+                                                .positiveText(R.string.activity_dialog_accept)
+                                                .negativeText(R.string.activity_dialog_decline)
+                                                .canceledOnTouchOutside(false)
+                                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                                    @Override
+                                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                                        Day d = Day.getByDate(mDate);
+                                                        if (null != d) {
+                                                            d.delete();
+                                                            caldroidFragment.clearBackgroundDrawableForDate(mDate);
+                                                            caldroidFragment.refreshView();
+                                                        }
+                                                    }
+                                                })
+                                                .show();
+                                        break;
+                                    case 1: // set N days
+
+                                        break;
+                                    case 2: // set with template
+                                        break;
+                                }
+                            }
+                        })
+                        .show();
+
+                /*new MaterialDialog.Builder(getContext())
                         .title(R.string.dialog_delete)
                         .content(R.string.realy_clear)
                         .positiveText(R.string.activity_dialog_accept)
@@ -175,7 +209,7 @@ public class CalendarFragment extends Fragment {
                                 }
                             }
                         })
-                        .show();
+                        .show();*/
             }
 
             @Override

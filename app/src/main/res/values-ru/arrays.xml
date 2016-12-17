@@ -17,4 +17,10 @@
         <item>vahta_donate_1000</item>
         <item>vahta_donate_5000</item>
     </string-array>
+
+    <string-array name="calendar_menu">
+        <item>Удалить смену</item>
+        <item>Заполнить однотипно</item>
+        <item>Заполнить по шаблону</item>
+    </string-array>
 </resources>
