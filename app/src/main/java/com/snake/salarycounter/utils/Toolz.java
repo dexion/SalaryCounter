@@ -6,7 +6,8 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 public class Toolz {
-    public static String money(Object value){
+
+    public static String money(Object value) {
         try {
             NumberFormat numberFormat = DecimalFormat.getCurrencyInstance(Locale.getDefault());
             return numberFormat.format(value);
@@ -14,10 +15,13 @@ public class Toolz {
             return "Exception raised";
         }
     }
+
     public static double round(double value, int places) {
-        if (places < 0) throw new IllegalArgumentException();
+        if (places < 0) {
+            throw new IllegalArgumentException();
+        }
         try {
-            BigDecimal bd = new BigDecimal(value);
+            BigDecimal bd = BigDecimal.valueOf(value);
             bd = bd.setScale(places, BigDecimal.ROUND_HALF_UP);
             return bd.doubleValue();
         } catch (java.lang.NumberFormatException e) {
@@ -31,8 +35,7 @@ public class Toolz {
         try {
             return value.setScale(places, BigDecimal.ROUND_HALF_UP);
         } catch (java.lang.NumberFormatException e) {
-            return new BigDecimal(0.0);
+            return new BigDecimal("0.0");
         }
     }
-
 }

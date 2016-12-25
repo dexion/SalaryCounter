@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.mikepenz.fastadapter.items.GenericAbstractItem;
 import com.mikepenz.fastadapter.utils.ViewHolderFactory;
-import com.mikepenz.materialdrawer.holder.StringHolder;
 import com.snake.salarycounter.R;
 import com.snake.salarycounter.models.ShiftType;
 
@@ -21,11 +20,6 @@ import butterknife.ButterKnife;
 public class GenericShiftTypeItem extends GenericAbstractItem<ShiftType, GenericShiftTypeItem, GenericShiftTypeItem.ViewHolder> {
     //the static ViewHolderFactory which will be used to generate the ViewHolder for this Item
     private static final ViewHolderFactory<? extends ViewHolder> FACTORY = new ItemFactory();
-
-    public StringHolder undoTextSwipeFromRight;
-    public StringHolder undoTextSwipeFromLeft;
-    public StringHolder undoTextSwipeFromTop;
-    public StringHolder undoTextSwipeFromBottom;
 
     public int swipedDirection;
     private Runnable swipedAction;

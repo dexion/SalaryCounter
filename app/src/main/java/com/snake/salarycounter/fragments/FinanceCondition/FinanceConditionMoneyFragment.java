@@ -28,19 +28,32 @@ public class FinanceConditionMoneyFragment extends Fragment {
 
     private FinanceCondition fc;
 
-    @BindView(R.id.finance_condition_salary) EditText financeConditionSalary;
-    @BindView(R.id.finance_condition_addition) EditText financeConditionAddition;
-    @BindView(R.id.finance_condition_addition_proc) EditText financeConditionAdditionProc;
-    @BindView(R.id.finance_condition_north) EditText financeConditionNorth;
-    @BindView(R.id.finance_condition_district) EditText financeConditionDistrict;
-    @BindView(R.id.finance_condition_bonus) EditText financeConditionBonus;
-    @BindView(R.id.finance_condition_alimony) EditText financeConditionAlimony;
-    @BindView(R.id.finance_condition_alimony_proc) EditText financeConditionAlimonyProc;
-    @BindView(R.id.finance_condition_residue) EditText financeConditionResidue;
-    @BindView(R.id.finance_condition_residue_proc) EditText financeConditionResidueProc;
+    @BindView(R.id.finance_condition_salary)
+    EditText financeConditionSalary;
+    @BindView(R.id.finance_condition_addition)
+    EditText financeConditionAddition;
+    @BindView(R.id.finance_condition_addition_proc)
+    EditText financeConditionAdditionProc;
+    @BindView(R.id.finance_condition_north)
+    EditText financeConditionNorth;
+    @BindView(R.id.finance_condition_district)
+    EditText financeConditionDistrict;
+    @BindView(R.id.finance_condition_bonus)
+    EditText financeConditionBonus;
+    @BindView(R.id.finance_condition_alimony)
+    EditText financeConditionAlimony;
+    @BindView(R.id.finance_condition_alimony_proc)
+    EditText financeConditionAlimonyProc;
+    @BindView(R.id.finance_condition_residue)
+    EditText financeConditionResidue;
+    @BindView(R.id.finance_condition_residue_proc)
+    EditText financeConditionResidueProc;
 
-    @BindView(R.id.finance_condition_enable_tax) CheckBox enableTax;
-    @OnCheckedChanged(R.id.finance_condition_enable_tax) void onEnableTaxChecked(boolean checked) {
+    @BindView(R.id.finance_condition_enable_tax)
+    CheckBox enableTax;
+
+    @OnCheckedChanged(R.id.finance_condition_enable_tax)
+    void onEnableTaxChecked(boolean checked) {
         fc.enable_tax = checked;
         fc.save();
     }
@@ -102,8 +115,8 @@ public class FinanceConditionMoneyFragment extends Fragment {
         return v;
     }
 
-    public void onEvent(TextEvent event){
-        if(fc.getId() == event.mId) {
+    public void onEvent(TextEvent event) {
+        if (fc.getId().equals(event.mId)) {
             switch (event.mTextEditId) {
                 case R.id.finance_condition_salary:
                     fc.salary = new BigDecimal(event.mValue);
@@ -144,6 +157,8 @@ public class FinanceConditionMoneyFragment extends Fragment {
                 case R.id.finance_condition_residue_proc:
                     fc.residue_proc = Double.valueOf(event.mValue);
                     fc.save();
+                    break;
+                default:
                     break;
             }
         }

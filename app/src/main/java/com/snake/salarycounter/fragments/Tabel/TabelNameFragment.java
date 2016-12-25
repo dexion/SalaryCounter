@@ -32,11 +32,15 @@ public class TabelNameFragment extends Fragment {
 
     private Tabel t;
 
-    @BindView(R.id.tabel_start_date) EditText tabelStartDate;
-    @BindView(R.id.tabel_hours) EditText tabelHours;
-    @OnClick(R.id.tabel_start_date) void onTabelStartDateClick(){
-        DatePickerDialog  tpd = DatePickerDialog.newInstance(
-                new DatePickerDialog.OnDateSetListener(){
+    @BindView(R.id.tabel_start_date)
+    EditText tabelStartDate;
+    @BindView(R.id.tabel_hours)
+    EditText tabelHours;
+
+    @OnClick(R.id.tabel_start_date)
+    void onTabelStartDateClick() {
+        DatePickerDialog tpd = DatePickerDialog.newInstance(
+                new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
                         currentYear = year;
@@ -90,15 +94,17 @@ public class TabelNameFragment extends Fragment {
         return v;
     }
 
-    public void onEvent(TextEvent event){
-        if(t.getId() == event.mId) {
+    public void onEvent(TextEvent event) {
+        if (t.getId().equals(event.mId)) {
             switch (event.mTextEditId) {
                 case R.id.tabel_hours:
                     t.hours = Double.valueOf(event.mValue);
-                    if(t.hours <= 0){
+                    if (t.hours <= 0) {
                         t.hours = 1;
                     }
                     t.save();
+                    break;
+                default:
                     break;
             }
         }

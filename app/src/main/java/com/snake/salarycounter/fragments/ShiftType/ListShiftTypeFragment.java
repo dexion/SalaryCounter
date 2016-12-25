@@ -53,7 +53,7 @@ public class ListShiftTypeFragment extends Fragment implements
         ItemTouchCallback,
         ItemAdapter.ItemFilterListener,
         SimpleSwipeCallback.ItemSwipeCallback,
-        FastAdapter.OnClickListener<GenericShiftTypeItem>{
+        FastAdapter.OnClickListener<GenericShiftTypeItem> {
 
     public static final long NEW_SHIFT_TYPE = -10;
     protected ArrayList<ShiftType> models;
@@ -68,6 +68,7 @@ public class ListShiftTypeFragment extends Fragment implements
     private ItemTouchHelper touchHelper;
 
     View rootView;
+
     public ListShiftTypeFragment() {
         // Required empty public constructor
     }
@@ -95,7 +96,7 @@ public class ListShiftTypeFragment extends Fragment implements
         if (null != toolbar && null != ((MainActivity) getActivity()).getDrawer()) {
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.title_activity_shift_type);
-            ActionBarDrawerToggle mActionBarDrawerToggle = new ActionBarDrawerToggle(getActivity(),  ((MainActivity) getActivity()).getDrawer().getDrawerLayout(), toolbar, R.string.drawer_open, R.string.drawer_close);
+            ActionBarDrawerToggle mActionBarDrawerToggle = new ActionBarDrawerToggle(getActivity(), ((MainActivity) getActivity()).getDrawer().getDrawerLayout(), toolbar, R.string.drawer_open, R.string.drawer_close);
             mActionBarDrawerToggle.syncState();
             ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             mActionBarDrawerToggle.setDrawerIndicatorEnabled(true);
@@ -232,12 +233,9 @@ public class ListShiftTypeFragment extends Fragment implements
 
         ShiftType st1 = ShiftType.getByPosition(oldPosition);
 
-        if(oldPosition < newPosition)
-        {
+        if (oldPosition < newPosition) {
             ShiftType.reorderTop(newPosition, st1.weight);
-        }
-        else
-        {
+        } else {
             ShiftType.reorderBottom(newPosition, st1.weight);
         }
 
@@ -293,16 +291,13 @@ public class ListShiftTypeFragment extends Fragment implements
                             ShiftType.getByPosition(position).delete();
                             ShiftType.reorderAfterDeletion(position);
                             itemAdapter.remove(position);
-                        }
-                        else
-                        {
+                        } else {
                             item.setSwipedDirection(0);
 
                             SuperToast.create(getActivity(), getString(R.string.cannot_delete), SuperToast.Duration.MEDIUM, Style.getStyle(Style.ORANGE)).show();
                             rv.removeCallbacks(this);
                         }
-                    }
-                    catch(SQLiteConstraintException sqlExc){
+                    } catch (SQLiteConstraintException sqlExc) {
                         SuperToast.create(getActivity(), getString(R.string.error_deleting), SuperToast.Duration.MEDIUM, Style.getStyle(Style.RED)).show();
                     }
                 }
@@ -338,7 +333,7 @@ public class ListShiftTypeFragment extends Fragment implements
 
         @Override
         protected void onPostExecute(String s) {
-            if(null != itemAdapter && null != fastAdapter) {
+            if (null != itemAdapter && null != fastAdapter) {
                 itemAdapter.clear();
                 itemAdapter.addModel(models);
                 fastAdapter.notifyAdapterDataSetChanged();
@@ -346,5 +341,4 @@ public class ListShiftTypeFragment extends Fragment implements
             super.onPostExecute(s);
         }
     }
-
 }

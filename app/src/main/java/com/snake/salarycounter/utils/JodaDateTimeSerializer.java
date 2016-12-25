@@ -5,6 +5,7 @@ import com.activeandroid.serializer.TypeSerializer;
 import org.joda.time.DateTime;
 
 public class JodaDateTimeSerializer extends TypeSerializer {
+
     public Class<?> getDeserializedType() {
         return DateTime.class;
     }
@@ -26,6 +27,6 @@ public class JodaDateTimeSerializer extends TypeSerializer {
             return null;
         }
 
-        return new DateTime().withMillis((Long)data);
+        return new DateTime().withMillis((Long) data);
     }
 }

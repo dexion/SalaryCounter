@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Table(name = "finances", id = BaseColumns._ID)
-public class FinanceCondition extends Model{
+public class FinanceCondition extends Model {
 
     @Column(name = "start_date", index = true)
     public DateTime startDate;
@@ -58,46 +58,39 @@ public class FinanceCondition extends Model{
     @Column(name = "enable_tax")
     public boolean enable_tax; // подоходный налог
 
-    public FinanceCondition()
-    {
+    public FinanceCondition() {
         super();
     }
 
-    public FinanceCondition(DateTime date)
-    {
+    public FinanceCondition(DateTime date) {
         super();
         startDate = date;
-        salary = new BigDecimal(0.0);
-        addition = new BigDecimal(0.0);
-        alimony = new BigDecimal(0.0);
-        residue = new BigDecimal(0.0);
-        other_bonus = new BigDecimal(0.0);
+        salary = new BigDecimal("0.0");
+        addition = new BigDecimal("0.0");
+        alimony = new BigDecimal("0.0");
+        residue = new BigDecimal("0.0");
+        other_bonus = new BigDecimal("0.0");
         enable_tax = true;
     }
 
-    public static ArrayList<FinanceCondition> allFinanceConditions()
-    {
+    public static ArrayList<FinanceCondition> allFinanceConditions() {
         List<FinanceCondition> typesList = new Select().from(FinanceCondition.class).orderBy("start_date DESC").execute();
         return new ArrayList<>(typesList);
     }
 
-    public static FinanceCondition getByPosition(int position)
-    {
+    public static FinanceCondition getByPosition(int position) {
         return new Select().from(FinanceCondition.class).orderBy("start_date DESC").limit(1).offset(position).executeSingle();
     }
 
-    public static FinanceCondition getLast()
-    {
+    public static FinanceCondition getLast() {
         return new Select().from(FinanceCondition.class).orderBy("start_date DESC").limit(1).executeSingle();
     }
 
-    public static FinanceCondition getById(long _id)
-    {
+    public static FinanceCondition getById(long _id) {
         return new Select().from(FinanceCondition.class).where("_id = ?", _id).limit(1).executeSingle();
     }
 
-    public static boolean canDelete(int position)
-    {
+    public static boolean canDelete(int position) {
         return true;
     }
 
@@ -105,11 +98,11 @@ public class FinanceCondition extends Model{
         return startDate.toString("dd MMMM yyyy");
     }
 
-    public static FinanceCondition getByDate(DateTime date){
+    public static FinanceCondition getByDate(DateTime date) {
         return new Select().from(FinanceCondition.class).orderBy("start_date DESC").limit(1).where("start_date <= ?", date.getMillis()).executeSingle();
     }
 
-    public long copy(){
+    public long copy() {
         FinanceCondition fc = new FinanceCondition(this.startDate);
         fc.startDate = this.startDate;
         fc.salary = this.salary;

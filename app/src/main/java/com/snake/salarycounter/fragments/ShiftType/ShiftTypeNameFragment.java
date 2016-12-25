@@ -63,12 +63,14 @@ public class ShiftTypeNameFragment extends Fragment {
         return v;
     }
 
-    public void onEvent(TextEvent event){
-        if(st.getId() == event.mId) {
+    public void onEvent(TextEvent event) {
+        if (st.getId().equals(event.mId)) {
             switch (event.mTextEditId) {
                 case R.id.shift_type_name:
                     st.name = event.mValue;
                     st.save();
+                    break;
+                default:
                     break;
             }
         }

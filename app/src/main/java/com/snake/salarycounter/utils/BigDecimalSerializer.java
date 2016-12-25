@@ -5,7 +5,9 @@ import com.activeandroid.serializer.TypeSerializer;
 import java.math.BigDecimal;
 
 public class BigDecimalSerializer extends TypeSerializer {
-    private final int PRECISION = 2;
+
+    private static final int PRECISION = 2;
+
     public Class<?> getDeserializedType() {
         return BigDecimal.class;
     }
@@ -27,6 +29,6 @@ public class BigDecimalSerializer extends TypeSerializer {
             return null;
         }
 
-        return (new BigDecimal((long)data)).scaleByPowerOfTen(PRECISION * -1);
+        return (new BigDecimal((long) data)).scaleByPowerOfTen(PRECISION * -1);
     }
 }

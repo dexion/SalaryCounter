@@ -11,7 +11,8 @@ public final class CurrencyTextFormatter {
     static final int MAX_RAW_INPUT_LENGTH = 15;
 
 
-    private CurrencyTextFormatter(){}
+    private CurrencyTextFormatter() {
+    }
 
     public static String formatText(String val, Locale locale) {
         return formatText(val, Currency.getInstance(locale), locale);
@@ -20,14 +21,16 @@ public final class CurrencyTextFormatter {
     public static String formatText(String val, Currency currency, Locale locale) {
 
         //special case for the start of a negative number
-        if(val.equals("-")) return val;
+        if (val.equals("-")) {
+            return val;
+        }
 
         final double CURRENCY_DECIMAL_DIVISOR = (int) Math.pow(10, currency.getDefaultFractionDigits());
         DecimalFormat currencyFormatter = (DecimalFormat) DecimalFormat.getCurrencyInstance(locale);
         currencyFormatter.setCurrency(currency);
 
         //if there's nothing left, that means we were handed an empty string. Also, cap the raw input so the formatter doesn't break.
-        if(!val.equals("") && val.length() < MAX_RAW_INPUT_LENGTH && !val.equals("-")) {
+        if (!val.equals("") && val.length() < MAX_RAW_INPUT_LENGTH && !val.equals("-")) {
             //Convert the string into a double, which will later be passed into the currency formatter
             double newTextValue = Double.valueOf(val);
 
@@ -38,11 +41,9 @@ public final class CurrencyTextFormatter {
              */
             newTextValue = newTextValue / CURRENCY_DECIMAL_DIVISOR;
             val = currencyFormatter.format(newTextValue);
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("Invalid amount of digits found (either zero or too many) in argument val");
         }
         return val;
     }
-
 }

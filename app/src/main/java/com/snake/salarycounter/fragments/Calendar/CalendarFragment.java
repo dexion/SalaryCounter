@@ -88,8 +88,7 @@ public class CalendarFragment extends Fragment {
                     .setAction(R.string.action_close, null)
                     .show();
             isCalendarEditable = false;
-        }
-        else {
+        } else {
             isCalendarEditable = true;
         }
 
@@ -157,11 +156,11 @@ public class CalendarFragment extends Fragment {
                         .negativeText(R.string.activity_dialog_decline)
                         .canceledOnTouchOutside(false)
                         .items(R.array.calendar_menu)
-                        .itemsCallback(new MaterialDialog.ListCallback(){
+                        .itemsCallback(new MaterialDialog.ListCallback() {
                             @Override
                             public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
                                 //We make choice
-                                switch(position){
+                                switch (position) {
                                     case 0: //clear date
                                         new MaterialDialog.Builder(getContext())
                                                 .title(R.string.dialog_delete)
@@ -183,9 +182,10 @@ public class CalendarFragment extends Fragment {
                                                 .show();
                                         break;
                                     case 1: // set N days
-
                                         break;
                                     case 2: // set with template
+                                        break;
+                                    default:
                                         break;
                                 }
                             }
@@ -211,16 +211,6 @@ public class CalendarFragment extends Fragment {
                         })
                         .show();*/
             }
-
-            @Override
-            public void onCaldroidViewCreated() {
-                if (caldroidFragment.getLeftArrowButton() != null) {
-                    //Toast.makeText(getActivity(),
-                    //        "Caldroid view is created", Toast.LENGTH_SHORT)
-                    //        .show();
-                }
-            }
-
         };
 
         caldroidShowListener = new CaldroidListener() {
@@ -234,11 +224,10 @@ public class CalendarFragment extends Fragment {
                             .beginTransaction()
                             .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
                             .replace(llDailyPayslip.getId(),
-                                PayslipFragment.newInstance(lgc.recalDay(new DateTime(mDate)), d.shiftType.getText(), true),
-                                d.shiftType.getText())
+                                    PayslipFragment.newInstance(lgc.recalDay(new DateTime(mDate)), d.shiftType.getText(), true),
+                                    d.shiftType.getText())
                             .commitAllowingStateLoss();
-                }
-                else{
+                } else {
                     llDailyPayslip.removeAllViews();
                 }
             }
@@ -273,14 +262,13 @@ public class CalendarFragment extends Fragment {
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     actionView.setThumbDrawable(
                             new IconicsDrawable(getContext(), "gmd_edit")
                                     .color(Color.WHITE)
                                     .sizeDp(32)
                     );
-                }
-                else{
+                } else {
                     actionView.setThumbDrawable(
                             new IconicsDrawable(getContext(), "gmd_remove_red_eye")
                                     .color(Color.WHITE)
@@ -305,17 +293,16 @@ public class CalendarFragment extends Fragment {
     }
 
     private void setCustomResourceForDates() {
-        for(Day d : Day.allDays()){
+        for (Day d : Day.allDays()) {
             caldroidFragment.setBackgroundDrawableForDate(new ColorDrawable(d.shiftType.color), d.date.toDate());
         }
     }
 
-    public void onEvent(SwitchEvent event){
-        if(event.mChecked && isCalendarEditable){
+    public void onEvent(SwitchEvent event) {
+        if (event.mChecked && isCalendarEditable) {
             // можно редактировать
             caldroidFragment.setCaldroidListener(caldroidEditListener);
-        }
-        else{
+        } else {
             // нельзя редактировать календарь
             caldroidFragment.setCaldroidListener(caldroidShowListener);
         }

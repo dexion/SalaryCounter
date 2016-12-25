@@ -17,9 +17,8 @@ import com.snake.salarycounter.fragments.ShiftType.ShiftTypeNameFragment;
 import com.snake.salarycounter.fragments.ShiftType.ShiftTypeTimeFragment;
 import com.snake.salarycounter.models.ShiftType;
 
-public class ShowShiftTypeActivity extends AppCompatActivity{
+public class ShowShiftTypeActivity extends AppCompatActivity {
 
-    private int _position;
     private long _id;
 
     @Override
@@ -37,19 +36,9 @@ public class ShowShiftTypeActivity extends AppCompatActivity{
                 .build();
 
         _id = getIntent().getLongExtra("shift_type_id", -1);
-        if(_id == ListShiftTypeFragment.NEW_SHIFT_TYPE){
-            //_position = ShiftType.allShiftTypes().size() ;
+        if (_id == ListShiftTypeFragment.NEW_SHIFT_TYPE) {
             _id = new ShiftType("").save();
         }
-        /*else{
-            _id = ShiftType.getByPosition(_position).getId();
-        }*/
-
-        /*ViewPagerItemAdapter adapter = new ViewPagerItemAdapter(ViewPagerItems.with(this)
-                .add("Title A", R.layout.partial_show_shift_type)
-                //.add("Title B", R.layout.activity_calendar)
-                .add("Title C", R.layout.activity_locked_scrolling)
-                .create());*/
 
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
                 getSupportFragmentManager(), FragmentPagerItems.with(this)

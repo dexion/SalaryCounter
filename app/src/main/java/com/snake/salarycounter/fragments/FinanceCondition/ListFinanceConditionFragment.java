@@ -91,7 +91,7 @@ public class ListFinanceConditionFragment extends Fragment implements
         if (null != toolbar && null != ((MainActivity) getActivity()).getDrawer()) {
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.title_activity_list_finance_condition);
-            ActionBarDrawerToggle mActionBarDrawerToggle = new ActionBarDrawerToggle(getActivity(),  ((MainActivity) getActivity()).getDrawer().getDrawerLayout(), toolbar, R.string.drawer_open, R.string.drawer_close);
+            ActionBarDrawerToggle mActionBarDrawerToggle = new ActionBarDrawerToggle(getActivity(), ((MainActivity) getActivity()).getDrawer().getDrawerLayout(), toolbar, R.string.drawer_open, R.string.drawer_close);
             mActionBarDrawerToggle.syncState();
             ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             mActionBarDrawerToggle.setDrawerIndicatorEnabled(true);
@@ -248,16 +248,13 @@ public class ListFinanceConditionFragment extends Fragment implements
                         if (FinanceCondition.getByPosition(position).canDelete(position)) {
                             FinanceCondition.getByPosition(position).delete();
                             itemAdapter.remove(position);
-                        }
-                        else
-                        {
+                        } else {
                             item.setSwipedDirection(0);
 
                             SuperToast.create(getActivity(), getString(R.string.cannot_delete), SuperToast.Duration.MEDIUM, Style.getStyle(Style.ORANGE)).show();
                             rv.removeCallbacks(this);
                         }
-                    }
-                    catch(SQLiteConstraintException sqlExc){
+                    } catch (SQLiteConstraintException sqlExc) {
                         SuperToast.create(getActivity(), getString(R.string.error_deleting), SuperToast.Duration.MEDIUM, Style.getStyle(Style.RED)).show();
                     }
                 }
@@ -303,7 +300,7 @@ public class ListFinanceConditionFragment extends Fragment implements
 
         @Override
         protected void onPostExecute(String s) {
-            if(null != itemAdapter && null != fastAdapter) {
+            if (null != itemAdapter && null != fastAdapter) {
                 itemAdapter.clear();
                 itemAdapter.addModel(models);
                 fastAdapter.notifyAdapterDataSetChanged();

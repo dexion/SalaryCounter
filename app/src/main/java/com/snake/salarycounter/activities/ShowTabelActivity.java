@@ -17,7 +17,7 @@ import com.snake.salarycounter.models.Tabel;
 
 import org.joda.time.DateTime;
 
-public class ShowTabelActivity extends AppCompatActivity{
+public class ShowTabelActivity extends AppCompatActivity {
 
     private long _id;
 
@@ -36,7 +36,7 @@ public class ShowTabelActivity extends AppCompatActivity{
                 .build();
 
         _id = getIntent().getLongExtra("tabel_id", -1);
-        if(_id == ListTabelFragment.NEW_TABEL){
+        if (_id == ListTabelFragment.NEW_TABEL) {
             _id = new Tabel(DateTime.now(), 164).save();
         }
 

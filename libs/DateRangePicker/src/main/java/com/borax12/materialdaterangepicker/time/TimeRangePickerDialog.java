@@ -515,7 +515,7 @@ public class TimeRangePickerDialog extends DialogFragment implements OnValueSele
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
-                if(tabId=="start"){
+                if(tabId.equalsIgnoreCase("start")){
                     setCurrentItemShowing(mTimePicker.getCurrentItemShowing(), true, false, true);
                     setHour(mTimePicker.getHours(),false);
                     setMinute(mTimePicker.getMinutes());

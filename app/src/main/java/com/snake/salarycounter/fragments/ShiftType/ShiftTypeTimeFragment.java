@@ -40,8 +40,11 @@ public class ShiftTypeTimeFragment extends Fragment {
 
     DateTimeFormatter formatter = DateTimeFormat.forPattern("HH:mm");
 
-    @BindView(R.id.shift_type_time_day) Button day;
-    @OnClick(R.id.shift_type_time_day) void setDayStartEnd() {
+    @BindView(R.id.shift_type_time_day)
+    Button day;
+
+    @OnClick(R.id.shift_type_time_day)
+    void setDayStartEnd() {
         TimeRangePickerDialog tpd = TimeRangePickerDialog.newInstance(
                 new TimeRangePickerDialog.OnTimeSetListener() {
                     @Override
@@ -57,9 +60,7 @@ public class ShiftTypeTimeFragment extends Fragment {
 
                             day.setText(String.format(getString(R.string.time_from_to), formatter.print(currentDayStart), formatter.print(currentDayEnd)));
                             duration.setText(String.format(getString(R.string.time_duration), new Period(calcDayDuration()).getHours(), new Period(calcDayDuration()).getMinutes()));
-                        }
-                        else
-                        {
+                        } else {
                             SuperToast.create(getActivity(), getString(R.string.start_cannot_after_end), SuperToast.Duration.LONG, Style.getStyle(Style.ORANGE, SuperToast.Animations.FLYIN)).show();
                             day.setText(getString(R.string.incorrect_value));
                         }
@@ -74,8 +75,11 @@ public class ShiftTypeTimeFragment extends Fragment {
         tpd.show(getActivity().getFragmentManager(), "DayStartEnd");
     }
 
-    @BindView(R.id.shift_type_time_dinner) Button dinner;
-    @OnClick(R.id.shift_type_time_dinner) void setDinnerStartEnd() {
+    @BindView(R.id.shift_type_time_dinner)
+    Button dinner;
+
+    @OnClick(R.id.shift_type_time_dinner)
+    void setDinnerStartEnd() {
         TimeRangePickerDialog tpd = TimeRangePickerDialog.newInstance(
                 new TimeRangePickerDialog.OnTimeSetListener() {
                     @Override
@@ -91,9 +95,7 @@ public class ShiftTypeTimeFragment extends Fragment {
 
                             dinner.setText(String.format(getString(R.string.time_from_to), formatter.print(currentDinnerStart), formatter.print(currentDinnerEnd)));
                             duration.setText(String.format(getString(R.string.time_duration), new Period(calcDayDuration()).getHours(), new Period(calcDayDuration()).getMinutes()));
-                        }
-                        else
-                        {
+                        } else {
                             SuperToast.create(getActivity(), getString(R.string.start_cannot_after_end), SuperToast.Duration.LONG, Style.getStyle(Style.ORANGE, SuperToast.Animations.FLYIN)).show();
                             dinner.setText(getString(R.string.incorrect_value));
                         }
@@ -108,7 +110,8 @@ public class ShiftTypeTimeFragment extends Fragment {
         tpd.show(getActivity().getFragmentManager(), "DinnerStartEnd");
     }
 
-    @BindView(R.id.shift_type_time_duration) TextView duration;
+    @BindView(R.id.shift_type_time_duration)
+    TextView duration;
 
     public ShiftTypeTimeFragment() {
         // Required empty public constructor
@@ -142,7 +145,7 @@ public class ShiftTypeTimeFragment extends Fragment {
     }
 
     @NonNull
-    private Duration calcDayDuration(){
+    private Duration calcDayDuration() {
         return (new Duration(currentDayStart, currentDayEnd)).minus(new Duration(currentDinnerStart, currentDinnerEnd));
     }
 }

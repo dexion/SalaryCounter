@@ -29,10 +29,13 @@ public class FinanceConditionNameFragment extends Fragment {
 
     private FinanceCondition fc;
 
-    @BindView(R.id.finance_condition_start_date) EditText financeConditionStartDate;
-    @OnClick(R.id.finance_condition_start_date) void onTabelStartDateClick(){
-        DatePickerDialog  tpd = DatePickerDialog.newInstance(
-                new DatePickerDialog.OnDateSetListener(){
+    @BindView(R.id.finance_condition_start_date)
+    EditText financeConditionStartDate;
+
+    @OnClick(R.id.finance_condition_start_date)
+    void onTabelStartDateClick() {
+        DatePickerDialog tpd = DatePickerDialog.newInstance(
+                new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
                         currentYear = year;

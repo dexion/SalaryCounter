@@ -18,8 +18,8 @@ import hirondelle.date4j.DateTime;
 public class CaldroidCustomAdapter extends CaldroidGridAdapter {
 
     public CaldroidCustomAdapter(Context context, int month, int year,
-                                       Map<String, Object> caldroidData,
-                                       Map<String, Object> extraData) {
+                                 Map<String, Object> caldroidData,
+                                 Map<String, Object> extraData) {
         super(context, month, year, caldroidData, extraData);
     }
 
@@ -27,7 +27,7 @@ public class CaldroidCustomAdapter extends CaldroidGridAdapter {
     @Override
     protected void setCustomResources(DateTime dateTime, View backgroundView,
                                       TextView textView) {
-        super.setCustomResources( dateTime, backgroundView, textView);
+        super.setCustomResources(dateTime, backgroundView, textView);
 
         // Set custom background resource
         Map<DateTime, Drawable> backgroundForDateTimeMap = (Map<DateTime, Drawable>) caldroidData

@@ -18,7 +18,7 @@ import com.snake.salarycounter.models.FinanceCondition;
 
 import org.joda.time.DateTime;
 
-public class ShowFinanceConditionActivity extends AppCompatActivity{
+public class ShowFinanceConditionActivity extends AppCompatActivity {
 
     private long _id;
 
@@ -37,12 +37,10 @@ public class ShowFinanceConditionActivity extends AppCompatActivity{
                 .build();
 
         _id = getIntent().getLongExtra("finance_condition_id", -1);
-        if(_id == ListFinanceConditionFragment.NEW_FINANCE_CONDITION){
-            if(FinanceCondition.allFinanceConditions().size() < 1) {
+        if (_id == ListFinanceConditionFragment.NEW_FINANCE_CONDITION) {
+            if (FinanceCondition.allFinanceConditions().size() < 1) {
                 _id = new FinanceCondition(DateTime.now()).save();
-            }
-            else
-            {
+            } else {
                 _id = FinanceCondition.getLast().copy();
             }
         }

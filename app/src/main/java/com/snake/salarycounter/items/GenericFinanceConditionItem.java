@@ -17,23 +17,26 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class GenericFinanceConditionItem  extends GenericAbstractItem<FinanceCondition, GenericFinanceConditionItem, GenericFinanceConditionItem.ViewHolder>{
+public class GenericFinanceConditionItem  extends GenericAbstractItem<FinanceCondition, GenericFinanceConditionItem, GenericFinanceConditionItem.ViewHolder> {
     //the static ViewHolderFactory which will be used to generate the ViewHolder for this Item
-    private static final ViewHolderFactory<?extends RecyclerView.ViewHolder> FACTORY = new ItemFactory();
+    private static final ViewHolderFactory<? extends RecyclerView.ViewHolder> FACTORY = new ItemFactory();
 
     public int swipedDirection;
     private Runnable swipedAction;
 
-    public GenericFinanceConditionItem(FinanceCondition stype){ super(stype);}
+    public GenericFinanceConditionItem(FinanceCondition stype) {
+        super(stype);
+    }
+
     /**
      * defines the type defining this item. must be unique. preferably an id
      *
      * @return the type
      */
     @Override
-    public int getType(){
-            return R.id.fastadapter_generic_finance_condition_item_id;
-            }
+    public int getType() {
+        return R.id.fastadapter_generic_finance_condition_item_id;
+    }
 
     /**
      * defines the layout which will be used for this item in the list
@@ -41,9 +44,9 @@ public class GenericFinanceConditionItem  extends GenericAbstractItem<FinanceCon
      * @return the layout for this item
      */
     @Override
-    public int getLayoutRes(){
-            return R.layout.item_finance_condition;
-            }
+    public int getLayoutRes() {
+        return R.layout.item_finance_condition;
+    }
 
     /**
      * binds the data of this item onto the viewHolder
@@ -51,26 +54,26 @@ public class GenericFinanceConditionItem  extends GenericAbstractItem<FinanceCon
      * @param viewHolder the viewHolder of this item
      */
     @Override
-    public void bindView(ViewHolder viewHolder, List payloads){
-            super.bindView(viewHolder, payloads);
+    public void bindView(ViewHolder viewHolder, List payloads) {
+        super.bindView(viewHolder, payloads);
 
-            //define our data for the view
-            viewHolder.name.setText(getModel().getText());
+        //define our data for the view
+        viewHolder.name.setText(getModel().getText());
 
-            viewHolder.swipeResultContent.setVisibility(swipedDirection!=0?View.VISIBLE:View.GONE);
-            viewHolder.itemContent.setVisibility(swipedDirection!=0?View.GONE:View.VISIBLE);
+        viewHolder.swipeResultContent.setVisibility(swipedDirection != 0 ? View.VISIBLE : View.GONE);
+        viewHolder.itemContent.setVisibility(swipedDirection != 0 ? View.GONE : View.VISIBLE);
 
-            CharSequence swipedAction=null;
-            CharSequence swipedText=null;
-            if(swipedDirection!=0){
-            swipedAction=viewHolder.itemView.getContext().getString(R.string.action_undo);
+        CharSequence swipedAction = null;
+        CharSequence swipedText = null;
+        if (swipedDirection != 0) {
+            swipedAction = viewHolder.itemView.getContext().getString(R.string.action_undo);
             swipedText = swipedDirection == ItemTouchHelper.LEFT ? "Удалено" : "Archived";
-            viewHolder.swipeResultContent.setBackgroundColor(ContextCompat.getColor(viewHolder.itemView.getContext(),swipedDirection==ItemTouchHelper.LEFT?R.color.md_red_900:R.color.md_blue_900));
-            }
-            viewHolder.swipedAction.setText(swipedAction==null?"":swipedAction);
-            viewHolder.swipedText.setText(swipedText==null?"":swipedText);
-            viewHolder.swipedActionRunnable=this.swipedAction;
-            }
+            viewHolder.swipeResultContent.setBackgroundColor(ContextCompat.getColor(viewHolder.itemView.getContext(), swipedDirection == ItemTouchHelper.LEFT ? R.color.md_red_900 : R.color.md_blue_900));
+        }
+        viewHolder.swipedAction.setText(swipedAction == null ? "" : swipedAction);
+        viewHolder.swipedText.setText(swipedText == null ? "" : swipedText);
+        viewHolder.swipedActionRunnable = this.swipedAction;
+    }
 
     /**
      * our ItemFactory implementation which creates the ViewHolder for our adapter.

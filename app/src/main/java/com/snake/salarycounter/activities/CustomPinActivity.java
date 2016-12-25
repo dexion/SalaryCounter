@@ -1,7 +1,6 @@
 package com.snake.salarycounter.activities;
 
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -22,7 +21,6 @@ public class CustomPinActivity extends AppLockActivity {
 
     @Override
     public void showForgotDialog() {
-        final Resources res = getResources();
         // Create the builder with required paramaters - Context, Title, Positive Text
         new MaterialDialog.Builder(this)
                 .title(R.string.activity_dialog_title)

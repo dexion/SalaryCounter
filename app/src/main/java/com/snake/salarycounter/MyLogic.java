@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class MyLogic {
-    private final int SIZE_OF_PAYSLIP = 15;
+    private static final int SIZE_OF_PAYSLIP = 15;
 
     private DateTime mStart;
     private DateTime mEnd;
@@ -63,7 +63,8 @@ public class MyLogic {
         }
     }
 
-    public MyLogic() {}
+    public MyLogic() {
+    }
 
     public MyLogic(DateTime start, DateTime end) {
         mStart = start;
@@ -92,7 +93,7 @@ public class MyLogic {
                 totalPayslip[p.mShiftType.weight] = new BigDecimal[SIZE_OF_PAYSLIP];
 
                 for (int i = 0; i < SIZE_OF_PAYSLIP; i++) {
-                    totalPayslip[p.mShiftType.weight][i] = new BigDecimal(0.0);
+                    totalPayslip[p.mShiftType.weight][i] = new BigDecimal("0.0");
                 }
             }
 
@@ -118,8 +119,8 @@ public class MyLogic {
             totalPayslip[p.mShiftType.weight][10] = totalPayslip[p.mShiftType.weight][10].add(p.mTax);
             totalPayslip[p.mShiftType.weight][11] = totalPayslip[p.mShiftType.weight][11].add(p.mAlimonyProc);
             totalPayslip[p.mShiftType.weight][12] = totalPayslip[p.mShiftType.weight][12].add(p.mResidueProc);
-            totalPayslip[p.mShiftType.weight][13] = totalPayslip[p.mShiftType.weight][13].add(new BigDecimal(1.0));
-            totalPayslip[p.mShiftType.weight][14] = totalPayslip[p.mShiftType.weight][14].add(new BigDecimal(p.mCountedHours));
+            totalPayslip[p.mShiftType.weight][13] = totalPayslip[p.mShiftType.weight][13].add(new BigDecimal("1.0"));
+            totalPayslip[p.mShiftType.weight][14] = totalPayslip[p.mShiftType.weight][14].add(BigDecimal.valueOf(p.mCountedHours));
 
             totalTax = totalTax.add(p.mTax);
             totalAlimony = totalAlimony.add(p.mAlimonyProc).add(p.mAlimony);
@@ -195,8 +196,8 @@ public class MyLogic {
                 // надо как-то расчитывать средний заработок
             } else if (st.isHourlyRate) {
                 p.mSalary = st.hourlyRate.multiply(new BigDecimal(p.mHours));
-            }else {
-                if(null == fc || null == t){
+            } else {
+                if (null == fc || null == t) {
                     return null;
                 }
                 p.mEnableTax = fc.enable_tax;
@@ -231,7 +232,7 @@ public class MyLogic {
                                 .add(p.mDistrict)
                                 .add(p.mBonus)
                                 .add(p.mOtherBonusProc)
-                        ).multiply(new BigDecimal(0.13));
+                        ).multiply(BigDecimal.valueOf(0.13));
                     }
 
                     if (!p.mShiftType.onlySalary) {
@@ -252,7 +253,7 @@ public class MyLogic {
     }
 
     //region Getters & Setters
-    public static DateTime getLastDay(DateTime date){
+    public static DateTime getLastDay(DateTime date) {
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(date.getMillis());
         c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DAY_OF_MONTH));
@@ -291,7 +292,7 @@ public class MyLogic {
         for (int i = 0; i < SIZE; i++) {
             if (null != totalPayslip[i]) {
                 tArray[i] = new double[totalPayslip[i].length];
-                if(null == tArray[SIZE]){
+                if (null == tArray[SIZE]) {
                     tArray[SIZE] = new double[totalPayslip[i].length];
                 }
                 for (int ii = 0; ii < totalPayslip[i].length; ii++) {

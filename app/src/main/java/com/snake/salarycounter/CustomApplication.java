@@ -9,12 +9,10 @@ import android.widget.ImageView;
 import com.activeandroid.ActiveAndroid;
 import com.bumptech.glide.Glide;
 import com.crashlytics.android.Crashlytics;
-import com.github.orangegangsters.lollipin.lib.managers.LockManager;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerUIUtils;
-import com.snake.salarycounter.activities.CustomPinActivity;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 

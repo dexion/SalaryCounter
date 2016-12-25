@@ -493,7 +493,7 @@ public class DateRangePickerDialog extends DialogFragment implements
             @Override
             public void onTabChanged(String tabId) {
                 com.borax12.materialdaterangepicker.date.MonthAdapter.CalendarDay calendarDay;
-                if(tabId=="start"){
+                if(tabId.equalsIgnoreCase("start")){
                     calendarDay = new com.borax12.materialdaterangepicker.date.MonthAdapter.CalendarDay(mCalendar.getTimeInMillis());
                     mDayPickerView.goTo(calendarDay,true,true,false);
                 }

@@ -63,7 +63,7 @@ public class Day extends Model {
         return null;
     }
 
-    public ShiftType getShiftType(){
+    public ShiftType getShiftType() {
         return shiftType;
     }
 }

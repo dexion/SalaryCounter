@@ -5,6 +5,7 @@ import com.activeandroid.serializer.TypeSerializer;
 import org.joda.time.Duration;
 
 public class JodaDurationSerializer extends TypeSerializer {
+
     public Class<?> getDeserializedType() {
         return Duration.class;
     }
@@ -26,6 +27,6 @@ public class JodaDurationSerializer extends TypeSerializer {
             return null;
         }
 
-        return new Duration((Long)data);
+        return new Duration((Long) data);
     }
 }

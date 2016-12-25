@@ -69,7 +69,7 @@ public class SettingsActivity extends PreferenceActivity {
             TypedValue tv = new TypedValue();
             if (getTheme().resolveAttribute(R.attr.actionBarSize, tv, true)) {
                 height = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
-            }else{
+            } else {
                 height = bar.getHeight();
             }
 
@@ -109,6 +109,8 @@ public class SettingsActivity extends PreferenceActivity {
                     return new AppCompatRadioButton(this, attrs);
                 case "CheckedTextView":
                     return new AppCompatCheckedTextView(this, attrs);
+                default: // а вдруг? ))
+                    return new AppCompatEditText(this, attrs);
             }
         }
 
@@ -270,7 +272,7 @@ public class SettingsActivity extends PreferenceActivity {
             // updated to reflect the new value, per the Android Design
             // guidelines.
             String[] year = {"jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"};
-            for(String month : year){
+            for (String month : year) {
                 bindPreferenceSummaryToValue(findPreference(month));
             }
         }

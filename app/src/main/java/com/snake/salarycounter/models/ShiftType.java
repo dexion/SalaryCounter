@@ -18,8 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Table(name = "shift_types", id = BaseColumns._ID)
-public class ShiftType extends Model
-{
+public class ShiftType extends Model {
     @Column(name = "name", index = true)
     public String name;
 
@@ -32,101 +31,94 @@ public class ShiftType extends Model
     @Column(name = "ser")
     public String ser;
 
-    @Column (name = "day_start")
+    @Column(name = "day_start")
     public DateTime dayStart;
 
-    @Column (name = "day_end")
+    @Column(name = "day_end")
     public DateTime dayEnd;
 
-    @Column (name = "dinner_start")
+    @Column(name = "dinner_start")
     public DateTime dinnerStart;
 
-    @Column (name = "dinner_end")
+    @Column(name = "dinner_end")
     public DateTime dinnerEnd;
 
-    @Column (name = "day_duration")
+    @Column(name = "day_duration")
     public Duration dayDuration;
 
-    @Column (name = "is_fixed_price")
+    @Column(name = "is_fixed_price")
     public boolean isFixedPrice;
 
-    @Column (name = "fixed_price")
+    @Column(name = "fixed_price")
     public BigDecimal fixedPrice;
 
-    @Column (name = "is_hourly_rate")
+    @Column(name = "is_hourly_rate")
     public boolean isHourlyRate;
 
-    @Column (name = "hourly_rate")
+    @Column(name = "hourly_rate")
     public BigDecimal hourlyRate;
 
-    @Column (name = "additional_price")
+    @Column(name = "additional_price")
     public BigDecimal additionalPrice;
 
-    @Column (name = "multiplier")
+    @Column(name = "multiplier")
     public BigDecimal multiplier;
 
-    @Column (name = "is_count_hours")
+    @Column(name = "is_count_hours")
     public boolean isCountHours;
 
-    @Column (name = "is_average_price")
+    @Column(name = "is_average_price")
     public boolean isAveragePrice;
 
-    @Column (name = "only_salary")
+    @Column(name = "only_salary")
     public boolean onlySalary; // в эту смену только оклад считается, остальные надбавки не учитываются
 
-    public ShiftType()
-    {
+    public ShiftType() {
         super();
     }
 
-    public ShiftType(String sName)
-    {
+    public ShiftType(String sName) {
         super();
         DateTimeFormatter formatter = DateTimeFormat.forPattern("HH:mm:ss");
 
         name = sName;
         color = 0xffff0000;
         weight = ShiftType.allShiftTypes().size();
-        dayStart =    formatter.parseDateTime("08:00:00");
-        dayEnd =      formatter.parseDateTime("20:00:00");
+        dayStart = formatter.parseDateTime("08:00:00");
+        dayEnd = formatter.parseDateTime("20:00:00");
         dinnerStart = formatter.parseDateTime("13:00:00");
-        dinnerEnd =   formatter.parseDateTime("14:00:00");
+        dinnerEnd = formatter.parseDateTime("14:00:00");
         dayDuration = (new Duration(dayStart, dayEnd)).minus(new Duration(dinnerStart, dinnerEnd));
 
         isFixedPrice = false;
-        fixedPrice = new BigDecimal(0.0);
-        hourlyRate = new BigDecimal(0.0);
-        additionalPrice = new BigDecimal(250.0); // компенсация вахтового метода
-        multiplier = new BigDecimal(1.0);
+        fixedPrice = new BigDecimal("0.0");
+        hourlyRate = new BigDecimal("0.0");
+        additionalPrice = new BigDecimal("250.0"); // компенсация вахтового метода
+        multiplier = new BigDecimal("1.0");
         isCountHours = true;
         isAveragePrice = false;
         isHourlyRate = false;
         onlySalary = false;
     }
 
-    public static ArrayList<ShiftType> allShiftTypes()
-    {
+    public static ArrayList<ShiftType> allShiftTypes() {
         List<ShiftType> typesList = new Select().from(ShiftType.class).orderBy("weight ASC").execute();
         return new ArrayList<>(typesList);
     }
 
-    public static ShiftType getByPosition(int position)
-    {
+    public static ShiftType getByPosition(int position) {
         return new Select().from(ShiftType.class).orderBy("weight ASC").limit(1).offset(position).executeSingle();
     }
 
-    public static ShiftType getById(long _id)
-    {
+    public static ShiftType getById(long _id) {
         return new Select().from(ShiftType.class).where("_id = ?", _id).limit(1).executeSingle();
     }
 
-    public static ShiftType getByWeight(int weight)
-    {
+    public static ShiftType getByWeight(int weight) {
         return new Select().from(ShiftType.class).where("weight = ?", weight).limit(1).executeSingle();
     }
 
-    public static void reorderBottom(int fromPosition, int ignorePosition)
-    {
+    public static void reorderBottom(int fromPosition, int ignorePosition) {
         int weight = ((ShiftType) new Select().from(ShiftType.class).orderBy("weight ASC").limit(1).offset(fromPosition).executeSingle()).weight;
         weight += 1;
 
@@ -138,20 +130,18 @@ public class ShiftType extends Model
 
         ActiveAndroid.beginTransaction();
         try {
-            for(ShiftType i : typesList){
+            for (ShiftType i : typesList) {
                 i.weight = weight;
                 weight += 1;
                 i.save();
             }
             ActiveAndroid.setTransactionSuccessful();
-        }
-        finally {
+        } finally {
             ActiveAndroid.endTransaction();
         }
     }
 
-    public static void reorderTop(int fromPosition, int ignorePosition)
-    {
+    public static void reorderTop(int fromPosition, int ignorePosition) {
         int weight = 0;
         List<ShiftType> typesList = new Select()
                 .from(ShiftType.class)
@@ -161,14 +151,13 @@ public class ShiftType extends Model
 
         ActiveAndroid.beginTransaction();
         try {
-            for(ShiftType i : typesList){
+            for (ShiftType i : typesList) {
                 i.weight = weight;
                 i.save();
                 weight++;
             }
             ActiveAndroid.setTransactionSuccessful();
-        }
-        finally {
+        } finally {
             ActiveAndroid.endTransaction();
         }
     }
@@ -182,23 +171,23 @@ public class ShiftType extends Model
 
         ActiveAndroid.beginTransaction();
         try {
-            for(ShiftType i : typesList){
+            for (ShiftType i : typesList) {
                 i.weight -= 1;
                 i.save();
             }
             ActiveAndroid.setTransactionSuccessful();
-        }
-        finally {
+        } finally {
             ActiveAndroid.endTransaction();
         }
         return typesList.size();
     }
 
-    public static boolean canDelete(int position){
-        return !(Day.getByShiftType(ShiftType.getByPosition(position)).size() > 0);
+    public static boolean canDelete(int position) {
+        return (Day.getByShiftType(ShiftType.getByPosition(position)).size() == 0);
     }
-    public boolean canDelete(){
-        return !(Day.getByShiftType(this).size() > 0);
+
+    public boolean canDelete() {
+        return (Day.getByShiftType(this).size() == 0);
     }
 
     @Override

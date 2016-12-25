@@ -73,18 +73,20 @@ public class StatisticFragment extends Fragment {
     ArrayList<String> mTitles = new ArrayList<>();
     List<Entry> mEntries = new ArrayList<>();
 
-    private final static SimpleDateFormat sdfDay = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-    private final static SimpleDateFormat sdfMonth = new SimpleDateFormat("LLLL yyyy", Locale.getDefault());
-    private final static SimpleDateFormat sdfYear = new SimpleDateFormat("yyyy", Locale.getDefault());
+    private static final SimpleDateFormat sdfDay = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+    private static final SimpleDateFormat sdfMonth = new SimpleDateFormat("LLLL yyyy", Locale.getDefault());
+    private static final SimpleDateFormat sdfYear = new SimpleDateFormat("yyyy", Locale.getDefault());
 
     @BindView(R.id.collapsing_toolbar)
     CollapsingToolbarLayout ctl;
 
     @BindView(R.id.calculator_start_date)
     TextView calcStartDate;
-    @OnClick(R.id.calculator_start_date) void onStartDateClicked(){
+
+    @OnClick(R.id.calculator_start_date)
+    void onStartDateClicked() {
         DatePickerDialog tpd = DatePickerDialog.newInstance(
-                new DatePickerDialog.OnDateSetListener(){
+                new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
                         currentStartYear = year;
@@ -112,9 +114,11 @@ public class StatisticFragment extends Fragment {
 
     @BindView(R.id.calculator_end_date)
     TextView calcEndDate;
-    @OnClick(R.id.calculator_end_date) void onEndDateClicked(){
+
+    @OnClick(R.id.calculator_end_date)
+    void onEndDateClicked() {
         DatePickerDialog tpd = DatePickerDialog.newInstance(
-                new DatePickerDialog.OnDateSetListener(){
+                new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
                         currentEndYear = year;
@@ -155,7 +159,7 @@ public class StatisticFragment extends Fragment {
         Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
         if (null != toolbar && null != ((MainActivity) getActivity()).getDrawer()) {
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-            ActionBarDrawerToggle mActionBarDrawerToggle = new ActionBarDrawerToggle(getActivity(),  ((MainActivity) getActivity()).getDrawer().getDrawerLayout(), toolbar, R.string.drawer_open, R.string.drawer_close);
+            ActionBarDrawerToggle mActionBarDrawerToggle = new ActionBarDrawerToggle(getActivity(), ((MainActivity) getActivity()).getDrawer().getDrawerLayout(), toolbar, R.string.drawer_open, R.string.drawer_close);
             mActionBarDrawerToggle.syncState();
             ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             mActionBarDrawerToggle.setDrawerIndicatorEnabled(true);
@@ -195,9 +199,10 @@ public class StatisticFragment extends Fragment {
         super.onDestroyView();
     }
 
-    private void showSpinner(){
-        if(glPayslip.getChildCount() > 0)
+    private void showSpinner() {
+        if (glPayslip.getChildCount() > 0) {
             glPayslip.removeAllViews();
+        }
         mProgressDialog = new ProgressDialog(getActivity());
         mProgressDialog.setTitle(R.string.loading);
         mProgressDialog.setCancelable(true);
@@ -205,7 +210,7 @@ public class StatisticFragment extends Fragment {
         mProgressDialog.show();
     }
 
-    private void prepareData(){
+    private void prepareData() {
         int duration = new Duration(startDate, endDate).toStandardDays().getDays();
         lgc.setStart(startDate).setEnd(endDate).recalcAll();
         totalAmountOnHand = lgc.getTotalAmountOnHand();
@@ -213,46 +218,43 @@ public class StatisticFragment extends Fragment {
         mTitles.clear();
         mEntries.clear();
 
-        if(duration < 50){ // Считаем по дням
+        if (duration < 50) { // Считаем по дням
             for (DateTime i = new DateTime(startDate); i.isBefore(endDate.plusDays(1)); i = i.plusDays(1)) {
                 mTitles.add(sdfDay.format(i.getMillis()));
-                double dailyPayslip[] = lgc.recalDay(i);
-                mValues.add(dailyPayslip[9] - Toolz.round(dailyPayslip[10], 0)  - dailyPayslip[11]  - dailyPayslip[12]);
+                double[] dailyPayslip = lgc.recalDay(i);
+                mValues.add(dailyPayslip[9] - Toolz.round(dailyPayslip[10], 0) - dailyPayslip[11] - dailyPayslip[12]);
             }
-        }else if(duration < 500){ // Считаем по месяцам
-            for (DateTime i = new DateTime(startDate); i.isBefore(endDate.plusDays(1));) {
+        } else if (duration < 500) { // Считаем по месяцам
+            for (DateTime i = new DateTime(startDate); i.isBefore(endDate.plusDays(1)); ) {
                 mTitles.add(sdfMonth.format(i.getMillis()));
 
-                if(MyLogic.getLastDay(i).isBefore(endDate.plusDays(1))) {
+                if (MyLogic.getLastDay(i).isBefore(endDate.plusDays(1))) {
                     lgc.setStart(i).setEnd(MyLogic.getLastDay(i));
-                }
-                else{
+                } else {
                     lgc.setStart(i).setEnd(endDate);
                 }
                 lgc.recalcAll();
                 int index = lgc.getTotalPayslipDouble().length - 1;
-                if(index > 0) {
-                    double payslip[] = lgc.getTotalPayslipDouble()[index];
-                    if(null == payslip) {
+                if (index > 0) {
+                    double[] payslip = lgc.getTotalPayslipDouble()[index];
+                    if (null == payslip) {
                         mValues.add(0.0);
-                    }
-                    else {
+                    } else {
                         mValues.add(payslip[9] - Toolz.round(payslip[10], 0) - payslip[11] - payslip[12]);
                     }
                 }
                 i = lgc.getEnd().plusDays(1);
             }
-        }
-        else{ // Считаем по годам
+        } else { // Считаем по годам
 
         }
 
-        for(int i = 0; i < mValues.size(); i++){
+        for (int i = 0; i < mValues.size(); i++) {
             mEntries.add(new Entry(i, mValues.get(i).floatValue()));
         }
     }
 
-    private void fillChart(){
+    private void fillChart() {
         LineDataSet dataSet = new LineDataSet(mEntries, "Label");
         dataSet.setColor(Color.WHITE);
         dataSet.setDrawFilled(true);
@@ -312,8 +314,8 @@ public class StatisticFragment extends Fragment {
         mLineChart.invalidate();
     }
 
-    private void fillStatisticCardViews(){
-        if(glPayslip.getChildCount() > 0)
+    private void fillStatisticCardViews() {
+        if (glPayslip.getChildCount() > 0)
             glPayslip.removeAllViews();
 
         /*getFragmentManager()
@@ -330,9 +332,9 @@ public class StatisticFragment extends Fragment {
                     .beginTransaction()
                     .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
                     .add(
-                        glPayslip.getId(),
-                        StatisticCardFragment.newInstance(mTitles.get(i), mValues.get(i), i == 0 ? mValues.get(i) : mValues.get(i-1)),
-                        mTitles.get(i))
+                            glPayslip.getId(),
+                            StatisticCardFragment.newInstance(mTitles.get(i), mValues.get(i), i == 0 ? mValues.get(i) : mValues.get(i - 1)),
+                            mTitles.get(i))
                     .commitAllowingStateLoss();
         }
 
@@ -351,13 +353,13 @@ public class StatisticFragment extends Fragment {
         currentEndDay = endDate.getDayOfMonth();
     }
 
-    private void resetDates(){
+    private void resetDates() {
         startDate = new DateTime(currentStartYear, currentStartMonth + 1, currentStartDay, 0, 0);
         endDate = new DateTime(currentEndYear, currentEndMonth + 1, currentEndDay, 0, 0);
         lgc.setStart(startDate).setEnd(endDate);
     }
 
-    private void setTitle(Object value){
+    private void setTitle(Object value) {
         ctl.setTitle(Toolz.money(value));
     }
 
@@ -376,7 +378,7 @@ public class StatisticFragment extends Fragment {
             setTitle(totalAmountOnHand);
             fillChart();
             fillStatisticCardViews();
-            if(null!= mProgressDialog){
+            if (null != mProgressDialog) {
                 mProgressDialog.dismiss();
             }
             super.onPostExecute(s);

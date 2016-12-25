@@ -64,16 +64,18 @@ public class MainCalcFragment extends Fragment {
 
     MyLogic lgc = new MyLogic(startDate, endDate);
 
-    private final static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
 
     @BindView(R.id.collapsing_toolbar)
     CollapsingToolbarLayout ctl;
 
     @BindView(R.id.calculator_start_date)
     TextView calcStartDate;
-    @OnClick(R.id.calculator_start_date) void onStartDateClicked(){
+
+    @OnClick(R.id.calculator_start_date)
+    void onStartDateClicked() {
         DatePickerDialog tpd = DatePickerDialog.newInstance(
-                new DatePickerDialog.OnDateSetListener(){
+                new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
                         currentStartYear = year;
@@ -101,9 +103,11 @@ public class MainCalcFragment extends Fragment {
 
     @BindView(R.id.calculator_end_date)
     TextView calcEndDate;
-    @OnClick(R.id.calculator_end_date) void onEndDateClicked(){
+
+    @OnClick(R.id.calculator_end_date)
+    void onEndDateClicked() {
         DatePickerDialog tpd = DatePickerDialog.newInstance(
-                new DatePickerDialog.OnDateSetListener(){
+                new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
                         currentEndYear = year;
@@ -147,7 +151,7 @@ public class MainCalcFragment extends Fragment {
         Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
         if (null != toolbar && null != ((MainActivity) getActivity()).getDrawer()) {
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-            ActionBarDrawerToggle mActionBarDrawerToggle = new ActionBarDrawerToggle(getActivity(),  ((MainActivity) getActivity()).getDrawer().getDrawerLayout(), toolbar, R.string.drawer_open, R.string.drawer_close);
+            ActionBarDrawerToggle mActionBarDrawerToggle = new ActionBarDrawerToggle(getActivity(), ((MainActivity) getActivity()).getDrawer().getDrawerLayout(), toolbar, R.string.drawer_open, R.string.drawer_close);
             mActionBarDrawerToggle.syncState();
             ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             mActionBarDrawerToggle.setDrawerIndicatorEnabled(true);
@@ -193,9 +197,10 @@ public class MainCalcFragment extends Fragment {
         super.onDestroyView();
     }
 
-    private void showSpinner(){
-        if(llPayslip.getChildCount() > 0)
+    private void showSpinner() {
+        if (llPayslip.getChildCount() > 0) {
             llPayslip.removeAllViews();
+        }
         mProgressDialog = new ProgressDialog(getActivity());
         mProgressDialog.setTitle(R.string.loading);
         mProgressDialog.setCancelable(true);
@@ -203,28 +208,28 @@ public class MainCalcFragment extends Fragment {
         mProgressDialog.show();
     }
 
-    private void setPayslipList(){
-        if(llPayslip.getChildCount() > 0)
+    private void setPayslipList() {
+        if (llPayslip.getChildCount() > 0)
             llPayslip.removeAllViews();
 
         getFragmentManager()
                 .beginTransaction()
                 .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
                 .add(
-                    llPayslip.getId(),
-                    PayslipFragment.newInstance(lgc.getTotalPayslipDouble()[lgc.getTotalPayslipDouble().length - 1], getString(R.string.payslip_total), false),
-                    getString(R.string.payslip_total))
+                        llPayslip.getId(),
+                        PayslipFragment.newInstance(lgc.getTotalPayslipDouble()[lgc.getTotalPayslipDouble().length - 1], getString(R.string.payslip_total), false),
+                        getString(R.string.payslip_total))
                 .commitAllowingStateLoss();
 
         for (int i = 0; i < lgc.getTotalPayslipDouble().length - 1; i++) {
-            if(null != lgc.getTotalPayslip()[i] && 0 != lgc.getTotalPayslip()[i][9].compareTo( BigDecimal.ZERO)){
+            if (null != lgc.getTotalPayslip()[i] && 0 != lgc.getTotalPayslip()[i][9].compareTo(BigDecimal.ZERO)) {
                 getFragmentManager()
                         .beginTransaction()
                         .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
                         .add(
-                            llPayslip.getId(),
-                            PayslipFragment.newInstance(lgc.getTotalPayslipDouble()[i], ShiftType.getByWeight(i).getText(), false),
-                            ShiftType.getByWeight(i).getText())
+                                llPayslip.getId(),
+                                PayslipFragment.newInstance(lgc.getTotalPayslipDouble()[i], ShiftType.getByWeight(i).getText(), false),
+                                ShiftType.getByWeight(i).getText())
                         .commitAllowingStateLoss();
             }
         }
@@ -244,13 +249,13 @@ public class MainCalcFragment extends Fragment {
         currentEndDay = endDate.getDayOfMonth();
     }
 
-    private void resetDates(){
+    private void resetDates() {
         startDate = new DateTime(currentStartYear, currentStartMonth + 1, currentStartDay, 0, 0);
         endDate = new DateTime(currentEndYear, currentEndMonth + 1, currentEndDay, 0, 0);
         lgc.setStart(startDate).setEnd(endDate);
     }
 
-    private void setTitleAmount(Object value){
+    private void setTitleAmount(Object value) {
         ctl.setTitle(Toolz.money(value));
     }
 
@@ -268,7 +273,7 @@ public class MainCalcFragment extends Fragment {
         protected void onPostExecute(String s) {
             setTitleAmount(lgc.getTotalAmountOnHand());
             setPayslipList();
-            if(null!= mProgressDialog){
+            if (null != mProgressDialog) {
                 mProgressDialog.dismiss();
             }
             super.onPostExecute(s);

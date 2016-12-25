@@ -129,8 +129,8 @@ public class FlippableView extends FrameLayout {
     private void initializeView(final TypedArray a) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
 
-        View[] views = new View[] {mFrontView, mBackView};
-        int[] styleables = new int[] {R.styleable.FlippableView_viewFront,
+        View[] views = new View[]{mFrontView, mBackView};
+        int[] styleables = new int[]{R.styleable.FlippableView_viewFront,
                 R.styleable.FlippableView_viewBack};
         for (int i = 0; i < 2; i++) {
             if (views[i] != null) {
@@ -166,7 +166,7 @@ public class FlippableView extends FrameLayout {
     /**
      * Updates both sides of the card/widget by removing both Views, and
      * re-adding them using the global variables.
-     *
+     * <p>
      * Listeners for click callbacks are set to these views, and they are
      * made sure to have the same height (as a piece of card could not be
      * longer on one side).
@@ -174,13 +174,13 @@ public class FlippableView extends FrameLayout {
     private void updateFrontAndBack() {
         mViewFlipper.removeAllViews();
 
-        OnClickListener onClickListener = new OnClickListener() {
+        /*OnClickListener onClickListener = new OnClickListener() {
             @Override
             public void onClick(View v) {
                 flip();
             }
-        };
-        View[] views = new View[] {mFrontView, mBackView};
+        };*/
+        View[] views = new View[]{mFrontView, mBackView};
         for (int i = 0; i < 2; i++) {
             //views[i].setOnClickListener(onClickListener);
             mViewFlipper.addView(views[i]);
@@ -219,7 +219,6 @@ public class FlippableView extends FrameLayout {
      * animates depends on the parameter passed.
      *
      * @param animate Whether or not the flip should be animated
-     *
      * @see #flip()
      */
     public void flip(boolean animate) {
@@ -287,11 +286,10 @@ public class FlippableView extends FrameLayout {
      * Changes the View shown on the front side of the card
      *
      * @param frontView The View for the front side of the card
-     *
+     * @attr ref R.styleable#FlippableView_viewFront
      * @see #getFrontView()
      * @see #setBackView(View)
      * @see #setFrontAndBackViews(View, View)
-     * @attr ref R.styleable#FlippableView_viewFront
      */
     public void setFrontView(View frontView) {
         mFrontView = frontView;
@@ -302,11 +300,10 @@ public class FlippableView extends FrameLayout {
      * Changes the View shown on the back side of the card
      *
      * @param backView The view for the back side of the card
-     *
+     * @attr ref R.styleable#FlippableView_viewBack
      * @see #getBackView()
      * @see #setFrontView(View)
      * @see #setFrontAndBackViews(View, View)
-     * @attr ref R.styleable#FlippableView_viewBack
      */
     public void setBackView(View backView) {
         mBackView = backView;
@@ -317,12 +314,11 @@ public class FlippableView extends FrameLayout {
      * Changes the View shown on both sides of the card
      *
      * @param frontView The View for the front side of the card
-     * @param backView The View for the back side of the card
-     *
-     * @see #setFrontView(View)
-     * @see #setBackView(View)
+     * @param backView  The View for the back side of the card
      * @attr ref R.styleable#FlippableView_viewFront
      * @attr ref R.styleable#FlippableView_viewBack
+     * @see #setFrontView(View)
+     * @see #setBackView(View)
      */
     public void setFrontAndBackViews(View frontView, View backView) {
         mFrontView = frontView;
@@ -353,7 +349,6 @@ public class FlippableView extends FrameLayout {
      *
      * @param animate Whether or not flipping this widget should
      *                display an animation
-     *
      * @see #isAnimated()
      */
     public void setAnimate(boolean animate) {

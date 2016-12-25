@@ -68,17 +68,17 @@ public class StatisticCardFragment extends Fragment {
         title.setText(mTitle);
         value.setText(Toolz.money(mCurrentValue));
         directionValue.setText(Toolz.money(mCurrentValue - mPreviousValue));
-        if(mCurrentValue == mPreviousValue){
+        if (mCurrentValue == mPreviousValue) {
             direction.setText("{cmd-arrow-right}");
             direction.setTextColor(Color.GRAY);
             directionValue.setTextColor(Color.GRAY);
         }
-        if(mCurrentValue > mPreviousValue){
+        if (mCurrentValue > mPreviousValue) {
             direction.setText("{cmd-arrow-top-right}");
             direction.setTextColor(Color.GREEN);
             directionValue.setTextColor(Color.GREEN);
         }
-        if(mCurrentValue < mPreviousValue){
+        if (mCurrentValue < mPreviousValue) {
             direction.setText("{cmd-arrow-bottom-right}");
             direction.setTextColor(Color.RED);
             directionValue.setTextColor(Color.RED);
@@ -86,5 +86,4 @@ public class StatisticCardFragment extends Fragment {
 
         return rootView;
     }
-
 }

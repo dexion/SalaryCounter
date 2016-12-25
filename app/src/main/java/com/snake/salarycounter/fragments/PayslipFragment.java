@@ -91,16 +91,17 @@ public class PayslipFragment extends Fragment {
     @BindView(R.id.payslip_flipper)
     FlippableView payslip_flipper;
 
-    @OnClick(R.id.payslip_cardview) void onClickPayslipCardView(){
+    @OnClick(R.id.payslip_cardview)
+    void onClickPayslipCardView() {
         payslip_flipper.flip();
     }
 
-    @OnLongClick(R.id.payslip_cardview) boolean onLongClickPayslipCardView(){
-        if (hideable_details.getVisibility() == View.GONE){
+    @OnLongClick(R.id.payslip_cardview)
+    boolean onLongClickPayslipCardView() {
+        if (hideable_details.getVisibility() == View.GONE) {
             hideable_details.setVisibility(View.VISIBLE);
             hideable_total.setVisibility(View.VISIBLE);
-        }
-        else{
+        } else {
             hideable_details.setVisibility(View.GONE);
             hideable_total.setVisibility(View.GONE);
         }
@@ -116,7 +117,7 @@ public class PayslipFragment extends Fragment {
 
         title.setText(mTitle);
         titleBack.setText(mTitle);
-        if (mShort){
+        if (mShort) {
             hideable_details.setVisibility(View.GONE);
             hideable_total.setVisibility(View.GONE);
         }
@@ -132,7 +133,7 @@ public class PayslipFragment extends Fragment {
             tax.setText(Toolz.money(Toolz.round(mMoney[10], 0)));
             alimony_proc.setText(Toolz.money(mMoney[11]));
             residue_proc.setText(Toolz.money(mMoney[12]));
-            cash.setText(Toolz.money(mMoney[9] - Toolz.round(mMoney[10], 0)  - mMoney[11]  - mMoney[12]));
+            cash.setText(Toolz.money(mMoney[9] - Toolz.round(mMoney[10], 0) - mMoney[11] - mMoney[12]));
             days.setText(String.valueOf(mMoney[13]));
             hours.setText(String.valueOf(mMoney[14]));
         }
