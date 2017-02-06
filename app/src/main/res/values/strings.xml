@@ -191,7 +191,7 @@
     <string name="tabel_main_settings">Main settings</string>
     <string name="tabel_start_date">Start date</string>
     <string name="tabel_start_date_hint">start date</string>
-    <string name="time_duration">Houes: %1$d, minutes: %2$d</string>
+    <string name="time_duration">Hours: %1$d, minutes: %2$d</string>
     <string name="time_from_to">From: %1$s  To: %2$s</string>
     <string name="title_activity_list_finance_condition">Finance conditions</string>
     <string name="title_activity_list_tabel">Table</string>

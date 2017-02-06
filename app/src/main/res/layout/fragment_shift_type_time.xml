@@ -15,7 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/shift_type_time_day"
-        android:layout_gravity="center_horizontal|top" />
+        android:gravity="center_horizontal|bottom"
+        style="@android:style/Widget.Holo.Light.Spinner"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -26,7 +27,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/shift_type_time_dinner"
-        android:layout_gravity="center_horizontal|top" />
+        android:gravity="center_horizontal|bottom"
+        style="@android:style/Widget.Holo.Light.Spinner"/>
 
     <TextView
         android:layout_width="wrap_content"

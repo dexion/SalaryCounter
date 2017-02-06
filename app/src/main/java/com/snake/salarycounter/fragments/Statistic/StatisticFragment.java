@@ -277,7 +277,8 @@ public class StatisticFragment extends Fragment {
         mLineChart.getDescription().setEnabled(false);
         mLineChart.getLegend().setEnabled(false);
         mLineChart.setData(lineData);
-        mLineChart.setPinchZoom(false);
+        //mLineChart.setPinchZoom(false);
+        mLineChart.setTouchEnabled(false);
 
         /*IAxisValueFormatter formatter = new IAxisValueFormatter() {
             @Override
