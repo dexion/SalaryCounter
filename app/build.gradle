@@ -34,10 +34,11 @@ android {
                 output.outputFile = new File(file.parentFile, fileName)
             }
         }
+        multiDexEnabled  true
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -64,28 +65,29 @@ dependencies {
     compile "com.android.support:gridlayout-v7:${rootProject.ext.supportLibVersion}"
     compile "com.android.support:cardview-v7:${rootProject.ext.supportLibVersion}"
 
-    compile('com.mikepenz:materialdrawer:5.7.0@aar') {
+    compile('com.mikepenz:materialdrawer:5.8.1@aar') {
         transitive = true;
     }
-    compile('com.mikepenz:aboutlibraries:5.8.5@aar') {
+    compile('com.mikepenz:aboutlibraries:5.9.1@aar') {
         transitive = true;
     }
-    compile('com.mikepenz:fastadapter:2.0.0@aar') {
+    compile('com.mikepenz:fastadapter:2.1.6@aar') {
         transitive = true
     }
+    compile 'com.mikepenz:fastadapter-commons:2.1.0@aar'
+    compile 'com.mikepenz:fastadapter-extensions:2.1.0@aar'
     compile('com.mikepenz:itemanimators:0.5.0@aar') {
         transitive = true
     }
     compile('com.github.dexion:lollipin:1.6.1@aar') {
         transitive = true;
     }
-    compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.6@aar') {
         transitive = true;
     }
-    compile 'com.mikepenz:fastadapter-extensions:2.0.0@aar'
     compile 'com.mikepenz:materialize:1.0.0@aar'
     compile 'com.roomorama:caldroid:3.0.1'
-    compile 'com.mikepenz:iconics-core:2.8.1@aar'
+    compile 'com.mikepenz:iconics-core:2.8.2@aar'
     compile 'com.mikepenz:google-material-typeface:2.2.0.3.original@aar'
     compile 'com.mikepenz:fontawesome-typeface:4.7.0.0@aar'
     compile 'com.mikepenz:community-material-typeface:1.5.54.2@aar'
@@ -94,22 +96,23 @@ dependencies {
     compile 'de.greenrobot:eventbus:2.4.0'
     compile 'net.danlew:android.joda:2.9.1'
     compile 'com.google.code.gson:gson:2.5'
-    compile 'com.github.QuadFlask:colorpicker:0.0.9'
+    compile 'com.github.QuadFlask:colorpicker:0.0.13'
     compile 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
     compile 'com.ogaclejapan.smarttablayout:utils-v4:1.6.1@aar'
     compile 'pub.devrel:easygoogle:0.2.5'
     compile 'pub.devrel:easypermissions:0.1.5'
     compile 'com.github.johnpersano:supertoasts:1.3.4@aar'
     compile 'com.melnykov:floatingactionbutton:1.3.0'
-    compile 'com.jakewharton:butterknife:8.4.0'
-    apt 'com.jakewharton:butterknife-compiler:8.4.0'
-    compile 'com.wdullaer:materialdatetimepicker:2.5.0'
+    compile 'com.jakewharton:butterknife:8.5.1'
+    apt 'com.jakewharton:butterknife-compiler:8.5.1'
+    compile 'com.wdullaer:materialdatetimepicker:2.5.0' //3.1.1
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.robinhood.ticker:ticker:1.1.0'
-    compile 'com.github.afollestad.material-dialogs:core:0.9.1.0@aar'
-    compile 'com.github.afollestad.material-dialogs:commons:0.9.1.0@aar'
+    //compile 'com.robinhood.ticker:ticker:1.1.0'
+    compile 'com.afollestad.material-dialogs:core:0.9.2.3'
+    compile 'com.afollestad.material-dialogs:commons:0.9.2.3'
     compile 'com.anjlab.android.iab.v3:library:1.0.36'
-    compile 'com.github.PhilJay:MPAndroidChart:v3.0.0'
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
+    compile 'com.rengwuxian.materialedittext:library:2.1.4'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(path: ':libs:DateRangePicker')
 }

@@ -33,5 +33,5 @@ ext {
     compileSdkVersion = 25
     buildToolsVersion = "25.0.2"
     supportLibVersion = "25.1.0"
-    supportLibV4Version = "23.4.0"
+    supportLibV4Version = "25.1.0"
 }
