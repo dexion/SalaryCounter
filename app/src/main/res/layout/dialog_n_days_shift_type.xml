@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/n_days_shift_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/n_day_shift_type"
+        app:met_floatingLabel="normal"
+        app:met_floatingLabelText="@string/n_day_shift_type"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:maxLines="1" />
+</LinearLayout>

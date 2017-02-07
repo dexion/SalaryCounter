@@ -25,6 +25,10 @@
         <meta-data
             android:name="AA_MODELS"
             android:value="com.snake.salarycounter.models.Day, com.snake.salarycounter.models.FinanceCondition, com.snake.salarycounter.models.ShiftType, com.snake.salarycounter.models.Tabel" />
+        <provider
+            android:authorities="com.snake.salarycounter"
+            android:exported="false"
+            android:name="com.activeandroid.content.ContentProvider" />
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="22f2022038253dd2c7f492c264c6a664a72710e8" />

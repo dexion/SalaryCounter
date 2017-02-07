@@ -156,5 +156,6 @@
     <string name="payslip_total_days">Дни</string>
     <string name="payslip_total_hours">Часы</string>
     <string name="no_data">Нет данных для отображения</string>
+    <string name="n_day_shift_type">Количество дней</string>
 
 </resources>
