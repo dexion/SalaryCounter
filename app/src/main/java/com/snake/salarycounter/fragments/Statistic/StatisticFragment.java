@@ -228,8 +228,8 @@ public class StatisticFragment extends Fragment {
             for (DateTime i = new DateTime(startDate); i.isBefore(endDate.plusDays(1)); ) {
                 mTitles.add(sdfMonth.format(i.getMillis()));
 
-                if (MyLogic.getLastDay(i).isBefore(endDate.plusDays(1))) {
-                    lgc.setStart(i).setEnd(MyLogic.getLastDay(i));
+                if (MyLogic.getLastDayOfMonth(i).isBefore(endDate.plusDays(1))) {
+                    lgc.setStart(i).setEnd(MyLogic.getLastDayOfMonth(i));
                 } else {
                     lgc.setStart(i).setEnd(endDate);
                 }
@@ -246,7 +246,26 @@ public class StatisticFragment extends Fragment {
                 i = lgc.getEnd().plusDays(1);
             }
         } else { // Считаем по годам
+            for (DateTime i = new DateTime(startDate); i.isBefore(endDate.plusDays(1)); ) {
+                mTitles.add(sdfYear.format(i.getMillis()));
 
+                if (MyLogic.getLastDayOfYear(i).isBefore(endDate.plusDays(1))) {
+                    lgc.setStart(i).setEnd(MyLogic.getLastDayOfYear(i));
+                } else {
+                    lgc.setStart(i).setEnd(endDate);
+                }
+                lgc.recalcAll();
+                int index = lgc.getTotalPayslipDouble().length - 1;
+                if (index > 0) {
+                    double[] payslip = lgc.getTotalPayslipDouble()[index];
+                    if (null == payslip) {
+                        mValues.add(0.0);
+                    } else {
+                        mValues.add(payslip[9] - Toolz.round(payslip[10], 0) - payslip[11] - payslip[12]);
+                    }
+                }
+                i = lgc.getEnd().plusDays(1);
+            }
         }
 
         for (int i = 0; i < mValues.size(); i++) {

@@ -193,7 +193,7 @@ public class MyLogic {
             if (st.isFixedPrice) {
                 p.mSalary = st.fixedPrice;
             } else if (st.isAveragePrice) {
-                // надо как-то расчитывать средний заработок
+                // TODO: надо как-то расчитывать средний заработок
             } else if (st.isHourlyRate) {
                 p.mSalary = st.hourlyRate.multiply(new BigDecimal(p.mHours));
             } else {
@@ -253,10 +253,18 @@ public class MyLogic {
     }
 
     //region Getters & Setters
-    public static DateTime getLastDay(DateTime date) {
+    public static DateTime getLastDayOfMonth(DateTime date) {
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(date.getMillis());
         c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DAY_OF_MONTH));
+        return new DateTime(c.getTimeInMillis());
+    }
+
+    public static DateTime getLastDayOfYear(DateTime date) {
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(date.getMillis());
+        c.set(Calendar.DAY_OF_MONTH, 31);
+        c.set(Calendar.MONTH, Calendar.DECEMBER);
         return new DateTime(c.getTimeInMillis());
     }
 

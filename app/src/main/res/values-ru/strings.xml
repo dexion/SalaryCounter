@@ -148,8 +148,8 @@
     <string name="drawer_open">Открыть</string>
     <string name="payslip_alimony_proc">Алименты в %</string>
     <string name="payslip_residue_proc">Вычеты в %</string>
-    <string name="donate">Поблагодарить</string>
-    <string name="drawer_item_donate">Поблагодарить</string>
+    <string name="donate">Поддержать</string>
+    <string name="drawer_item_donate">Поддержать</string>
     <string name="market_unavailable">К сожалению, магазин не досутпен</string>
     <string name="shift_type_money_hourly_rate">Почасовая ставка</string>
     <string name="shift_type_money_is_hourly_rate">Оплачивается по часам</string>
