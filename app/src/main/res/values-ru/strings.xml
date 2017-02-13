@@ -123,7 +123,9 @@
     <string name="finance_condition_enable_tax">Вычитать подоходный налог 13%</string>
     <string name="aboutLibraries_description_name">Зарплатный счётчик</string>
     <string name="aboutLibraries_description_special1_name">Введение</string>
+    <string name="aboutLibraries_description_special2_name">Форум</string>
     <string name="aboutLibraries_description_special3_name">История изменений</string>
+    <string name="about_description"><![CDATA[Это небольшое приложение для {faw-android}, которое позволяет <b>подсчитывать</b> и отслеживать свои <b>заработки</b>, вести собственый <b>табель</b> и <b>учет рабочего времени</b>.]]></string>
     <string name="dialog_delete">Удалить</string>
     <string name="start_date">Начало периода</string>
     <string name="end_date">Окончание периода</string>
@@ -157,5 +159,7 @@
     <string name="payslip_total_hours">Часы</string>
     <string name="no_data">Нет данных для отображения</string>
     <string name="n_day_shift_type">Количество дней</string>
+    <string name="title_activity_changelog">История изменений</string>
+    <string name="title_activity_intro">Введение</string>
 
 </resources>

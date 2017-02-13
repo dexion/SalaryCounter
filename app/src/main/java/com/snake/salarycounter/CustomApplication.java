@@ -22,7 +22,7 @@ public class CustomApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Fabric.with(this, new Crashlytics());
+        //Fabric.with(this, new Crashlytics());
 
         JodaTimeAndroid.init(this);
         ActiveAndroid.initialize(this);
@@ -63,5 +63,7 @@ public class CustomApplication extends Application {
                 return super.placeholder(ctx, tag);
             }
         });
+
+        Fabric.with(this, new Crashlytics());
     }
 }

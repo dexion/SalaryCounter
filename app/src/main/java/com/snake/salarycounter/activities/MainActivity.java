@@ -3,6 +3,7 @@ package com.snake.salarycounter.activities;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -17,6 +18,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.anjlab.android.iab.v3.BillingProcessor;
 import com.anjlab.android.iab.v3.TransactionDetails;
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.CustomEvent;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
@@ -145,6 +148,15 @@ public class MainActivity extends AppCompatActivity implements
             case R.id.action_about:
                 showAbout(thisContext);
                 break;
+            case R.id.action_crash:
+                // TODO: Use your own string attributes to track common values over time
+                // TODO: Use your own number attributes to track median value over time
+                Answers.getInstance().logCustom(new CustomEvent("Video Played")
+                        .putCustomAttribute("Category", "Comedy")
+                        .putCustomAttribute("Length", 350));
+
+                Crashlytics.getInstance().crash();
+                break;
             default:
                 return false;
         }
@@ -152,7 +164,27 @@ public class MainActivity extends AppCompatActivity implements
         return true;
     }
 
-    public void showAbout(Context context) {
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        //add the values which need to be saved from the drawer to the bundle
+        outState = drawerResult.saveInstanceState(outState);
+        //add the values which need to be saved from the accountHeader to the bundle
+        outState = headerResult.saveInstanceState(outState);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onBackPressed() {
+        //handle the back press :D close the drawer first and if the drawer is closed close the activity
+        if (drawerResult != null && drawerResult.isDrawerOpen()) {
+            drawerResult.closeDrawer();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    //region Internal functions
+    private void showAbout(Context context) {
         LibsConfiguration.LibsListener libsListener = new LibsConfiguration.LibsListener() {
             @Override
             public void onIconClicked(View v) {
@@ -177,11 +209,16 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public boolean onExtraClicked(View v, Libs.SpecialButton specialButton) {
                 if (specialButton.name().compareToIgnoreCase("special1") == 0) {
-                    //startActivity(new Intent(v.getContext(), MyIntro.class));
+                    showIntro(v.getContext());
+                    return true;
+                }
+                if (specialButton.name().compareToIgnoreCase("special2") == 0) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://4pda.ru/forum/index.php?showtopic=514934"));
+                    startActivity(browserIntent);
                     return true;
                 }
                 if (specialButton.name().compareToIgnoreCase("special3") == 0) {
-                    //startActivity(new Intent(v.getContext(), ChangelogActivity.class));
+                    showChangelog(v.getContext());
                     return true;
                 }
                 return false;
@@ -218,29 +255,23 @@ public class MainActivity extends AppCompatActivity implements
                 .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
                 .withAboutIconShown(true)
                 .withAboutVersionShown(true)
-                .withAboutDescription("{faw-android} This is a small sample which can be set in the about my app description file.<br /><b>You can style this with html markup :D</b>")
+                .withAboutDescription(getString(R.string.about_description))
                 //start the activity
                 .start(context);
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        //add the values which need to be saved from the drawer to the bundle
-        outState = drawerResult.saveInstanceState(outState);
-        //add the values which need to be saved from the accountHeader to the bundle
-        outState = headerResult.saveInstanceState(outState);
-        super.onSaveInstanceState(outState);
+    private void showChangelog(Context context){
+        new MaterialDialog.Builder(context)
+                .title(R.string.title_activity_changelog)
+                .customView(R.layout.fragment_changelog, false)
+                .positiveText(R.string.btn_ok)
+                .show();
     }
 
-    @Override
-    public void onBackPressed() {
-        //handle the back press :D close the drawer first and if the drawer is closed close the activity
-        if (drawerResult != null && drawerResult.isDrawerOpen()) {
-            drawerResult.closeDrawer();
-        } else {
-            super.onBackPressed();
-        }
+    private void showIntro(Context context){
+        startActivity(new Intent(context, MyIntro.class));
     }
+    //endregion
 
     //region Drawer
     private void buildDrawer(final Context context, Bundle savedInstanceState, Toolbar toolbar) {

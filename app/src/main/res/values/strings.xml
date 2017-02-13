@@ -235,5 +235,12 @@
     <string name="payslip_total_days">Total days</string>
     <string name="payslip_total_hours">Total hours</string>
     <string name="no_data">No chart data available</string>
+    <string name="about_description"><![CDATA[{faw-android} This is a small app for {faw-android} which can help calculate your money and work time.]]></string>
+    <string name="title_activity_changelog">Changelog</string>
+    <string name="btn_ok" translatable="false">Ok</string>
+    <string name="title_activity_intro">Intro</string>
+    <string name="aboutLibraries_description_special1_name">Intro</string>
+    <string name="aboutLibraries_description_special2_name">Forum</string>
+    <string name="n_day_shift_type">Days</string>
 
 </resources>

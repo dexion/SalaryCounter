@@ -113,6 +113,8 @@ dependencies {
     compile 'com.anjlab.android.iab.v3:library:1.0.36'
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
+    compile 'com.github.gabrielemariotti.changeloglib:changelog:2.1.0'
+    compile 'com.github.paolorotolo:appintro:4.1.0'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(path: ':libs:DateRangePicker')
 }
